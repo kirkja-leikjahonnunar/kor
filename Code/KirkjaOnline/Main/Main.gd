@@ -4,10 +4,24 @@ extends Node
 onready var voidling_ps: PackedScene = preload("res://Actors/Voidling/Voidling.tscn")
 onready var sign_ps: PackedScene = preload("res://Actors/Sign/Sign.tscn")
 
+# Renaming convinience.
+# Node refrences.
+onready var NODE_3D: Spatial = $Node3D
+onready var UI: Control = $NodeUI
+
+onready var VOID: Spatial = $Node3D/Void
+
 var player: Spatial = null
 
-func Hey():
-	print("Hey!")
+# Hey.
+func Hey(message: String) -> void:
+	print(message)
+	
+func Reparent(node: Node, new_parent: Node):
+	node.get_parent().remove_child(node)
+	new_parent.add_child(node)
+	
+	print("Reparented to: %s, %s" % [node.get_path(), node.name])
 
 ###################
 # Godot Functions #
@@ -16,17 +30,9 @@ func Hey():
 # One shot after our node is instanced.
 func _ready() -> void:
 	var voidling: Voidling = voidling_ps.instance()
-	voidling.Initialize(self)
-	add_child(voidling)
-
-	
-#	var i: int = 3
-#	for pn in ["they / them", "he / she", "any / all"]:
-#		var voidling: Spatial = voidling_ps.instance()
-#		voidling.pronouns = pn
-#		voidling.translation = Vector3(i * 100, 200, 0) # Ekki "voidling.position".
-#		add_child(voidling)
-#		i += 1
+	voidling.Initialize(self, "Harvy / Nuts")
+	VOID.add_child(voidling)
+	voidling.parent = self
 
 
 # [ Escape ] key.
