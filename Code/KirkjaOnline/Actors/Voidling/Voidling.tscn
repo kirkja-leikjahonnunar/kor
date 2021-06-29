@@ -5,7 +5,7 @@
 [ext_resource path="res://Actors/Voidling/Assets/Voidling.gd" type="Script" id=3]
 [ext_resource path="res://Actors/Voidling/Assets/voidling_material.tres" type="Material" id=4]
 
-[sub_resource type="CubeMesh" id=6]
+[sub_resource type="CubeMesh" id=1]
 
 [sub_resource type="SpatialMaterial" id=2]
 vertex_color_use_as_albedo = true
@@ -13,7 +13,7 @@ vertex_color_use_as_albedo = true
 [sub_resource type="CubeMesh" id=3]
 material = SubResource( 2 )
 
-[sub_resource type="BoxShape" id=5]
+[sub_resource type="BoxShape" id=4]
 extents = Vector3( 1.68179, 1.41173, 1.48867 )
 
 [node name="Voidling" type="Spatial"]
@@ -23,7 +23,7 @@ script = ExtResource( 3 )
 
 [node name="MeshInstance" type="MeshInstance" parent="KinematicBody"]
 transform = Transform( 1.1, 0, 0, 0, 1.1, 0, 0, 0, 1.1, 0, 0, 0 )
-mesh = SubResource( 6 )
+mesh = SubResource( 1 )
 material/0 = ExtResource( 4 )
 
 [node name="Orbitors" type="Particles" parent="KinematicBody"]
@@ -46,4 +46,4 @@ transform = Transform( 1, 0, 0, 0, 0.860706, 0.509102, 0, -0.509102, 0.860706, 0
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 13.0315 )
 
 [node name="CollisionShape" type="CollisionShape" parent="KinematicBody"]
-shape = SubResource( 5 )
+shape = SubResource( 4 )

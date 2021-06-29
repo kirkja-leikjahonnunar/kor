@@ -8,10 +8,26 @@
 
 config_version=4
 
+_global_script_classes=[ {
+"base": "Reference",
+"class": "PlayerPrefs",
+"language": "GDScript",
+"path": "res://PlayerPrefs.gd"
+}, {
+"base": "Spatial",
+"class": "Voidling",
+"language": "GDScript",
+"path": "res://Actors/Voidling/Assets/Voidling.gd"
+} ]
+_global_script_class_icons={
+"PlayerPrefs": "",
+"Voidling": ""
+}
+
 [application]
 
 config/name="KirkjaOnline"
-run/main_scene="res://World.tscn"
+run/main_scene="res://Main/Main.tscn"
 config/icon="res://Main/icon.png"
 
 [input]

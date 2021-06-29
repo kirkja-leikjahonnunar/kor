@@ -5,3 +5,4 @@
 [node name="World" type="Node"]
 
 [node name="Ribbon2D" parent="." instance=ExtResource( 1 )]
+position = Vector2( 126.303, 76.3663 )
