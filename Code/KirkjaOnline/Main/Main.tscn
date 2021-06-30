@@ -1,8 +1,22 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://Main/Main.gd" type="Script" id=2]
 
+[sub_resource type="ProceduralSky" id=4]
+sky_top_color = Color( 0.301961, 0, 0.317647, 1 )
+sky_horizon_color = Color( 0.921569, 0.0196078, 0.972549, 1 )
+sky_curve = 0.0378403
+sky_energy = 0.77
+ground_bottom_color = Color( 0.0196078, 0.152941, 0.0470588, 1 )
+ground_horizon_color = Color( 0.219608, 0.603922, 0.298039, 1 )
+ground_curve = 0.0527805
+sun_color = Color( 0.121569, 0.00784314, 0.133333, 1 )
+sun_curve = 1.39288
+sun_energy = 0.0
+
 [sub_resource type="Environment" id=1]
+background_mode = 2
+background_sky = SubResource( 4 )
 ssao_enabled = true
 
 [sub_resource type="SphereMesh" id=2]
@@ -51,14 +65,11 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -7.26092, 0, -17.9869 )
 mesh = SubResource( 3 )
 material/0 = null
 
-[node name="Lights" type="Spatial" parent="Node3D"]
+[node name="Lights" type="Spatial" parent="Node3D/Void"]
 
-[node name="DirectionalLight" type="DirectionalLight" parent="Node3D/Lights"]
-transform = Transform( 0.750184, -0.478733, -0.456113, 0.649674, 0.405249, 0.643193, -0.123079, -0.778838, 0.615031, 0, 27.8801, 22.1078 )
-
-[node name="OmniLight" type="OmniLight" parent="Node3D/Lights"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 7.99256, -1.79745, -3.93065 )
-omni_range = 12.2498
+[node name="DirectionalLight" type="DirectionalLight" parent="Node3D/Void/Lights"]
+transform = Transform( 0.558996, -0.82806, -0.0429025, 0.649674, 0.405249, 0.643193, -0.515217, -0.387415, 0.764501, 0, 27.8801, 22.1078 )
+light_color = Color( 0.937255, 0.8, 0.937255, 1 )
 
 [node name="Node2D" type="Node2D" parent="."]
 
