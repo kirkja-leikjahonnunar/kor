@@ -13,15 +13,9 @@ _global_script_classes=[ {
 "class": "PlayerPrefs",
 "language": "GDScript",
 "path": "res://PlayerPrefs.gd"
-}, {
-"base": "Spatial",
-"class": "Voidling",
-"language": "GDScript",
-"path": "res://Actors/Voidling/Assets/Voidling.gd"
 } ]
 _global_script_class_icons={
-"PlayerPrefs": "",
-"Voidling": ""
+"PlayerPrefs": ""
 }
 
 [application]

@@ -2,32 +2,32 @@
 
 [ext_resource path="res://Main/Main.gd" type="Script" id=2]
 
-[sub_resource type="ProceduralSky" id=4]
-sky_top_color = Color( 0.301961, 0, 0.317647, 1 )
+[sub_resource type="ProceduralSky" id=1]
+sky_top_color = Color( 0.45098, 0.0313726, 0.47451, 1 )
 sky_horizon_color = Color( 0.921569, 0.0196078, 0.972549, 1 )
 sky_curve = 0.0378403
 sky_energy = 0.77
-ground_bottom_color = Color( 0.0196078, 0.152941, 0.0470588, 1 )
-ground_horizon_color = Color( 0.219608, 0.603922, 0.298039, 1 )
-ground_curve = 0.0527805
+ground_bottom_color = Color( 0.0352941, 0.172549, 0.0235294, 1 )
+ground_horizon_color = Color( 0.219608, 0.603922, 0.443137, 1 )
+ground_curve = 0.0800004
 sun_color = Color( 0.121569, 0.00784314, 0.133333, 1 )
 sun_curve = 1.39288
 sun_energy = 0.0
 
-[sub_resource type="Environment" id=1]
+[sub_resource type="Environment" id=2]
 background_mode = 2
-background_sky = SubResource( 4 )
+background_sky = SubResource( 1 )
 ssao_enabled = true
 
-[sub_resource type="SphereMesh" id=2]
+[sub_resource type="SphereMesh" id=3]
 
-[sub_resource type="CubeMesh" id=3]
+[sub_resource type="CubeMesh" id=4]
 
 [node name="Main" type="Node"]
 script = ExtResource( 2 )
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
-environment = SubResource( 1 )
+environment = SubResource( 2 )
 
 [node name="Node3D" type="Spatial" parent="."]
 
@@ -37,32 +37,32 @@ environment = SubResource( 1 )
 
 [node name="MeshInstance" type="MeshInstance" parent="Node3D/Void/Level"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 5.73908, 0, 0 )
-mesh = SubResource( 2 )
+mesh = SubResource( 3 )
 material/0 = null
 
 [node name="MeshInstance2" type="MeshInstance" parent="Node3D/Void/Level"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 5.73908, 0, -7.35101 )
-mesh = SubResource( 2 )
+mesh = SubResource( 3 )
 material/0 = null
 
 [node name="MeshInstance3" type="MeshInstance" parent="Node3D/Void/Level"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 5.73908, 0, -17.9869 )
-mesh = SubResource( 2 )
+mesh = SubResource( 3 )
 material/0 = null
 
 [node name="MeshInstance4" type="MeshInstance" parent="Node3D/Void/Level"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -7.26092, 0, 0 )
-mesh = SubResource( 3 )
+mesh = SubResource( 4 )
 material/0 = null
 
 [node name="MeshInstance5" type="MeshInstance" parent="Node3D/Void/Level"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -7.26092, 0, -7.35101 )
-mesh = SubResource( 3 )
+mesh = SubResource( 4 )
 material/0 = null
 
 [node name="MeshInstance6" type="MeshInstance" parent="Node3D/Void/Level"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -7.26092, 0, -17.9869 )
-mesh = SubResource( 3 )
+mesh = SubResource( 4 )
 material/0 = null
 
 [node name="Lights" type="Spatial" parent="Node3D/Void"]
