@@ -18,5 +18,3 @@ func _run() -> void:
 	sun.translate(Vector3(0, 2, 0))
 	get_scene().add_child(sun)
 	sun.set_owner(get_scene())
-	
-	pass

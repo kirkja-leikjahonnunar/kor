@@ -9,17 +9,15 @@ export var MouseSensitivityX: float = 0.01
 export var MouseSensitivityY: float = 0.01
 export var CameraLag: float = 0.0
 
+export var movement_speed: float = 10.0
+
 onready var KB: KinematicBody = $KinematicBody
 
-var parent: Node = null
-var gravity_vector: Vector3 = -Vector3.UP
-
-
 # Class member variables.
-# warning-ignore:shadowed_variable
-# warning-ignore:shadowed_variable
 var main: Node = null
-var pronouns: String = "one"
+var pronouns: String = "all / any" # warning-ignore:shadowed_variable
+var gravity_vector: Vector3 = Vector3.DOWN # warning-ignore:shadowed_variable
+
 
 ######################
 # Voidling Functions #
@@ -39,6 +37,39 @@ func Initialize(main: Node, pronouns: String):
 # Godot Functions #
 ###################
 
+var velocity: Vector3 = Vector3.ZERO
+var thrust_power: float = 0.5 # m/s
+var break_power: float = 0.99
+
+#----------
+# Update().
+#----------
+func _process(delta_time: float) -> void:
+	
+	# Make the voidling move.
+	var thrust_direction: Vector3 = Vector3.ZERO
+	
+	if Input.is_action_pressed("move_forward"):
+		thrust_direction += Vector3.FORWARD
+		
+	if Input.is_action_pressed("move_back"):
+		thrust_direction += Vector3.BACK
+		
+	if Input.is_action_pressed("move_left"):
+		thrust_direction += Vector3.LEFT
+		
+	if Input.is_action_pressed("move_right"):
+		thrust_direction += Vector3.RIGHT
+		
+	if Input.is_action_pressed("break"):
+		velocity *= break_power
+	
+	# Update and use velocity.
+	velocity += thrust_direction * thrust_power * delta_time
+	translate(velocity)
+	print(velocity)
+	
+
 # Input.
 func _input(event: InputEvent) -> void:
 	if event is InputEventMouseMotion:
@@ -48,7 +79,7 @@ func _input(event: InputEvent) -> void:
 			self.rotate_y(event.get_relative().x * -MouseSensitivityX) # Yaw.
 			self.rotate_object_local(Vector3.RIGHT, event.get_relative().y * -MouseSensitivityY) # Pitch.
 	
-	# Type like a Keyboard.
+	# If you want to type like a Keyboard.
 	#if event is InputEventKey:
 	#	if event.is_action_pressed("move_forward", true):
 	#		print("move_forward")

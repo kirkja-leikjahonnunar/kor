@@ -2,7 +2,7 @@ extends Node
 
 # Preload resource assets.
 onready var voidling_ps: PackedScene = preload("res://Actors/Voidling/Voidling.tscn")
-onready var sign_ps: PackedScene = preload("res://Actors/Sign/Sign.tscn")
+onready var sign_ps: PackedScene = preload("res://Actors/Signpost/Signpost.tscn")
 
 # Renaming convinience.
 # Node refrences.
@@ -31,8 +31,8 @@ func Reparent(node: Node, new_parent: Node):
 func _ready() -> void:
 	var voidling: Voidling = voidling_ps.instance()
 	voidling.Initialize(self, "Harvy / Nuts")
+	voidling.translation = Vector3(0, 2, 0)
 	VOID.add_child(voidling)
-	voidling.parent = self
 
 
 # [ Escape ] key.
