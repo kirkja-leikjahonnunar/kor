@@ -1,4 +1,4 @@
-tool
+#tool
 extends Spatial
 class_name Voidling
 
@@ -15,7 +15,7 @@ onready var KB: KinematicBody = $KinematicBody
 
 # Class member variables.
 var main: Node = null
-var pronouns: String = "all / any" # warning-ignore:shadowed_variable
+export var pronouns: String = "all / any" # warning-ignore:shadowed_variable
 var gravity_vector: Vector3 = Vector3.DOWN # warning-ignore:shadowed_variable
 
 
@@ -37,9 +37,10 @@ func Initialize(main: Node, pronouns: String):
 # Godot Functions #
 ###################
 
-var velocity: Vector3 = Vector3.ZERO
-var thrust_power: float = 0.5 # m/s
-var break_power: float = 0.99
+export var velocity: Vector3 = Vector3.ZERO
+export var thrust_power: float = 0.5 # m/s
+export var max_speed: float = 100.0  # m/s
+export var break_power: float = 0.95
 
 #----------
 # Update().
@@ -49,17 +50,22 @@ func _process(delta_time: float) -> void:
 	# Make the voidling move.
 	var thrust_direction: Vector3 = Vector3.ZERO
 	
+	# Planar movement.
 	if Input.is_action_pressed("move_forward"):
-		thrust_direction += Vector3.FORWARD
-		
+		thrust_direction += Vector3.FORWARD		
 	if Input.is_action_pressed("move_back"):
 		thrust_direction += Vector3.BACK
-		
 	if Input.is_action_pressed("move_left"):
 		thrust_direction += Vector3.LEFT
-		
 	if Input.is_action_pressed("move_right"):
 		thrust_direction += Vector3.RIGHT
+		
+	# Vertical movement.
+	if Input.is_action_pressed("move_up"):
+		thrust_direction -= Vector3.UP
+	if Input.is_action_pressed("move_down"):
+		thrust_direction -= Vector3.DOWN
+
 		
 	if Input.is_action_pressed("break"):
 		velocity *= break_power
@@ -67,7 +73,7 @@ func _process(delta_time: float) -> void:
 	# Update and use velocity.
 	velocity += thrust_direction * thrust_power * delta_time
 	translate(velocity)
-	print(velocity)
+	#print(velocity)
 	
 
 # Input.

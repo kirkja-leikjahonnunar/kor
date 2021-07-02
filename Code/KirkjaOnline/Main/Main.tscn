@@ -72,7 +72,9 @@ shadow_enabled = true
 shadow_color = Color( 0.0156863, 0.0666667, 0.235294, 1 )
 
 [node name="Voidling" parent="Node3D/Void" instance=ExtResource( 3 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.3692, 0 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.86699, 0 )
+PrimaryColor = Color( 0.631373, 0.129412, 0.941176, 1 )
+SecondaryColor = Color( 0.223529, 0.0313726, 0.0313726, 1 )
 
 [node name="Node2D" type="Node2D" parent="."]
 
@@ -82,5 +84,3 @@ margin_bottom = 40.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
-
-[editable path="Node3D/Void/Voidling"]

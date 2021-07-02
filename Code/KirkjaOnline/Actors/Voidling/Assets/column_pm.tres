@@ -8,5 +8,6 @@ curve = SubResource( 1 )
 
 [resource]
 gravity = Vector3( 0, 6.6, 0 )
+scale = 0.32
 scale_curve = SubResource( 2 )
 color = Color( 0.792157, 0.0941176, 0.764706, 1 )

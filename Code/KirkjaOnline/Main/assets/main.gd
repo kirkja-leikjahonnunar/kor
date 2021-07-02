@@ -29,10 +29,11 @@ func Reparent(node: Node, new_parent: Node):
 
 # One shot after our node is instanced.
 func _ready() -> void:
-	var voidling: Voidling = voidling_ps.instance()
-	voidling.Initialize(self, "Harvy / Nuts")
-	voidling.translation = Vector3(0, 2, 0)
-	VOID.add_child(voidling)
+	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+#	var voidling: Voidling = voidling_ps.instance()
+#	voidling.Initialize(self, "Harvy / Nuts")
+#	voidling.translation = Vector3(0, 2, 0)
+#	VOID.add_child(voidling)
 
 
 # [ Escape ] key.
