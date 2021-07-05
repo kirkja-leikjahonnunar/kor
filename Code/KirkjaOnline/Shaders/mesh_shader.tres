@@ -1,4 +1,4 @@
-[gd_resource type="VisualShader" load_steps=5 format=2]
+[gd_resource type="VisualShader" load_steps=6 format=2]
 
 [sub_resource type="VisualShaderNodeColorConstant" id=1]
 constant = Color( 0.81614, 0.0733251, 0.0733251, 1 )
@@ -14,11 +14,15 @@ operator = 2
 [sub_resource type="VisualShaderNodeColorUniform" id=4]
 uniform_name = "Color"
 
+[sub_resource type="VisualShaderNodeColorUniform" id=5]
+uniform_name = "Emission"
+
 [resource]
 code = "shader_type spatial;
 render_mode specular_schlick_ggx;
 
 uniform vec4 Color : hint_color;
+uniform vec4 Emission : hint_color;
 
 
 
@@ -32,13 +36,13 @@ void fragment() {
 	vec3 n_out5p0 = Color.rgb;
 	float n_out5p1 = Color.a;
 
-// Color:3
-	vec3 n_out3p0 = vec3(0.048828, 0.390625, 0.054169);
-	float n_out3p1 = 1.000000;
+// ColorUniform:6
+	vec3 n_out6p0 = Emission.rgb;
+	float n_out6p1 = Emission.a;
 
 // Output:0
 	ALBEDO = n_out5p0;
-	EMISSION = n_out3p0;
+	EMISSION = n_out6p0;
 
 }
 
@@ -47,14 +51,16 @@ void light() {
 
 }
 "
-graph_offset = Vector2( -465, 22 )
-nodes/fragment/0/position = Vector2( 420, 160 )
+graph_offset = Vector2( -256.907, -174.423 )
+nodes/fragment/0/position = Vector2( 520, 140 )
 nodes/fragment/2/node = SubResource( 1 )
 nodes/fragment/2/position = Vector2( -240, 320 )
 nodes/fragment/3/node = SubResource( 2 )
-nodes/fragment/3/position = Vector2( 240, 260 )
+nodes/fragment/3/position = Vector2( -240, 420 )
 nodes/fragment/4/node = SubResource( 3 )
 nodes/fragment/4/position = Vector2( -20, 220 )
 nodes/fragment/5/node = SubResource( 4 )
 nodes/fragment/5/position = Vector2( -240, 120 )
-nodes/fragment/connections = PoolIntArray( 5, 0, 0, 0, 5, 0, 4, 0, 3, 0, 0, 5 )
+nodes/fragment/6/node = SubResource( 5 )
+nodes/fragment/6/position = Vector2( 280, 240 )
+nodes/fragment/connections = PoolIntArray( 5, 0, 0, 0, 5, 0, 4, 0, 6, 0, 0, 5 )

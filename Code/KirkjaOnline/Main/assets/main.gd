@@ -1,4 +1,5 @@
 extends Node
+class_name Main
 
 # Preload resource assets.
 onready var voidling_ps: PackedScene = preload("res://Actors/Voidling/Voidling.tscn")
@@ -30,10 +31,10 @@ func Reparent(node: Node, new_parent: Node):
 # One shot after our node is instanced.
 func _ready() -> void:
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
-#	var voidling: Voidling = voidling_ps.instance()
-#	voidling.Initialize(self, "Harvy / Nuts")
-#	voidling.translation = Vector3(0, 2, 0)
-#	VOID.add_child(voidling)
+	var voidling: Voidling = voidling_ps.instance()
+	voidling.Initialize(self, "Harvy / Nuts")
+	voidling.translation = Vector3(0, 2, 0)
+	VOID.add_child(voidling)
 
 
 # [ Escape ] key.

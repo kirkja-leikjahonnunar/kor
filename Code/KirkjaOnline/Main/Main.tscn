@@ -1,13 +1,15 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://Main/assets/main.gd" type="Script" id=1]
 [ext_resource path="res://Main/assets/environment.tres" type="Environment" id=2]
-[ext_resource path="res://Actors/Voidling/Voidling.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Actors/Bubble/Bubble.tscn" type="PackedScene" id=3]
 
 [sub_resource type="PrismMesh" id=1]
 
 [sub_resource type="SpatialMaterial" id=2]
-albedo_color = Color( 0.0666667, 0.623529, 0.505882, 1 )
+albedo_color = Color( 0.4, 0.4, 0.4, 1 )
+
+[sub_resource type="BoxShape" id=5]
 
 [sub_resource type="SphereMesh" id=3]
 
@@ -25,10 +27,16 @@ environment = ExtResource( 2 )
 
 [node name="Level" type="Spatial" parent="Node3D/Void"]
 
-[node name="Floor" type="MeshInstance" parent="Node3D/Void/Level"]
+[node name="Area" type="KinematicBody" parent="Node3D/Void/Level"]
+
+[node name="Floor" type="MeshInstance" parent="Node3D/Void/Level/Area"]
 transform = Transform( 88.2981, 0, 0, 0, -4.37114e-08, 1, 0, -69.0041, -3.01627e-06, 0, -1, -2.91429 )
 mesh = SubResource( 1 )
 material/0 = SubResource( 2 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Node3D/Void/Level/Area"]
+transform = Transform( 88.2981, 0, 0, 0, -4.37114e-08, 1, 0, -69.0041, -3.01627e-06, 0, -1, -2.91429 )
+shape = SubResource( 5 )
 
 [node name="MeshInstance" type="MeshInstance" parent="Node3D/Void/Level"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 5.73908, 0, 0 )
@@ -66,15 +74,12 @@ material/0 = null
 
 [node name="DirectionalLight" type="DirectionalLight" parent="Node3D/Void/Lights"]
 transform = Transform( 0.7597, -0.315001, -0.568885, 0.649674, 0.405249, 0.643193, 0.0279335, -0.858224, 0.512515, -0.0425873, 27.8801, 22.0444 )
-light_color = Color( 0.92549, 0.505882, 0.92549, 1 )
 light_bake_mode = 0
 shadow_enabled = true
 shadow_color = Color( 0.0156863, 0.0666667, 0.235294, 1 )
 
-[node name="Voidling" parent="Node3D/Void" instance=ExtResource( 3 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.86699, 0 )
-PrimaryColor = Color( 0.631373, 0.129412, 0.941176, 1 )
-SecondaryColor = Color( 0.223529, 0.0313726, 0.0313726, 1 )
+[node name="Bubble" parent="Node3D/Void" instance=ExtResource( 3 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -9.82502, 4.79921, 0 )
 
 [node name="Node2D" type="Node2D" parent="."]
 

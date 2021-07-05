@@ -1,0 +1,21 @@
+[gd_scene load_steps=3 format=2]
+
+[sub_resource type="SphereMesh" id=1]
+
+[sub_resource type="SphereShape" id=2]
+
+[node name="Bubble" type="Spatial"]
+
+[node name="OmniLight" type="OmniLight" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 4.27095, 2.02651, -4.76837e-07 )
+omni_range = 8.37422
+
+[node name="RigidBody" type="RigidBody" parent="."]
+linear_velocity = Vector3( 0, 1, 0 )
+
+[node name="MeshInstance" type="MeshInstance" parent="RigidBody"]
+mesh = SubResource( 1 )
+material/0 = null
+
+[node name="CollisionShape" type="CollisionShape" parent="RigidBody"]
+shape = SubResource( 2 )
