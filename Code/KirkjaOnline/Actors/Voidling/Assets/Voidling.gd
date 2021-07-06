@@ -2,6 +2,8 @@
 extends Spatial
 class_name Voidling
 
+onready var signpost_ps: PackedScene = preload("res://Actors/Signpost/Signpost.tscn")
+
 enum TravelMode { PUCK, WALK, FLY }
 
 # Properties.
@@ -16,13 +18,14 @@ export var CameraLag: float = 0.0
 # export var movement_speed: float = 10.0
 export var travel_mode = TravelMode.PUCK
 
-onready var KB: KinematicBody = $KinematicBody
 
 # Class member variables.
 var main: Node = null
 var pronouns: String = "all / any" # warning-ignore:shadowed_variable
 var gravity_vector: Vector3 = Vector3.DOWN # warning-ignore:shadowed_variable
 
+onready var AREA: Area = $Area
+onready var RAYCAST: RayCast = $Area/RayCast
 
 ######################
 # Voidling Functions #
@@ -35,11 +38,13 @@ func Initialize(main: Node, pronouns: String):
 	self.main = main
 	self.pronouns = pronouns
 	self.main.Hey("Hey Main thank's for spawning me.\nYours truley,\n- %s" % [self.pronouns])
-	var material = $KinematicBody/MeshInstance.get_surface_material(0)
+	
+	var material = $Area/MeshInstance.get_surface_material(0)
 	material.set_shader_param("Color", PrimaryColor)
 	material.set_shader_param("Emission", EmissionColor)
-	$KinematicBody/Column.process_material.set_color(SecondaryColor)
-	$CentralLight.set_color(SecondaryColor)
+	
+	$Area/Column.process_material.set_color(SecondaryColor)
+	$Area/CentralLight.set_color(SecondaryColor)
 	
 ###################
 # Godot Functions #
@@ -67,6 +72,7 @@ func _process(delta_time: float) -> void:
 			thrust_direction -= get_global_transform().basis.x
 		if Input.is_action_pressed("move_right"):
 			thrust_direction += get_global_transform().basis.x
+			
 	
 	else:
 		# Both WALK and FLY: local coords.	
@@ -78,7 +84,7 @@ func _process(delta_time: float) -> void:
 			thrust_direction += Vector3.LEFT
 		if Input.is_action_pressed("move_right"):
 			thrust_direction += Vector3.RIGHT
-
+		
 	# Brakes for everyone.
 	if Input.is_action_pressed("breaks"):
 		velocity *= break_power
@@ -104,6 +110,28 @@ func _process(delta_time: float) -> void:
 	velocity += thrust_direction * thrust_power * delta_time
 	translate(velocity)
 	
+	
+	
+	# Racast.
+	if Input.is_action_just_pressed("enable_laser"):
+		RAYCAST.set_enabled(true)
+	elif Input.is_action_just_released("enable_laser"):
+		RAYCAST.set_enabled(false)
+	
+	if RAYCAST.is_enabled() and RAYCAST.is_colliding():
+		var other_object: Object = RAYCAST.get_collider()
+		if other_object.owner is Bubble:
+			other_object.queue_free()
+		else:
+			if Input.is_action_just_pressed("post_sign"):
+				var collision_point: Vector3 = RAYCAST.get_collision_point()
+				var signpost: Signpost = signpost_ps.instance()
+				signpost.translation = collision_point
+				self.main.add_child(signpost)
+				print("Post sign.")
+	
+	
+	
 
 # Input.
 func _input(event: InputEvent) -> void:
@@ -116,7 +144,7 @@ func _input(event: InputEvent) -> void:
 			
 		if travel_mode == TravelMode.WALK:
 			self.rotate_y(event.get_relative().x * -MouseSensitivityX) # Yaw.			
-			KB.rotate_object_local(Vector3.RIGHT, event.get_relative().y * -MouseSensitivityY) # Pitch.
+			AREA.rotate_object_local(Vector3.RIGHT, event.get_relative().y * -MouseSensitivityY) # Pitch.
 			
 		if travel_mode == TravelMode.FLY:
 			self.rotate_y(event.get_relative().x * -MouseSensitivityX) # Yaw.
@@ -139,3 +167,10 @@ func _input(event: InputEvent) -> void:
 #		else:
 #			print("Off")
 #			reset_to_zero = false
+
+
+
+
+
+func _on_Area_area_shape_entered(area_id: int, area: Area, area_shape: int, local_shape: int) -> void:
+	print("I hit something.")

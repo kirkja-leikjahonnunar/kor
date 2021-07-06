@@ -48,3 +48,6 @@ text = "Hello!"
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="OmniLight" type="OmniLight" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.80408, 2.33723, 9.53674e-07 )

@@ -4,13 +4,12 @@ class_name Main
 # Preload resource assets.
 onready var voidling_ps: PackedScene = preload("res://Actors/Voidling/Voidling.tscn")
 onready var sign_ps: PackedScene = preload("res://Actors/Signpost/Signpost.tscn")
+onready var bubble_ps: PackedScene = preload("res://Actors/Bubble/Bubble.tscn")
 
 # Renaming convinience.
 # Node refrences.
-onready var NODE_3D: Spatial = $Node3D
-onready var UI: Control = $NodeUI
-
 onready var VOID: Spatial = $Node3D/Void
+onready var UI: Control = $NodeUI
 
 var player: Spatial = null
 
@@ -42,3 +41,10 @@ func _unhandled_input(event):
 	if event is InputEventKey:
 		if event.pressed and event.scancode == KEY_ESCAPE:
 			get_tree().quit()
+
+
+# Spawn bubble.
+func _on_Timer_timeout() -> void:
+	var bubble = bubble_ps.instance()
+	
+	VOID.add_child(bubble)

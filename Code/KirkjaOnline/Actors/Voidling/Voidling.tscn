@@ -19,24 +19,25 @@ extents = Vector3( 1.68179, 1.41173, 1.48867 )
 
 [node name="Voidling" type="Spatial"]
 script = ExtResource( 3 )
-EmissionColor = Color( 0.207843, 0.670588, 0.811765, 1 )
 travel_mode = 2
 
-[node name="KinematicBody" type="KinematicBody" parent="."]
+[node name="Area" type="Area" parent="."]
+gravity_point = true
+gravity_vec = Vector3( 0, 0, 0 )
 
-[node name="MeshInstance" type="MeshInstance" parent="KinematicBody"]
+[node name="MeshInstance" type="MeshInstance" parent="Area"]
 transform = Transform( 1.1, 0, 0, 0, 1.1, 0, 0, 0, 1.1, 0, 0, 0 )
 mesh = SubResource( 1 )
 material/0 = ExtResource( 4 )
 
-[node name="Orbitors" type="Particles" parent="KinematicBody"]
+[node name="Orbitors" type="Particles" parent="Area"]
 visible = false
 amount = 20
 local_coords = false
 process_material = ExtResource( 2 )
 draw_pass_1 = SubResource( 3 )
 
-[node name="Column" type="Particles" parent="KinematicBody"]
+[node name="Column" type="Particles" parent="Area"]
 cast_shadow = 0
 amount = 20
 speed_scale = 0.44
@@ -44,22 +45,28 @@ local_coords = false
 process_material = ExtResource( 1 )
 draw_pass_1 = SubResource( 3 )
 
-[node name="CameraPivot" type="Spatial" parent="KinematicBody"]
+[node name="CameraPivot" type="Spatial" parent="Area"]
 transform = Transform( 1, 0, 0, 0, 0.860706, 0.509102, 0, -0.509102, 0.860706, 0, 2.78633, 2.68489 )
 
-[node name="Camera" type="Camera" parent="KinematicBody/CameraPivot"]
+[node name="Camera" type="Camera" parent="Area/CameraPivot"]
 transform = Transform( 1, 0, 0, 0, 1, 2.98023e-08, 0, -2.98023e-08, 1, 0, 2.38419e-07, 13.0315 )
 fov = 66.0
 far = 500.0
 
-[node name="CollisionShape" type="CollisionShape" parent="KinematicBody"]
+[node name="CollisionShape" type="CollisionShape" parent="Area"]
 shape = SubResource( 4 )
 
-[node name="CentralLight" type="OmniLight" parent="."]
+[node name="CentralLight" type="OmniLight" parent="Area"]
 light_color = Color( 0.588235, 0.960784, 0.494118, 1 )
-light_energy = 0.62
 shadow_enabled = true
 omni_range = 13.4
+
+[node name="RayCast" type="RayCast" parent="Area"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.930521, 0 )
+cast_to = Vector3( 0, 0, -10 )
+
+[node name="SpotLight" type="SpotLight" parent="Area"]
+transform = Transform( 1, 0, 0, 0, 0.598856, 0.800857, 0, -0.800857, 0.598856, -0.48994, 2.99432, 1.7181 )
 
 [node name="Control" type="Control" parent="."]
 anchor_right = 1.0
@@ -69,13 +76,11 @@ __meta__ = {
 }
 
 [node name="Label" type="Label" parent="Control"]
-margin_right = 40.0
-margin_bottom = 14.0
+margin_right = 185.0
+margin_bottom = 132.0
 text = "Woot"
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
-[node name="ProgressBar" type="ProgressBar" parent="Control"]
-anchor_top = 1.0
-anchor_bottom = 1.0
-margin_top = -31.0
-margin_right = 232.0
-value = 50.0
+[connection signal="area_shape_entered" from="Area" to="." method="_on_Area_area_shape_entered"]

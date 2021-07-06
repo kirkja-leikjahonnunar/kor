@@ -9,6 +9,11 @@
 config_version=4
 
 _global_script_classes=[ {
+"base": "Spatial",
+"class": "Bubble",
+"language": "GDScript",
+"path": "res://Actors/Bubble/assets/bubble.gd"
+}, {
 "base": "Node",
 "class": "Main",
 "language": "GDScript",
@@ -30,6 +35,7 @@ _global_script_classes=[ {
 "path": "res://Actors/Voidling/assets/voidling.gd"
 } ]
 _global_script_class_icons={
+"Bubble": "",
 "Main": "",
 "PlayerPrefs": "",
 "Signpost": "",
@@ -95,7 +101,16 @@ toggle_travel_mode={
 }
 alt_fly_ui={
 "deadzone": 0.5,
+"events": [  ]
+}
+enable_laser={
+"deadzone": 0.5,
 "events": [ Object(InputEventMouseButton,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"button_mask":0,"position":Vector2( 0, 0 ),"global_position":Vector2( 0, 0 ),"factor":1.0,"button_index":2,"pressed":false,"doubleclick":false,"script":null)
+ ]
+}
+post_sign={
+"deadzone": 0.5,
+"events": [ Object(InputEventMouseButton,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"button_mask":0,"position":Vector2( 0, 0 ),"global_position":Vector2( 0, 0 ),"factor":1.0,"button_index":1,"pressed":false,"doubleclick":false,"script":null)
  ]
 }
 
