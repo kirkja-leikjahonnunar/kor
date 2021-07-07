@@ -22,6 +22,9 @@ func Reparent(node: Node, new_parent: Node):
 	new_parent.add_child(node)
 	
 	print("Reparented to: %s, %s" % [node.get_path(), node.name])
+	
+#func AddMe(node: Node):
+#	VOID.add_child(node)
 
 ###################
 # Godot Functions #

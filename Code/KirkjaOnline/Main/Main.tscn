@@ -1,8 +1,9 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://Main/assets/main.gd" type="Script" id=1]
 [ext_resource path="res://Main/assets/environment.tres" type="Environment" id=2]
 [ext_resource path="res://Actors/Bubble/Bubble.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Music/voidling.ogg" type="AudioStream" id=4]
 
 [sub_resource type="PrismMesh" id=1]
 
@@ -92,5 +93,9 @@ margin_bottom = 40.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 4 )
+volume_db = -10.0
 
 [connection signal="timeout" from="Node3D/Timer" to="." method="_on_Timer_timeout"]
