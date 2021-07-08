@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://Main/assets/main.gd" type="Script" id=1]
 [ext_resource path="res://Main/assets/environment.tres" type="Environment" id=2]
@@ -15,6 +15,10 @@ albedo_color = Color( 0.4, 0.4, 0.4, 1 )
 [sub_resource type="SphereMesh" id=4]
 
 [sub_resource type="CubeMesh" id=5]
+
+[sub_resource type="SphereShape" id=6]
+
+[sub_resource type="SphereMesh" id=7]
 
 [node name="Main" type="Node"]
 script = ExtResource( 1 )
@@ -86,6 +90,7 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -9.82502, 4.79921, 0 )
 autostart = true
 
 [node name="Node2D" type="Node2D" parent="."]
+position = Vector2( -1, 0 )
 
 [node name="NodeUI" type="Control" parent="."]
 margin_right = 40.0
@@ -97,5 +102,15 @@ __meta__ = {
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 4 )
 volume_db = -10.0
+
+[node name="Area" type="Area" parent="."]
+visible = false
+
+[node name="CollisionShape" type="CollisionShape" parent="Area"]
+shape = SubResource( 6 )
+
+[node name="MeshInstance" type="MeshInstance" parent="Area"]
+mesh = SubResource( 7 )
+material/0 = null
 
 [connection signal="timeout" from="Node3D/Timer" to="." method="_on_Timer_timeout"]

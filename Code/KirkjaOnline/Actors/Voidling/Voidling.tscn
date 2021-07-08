@@ -5,6 +5,9 @@
 [ext_resource path="res://Actors/Voidling/assets/voidling.gd" type="Script" id=3]
 [ext_resource path="res://Actors/Voidling/Assets/voidling_material.tres" type="Material" id=4]
 
+[sub_resource type="BoxShape" id=4]
+extents = Vector3( 0.5, 0.5, 0.5 )
+
 [sub_resource type="CubeMesh" id=1]
 size = Vector3( 1, 1, 1 )
 
@@ -14,11 +17,14 @@ vertex_color_use_as_albedo = true
 [sub_resource type="CubeMesh" id=3]
 material = SubResource( 2 )
 
-[sub_resource type="BoxShape" id=4]
-extents = Vector3( 1.68179, 1.41173, 1.48867 )
-
-[node name="Voidling" type="Spatial"]
+[node name="Voidling" type="KinematicBody"]
 script = ExtResource( 3 )
+PrimaryColor = Color( 0.941176, 0.129412, 0.470588, 1 )
+SecondaryColor = Color( 0.266667, 0.611765, 0.815686, 1 )
+
+[node name="CollisionShape" type="CollisionShape" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0 )
+shape = SubResource( 4 )
 
 [node name="FloorCast" type="RayCast" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0 )
@@ -31,7 +37,6 @@ material/0 = ExtResource( 4 )
 
 [node name="Apparition" type="Area" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0 )
-gravity_point = true
 gravity_vec = Vector3( 0, 0, 0 )
 
 [node name="LaserCast" type="RayCast" parent="Apparition"]
@@ -64,9 +69,6 @@ transform = Transform( 1, 0, 0, 0, 0.860706, 0.509102, 0, -0.509102, 0.860706, 0
 transform = Transform( 1, 0, 0, 0, 1, 2.98023e-08, 0, -2.98023e-08, 1, 0, 2.38419e-07, 13.0315 )
 fov = 66.0
 far = 500.0
-
-[node name="CollisionShape" type="CollisionShape" parent="Apparition"]
-shape = SubResource( 4 )
 
 [node name="CentralLight" type="OmniLight" parent="Apparition"]
 light_color = Color( 0.588235, 0.960784, 0.494118, 1 )

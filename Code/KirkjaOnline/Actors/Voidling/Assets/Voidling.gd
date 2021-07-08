@@ -1,5 +1,4 @@
-# tool
-extends Spatial
+extends KinematicBody
 class_name Voidling
 
 onready var signpost_ps: PackedScene = preload("res://Actors/Signpost/Signpost.tscn")
@@ -15,7 +14,6 @@ export var SecondaryColor: Color = Color.chartreuse
 export var EmissionColor: Color = Color.black
 
 # Motion.
-# export var movement_speed: float = 10.0
 export var travel_mode = TravelMode.GLIDE
 
 
@@ -24,7 +22,6 @@ var main: Node = null # warning-ignore:shadowed_variable
 var pronouns: String = "all / any" # warning-ignore:shadowed_variable
 var gravity_vector: Vector3 = Vector3.DOWN
 
-const FOLLOW_SPEED: float = 4.0
 
 onready var FLOORCAST: RayCast = $FloorCast
 onready var APPARITION: Area = $Apparition
@@ -47,7 +44,7 @@ export var break_power: float = 0.95 # Good enough friction.
 func Initialize(main: Node, pronouns: String):
 	self.main = main
 	self.pronouns = pronouns
-	self.main.Hey("Hey Main thank's for spawning me.\nYours truley,\n- %s" % [self.pronouns])
+	#self.main.Hey("Hey Main thank's for spawning me.\nYours truley,\n- %s" % [self.pronouns])
 	
 	var material: Material = $Apparition/MeshInstance.get_surface_material(0)
 	material.set_shader_param("Color", PrimaryColor)
@@ -74,37 +71,43 @@ func Initialize(main: Node, pronouns: String):
 # Update().
 #----------
 func _process(delta_time: float) -> void:
-	var thrust_direction: Vector3 = Vector3.ZERO
-	
 	if travel_mode == TravelMode.GLIDE:
-		if thrust_direction.x < max_speed or thrust_direction.y < max_speed or thrust_direction.z < max_speed:
-	
-			
-			# Align the Voidling forward vector to the Apparition's.
+		
+#		input_vector.x = Input.get_action_strength("ui_right") - Input.get_action_strength("ui_left")
+#		input_vector.z = Input.get_action_strength("ui_down") - Input.get_action_strength("ui_up")
 
-			if Input.is_action_pressed("move_forward"):
-				thrust_direction -= Vector3(sin(APPARITION.rotation.y), 0, cos(APPARITION.rotation.y))
-			if Input.is_action_pressed("move_back"):
-				thrust_direction += Vector3(sin(APPARITION.rotation.y), 0, cos(APPARITION.rotation.y))
-			if Input.is_action_pressed("move_left"):
-				thrust_direction -= APPARITION.transform.basis.x
-			if Input.is_action_pressed("move_right"):
-				thrust_direction += APPARITION.transform.basis.x
-			if Input.is_action_pressed("move_up"):
-				thrust_direction -= Vector3.UP
-			if Input.is_action_pressed("move_down"):
-				thrust_direction -= Vector3.DOWN
+#		var input_vector: Vector3 = Vector3.ZERO
+#		input_vector.x = Input.get_action_strength("move_right") - Input.get_action_strength("move_left")
+#		input_vector.z = Input.get_action_strength("move_back") - Input.get_action_strength("move_forward")
+#		input_vector = input_vector.normalized()
 				
-				
-			# Clamp the direction's length to 1 or less.
-			if thrust_direction.length() > 1:
-				thrust_direction = thrust_direction.normalized()
-				
+		var thrust_vector: Vector3 = Vector3.ZERO
+		
+		if Input.is_action_pressed("move_forward"):
+			thrust_vector -= Vector3(sin(APPARITION.rotation.y), 0, cos(APPARITION.rotation.y))
+		if Input.is_action_pressed("move_back"):
+			thrust_vector += Vector3(sin(APPARITION.rotation.y), 0, cos(APPARITION.rotation.y))
+		if Input.is_action_pressed("move_left"):
+			thrust_vector -= APPARITION.transform.basis.x
+		if Input.is_action_pressed("move_right"):
+			thrust_vector += APPARITION.transform.basis.x
+			
+		if Input.is_action_pressed("move_up"):
+			thrust_vector -= Vector3.UP
+		if Input.is_action_pressed("move_down"):
+			thrust_vector -= Vector3.DOWN
+
+
+		
+		if thrust_vector != Vector3.ZERO:
+			velocity += thrust_vector * thrust_power * delta_time
+			#velocity = velocity
+			#velocity = move_and_slide(velocity)
 			
 
 			
 		# Brakes for all.
-		if Input.is_action_pressed("breaks"):
+		if Input.is_action_pressed("appy_breaks"):
 			velocity *= break_power
 			
 		# Walking.
@@ -116,12 +119,7 @@ func _process(delta_time: float) -> void:
 
 
 			
-			
-		# Update and use velocity.
-		velocity += thrust_direction * thrust_power * delta_time
-		
-		if velocity.length() > max_speed:
-			velocity = velocity.normalized() * max_speed * delta_time
+
 			
 		translate(velocity)
 		Raycast()
@@ -169,13 +167,6 @@ func _input(event: InputEvent) -> void:
 				APPARITION.rotate_y(event.get_relative().x * -MouseSensitivityX) # Yaw for Voidling node.
 				APPARITION.rotate_object_local(Vector3.RIGHT, event.get_relative().y * -MouseSensitivityY) # Pitch.
 			
-#		if travel_mode == TravelMode.WALK:
-#			self.rotate_y(event.get_relative().x * -MouseSensitivityX) # Yaw.			
-#			APPARITION.rotate_object_local(Vector3.RIGHT, event.get_relative().y * -MouseSensitivityY) # Pitch.
-#
-#		if travel_mode == TravelMode.FLY:
-#			self.rotate_y(event.get_relative().x * -MouseSensitivityX) # Yaw.
-#			self.rotate_object_local(Vector3.RIGHT, event.get_relative().y * -MouseSensitivityY) # Pitch.
 	
 	
 	
