@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://Actors/Voidling/Assets/column_pm.tres" type="Material" id=1]
 [ext_resource path="res://Actors/Voidling/Assets/orbitor_pm.tres" type="Material" id=2]
@@ -11,11 +11,13 @@ extents = Vector3( 0.5, 0.5, 0.5 )
 [sub_resource type="CubeMesh" id=2]
 size = Vector3( 1, 1, 1 )
 
-[sub_resource type="SpatialMaterial" id=3]
+[sub_resource type="BoxShape" id=3]
+
+[sub_resource type="SpatialMaterial" id=4]
 vertex_color_use_as_albedo = true
 
-[sub_resource type="CubeMesh" id=4]
-material = SubResource( 3 )
+[sub_resource type="CubeMesh" id=5]
+material = SubResource( 4 )
 
 [node name="Voidling" type="KinematicBody"]
 script = ExtResource( 3 )
@@ -40,6 +42,9 @@ material/0 = ExtResource( 4 )
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0 )
 gravity_vec = Vector3( 0, 0, 0 )
 
+[node name="CollisionShape" type="CollisionShape" parent="Apparition"]
+shape = SubResource( 3 )
+
 [node name="LaserCast" type="RayCast" parent="Apparition"]
 cast_to = Vector3( 0, 0, -10 )
 
@@ -53,7 +58,7 @@ visible = false
 amount = 20
 local_coords = false
 process_material = ExtResource( 2 )
-draw_pass_1 = SubResource( 4 )
+draw_pass_1 = SubResource( 5 )
 
 [node name="Column" type="Particles" parent="Apparition"]
 cast_shadow = 0
@@ -61,7 +66,7 @@ amount = 20
 speed_scale = 0.44
 local_coords = false
 process_material = ExtResource( 1 )
-draw_pass_1 = SubResource( 4 )
+draw_pass_1 = SubResource( 5 )
 
 [node name="CameraPivot" type="Spatial" parent="Apparition"]
 transform = Transform( 1, 0, 0, 0, 0.860706, 0.509102, 0, -0.509102, 0.860706, 0, 2.78633, 2.68489 )

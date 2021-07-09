@@ -28,12 +28,18 @@ _global_script_classes=[ {
 "class": "Signpost",
 "language": "GDScript",
 "path": "res://Actors/Signpost/assets/signpost.gd"
+}, {
+"base": "KinematicBody",
+"class": "Voidling",
+"language": "GDScript",
+"path": "res://Actors/Voidling/assets/voidling.gd"
 } ]
 _global_script_class_icons={
 "Bubble": "",
 "Main": "",
 "PlayerPrefs": "",
-"Signpost": ""
+"Signpost": "",
+"Voidling": ""
 }
 
 [application]
