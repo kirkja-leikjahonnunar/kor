@@ -5,17 +5,17 @@
 [ext_resource path="res://Actors/Voidling/assets/voidling.gd" type="Script" id=3]
 [ext_resource path="res://Actors/Voidling/Assets/voidling_material.tres" type="Material" id=4]
 
-[sub_resource type="BoxShape" id=4]
+[sub_resource type="BoxShape" id=1]
 extents = Vector3( 0.5, 0.5, 0.5 )
 
-[sub_resource type="CubeMesh" id=1]
+[sub_resource type="CubeMesh" id=2]
 size = Vector3( 1, 1, 1 )
 
-[sub_resource type="SpatialMaterial" id=2]
+[sub_resource type="SpatialMaterial" id=3]
 vertex_color_use_as_albedo = true
 
-[sub_resource type="CubeMesh" id=3]
-material = SubResource( 2 )
+[sub_resource type="CubeMesh" id=4]
+material = SubResource( 3 )
 
 [node name="Voidling" type="KinematicBody"]
 script = ExtResource( 3 )
@@ -24,15 +24,16 @@ SecondaryColor = Color( 0.266667, 0.611765, 0.815686, 1 )
 
 [node name="CollisionShape" type="CollisionShape" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0 )
-shape = SubResource( 4 )
+shape = SubResource( 1 )
 
 [node name="FloorCast" type="RayCast" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0 )
+enabled = true
 cast_to = Vector3( 0, -10, 0 )
 
 [node name="Forward" type="MeshInstance" parent="."]
 transform = Transform( 0.22, 0, 0, 0, 0.22, 0, 0, 0, 0.22, 0, 1, -2 )
-mesh = SubResource( 1 )
+mesh = SubResource( 2 )
 material/0 = ExtResource( 4 )
 
 [node name="Apparition" type="Area" parent="."]
@@ -44,7 +45,7 @@ cast_to = Vector3( 0, 0, -10 )
 
 [node name="MeshInstance" type="MeshInstance" parent="Apparition"]
 transform = Transform( 1.1, 0, 0, 0, 1.1, 0, 0, 0, 1.1, 0, 0, 0 )
-mesh = SubResource( 1 )
+mesh = SubResource( 2 )
 material/0 = ExtResource( 4 )
 
 [node name="Orbitors" type="Particles" parent="Apparition"]
@@ -52,7 +53,7 @@ visible = false
 amount = 20
 local_coords = false
 process_material = ExtResource( 2 )
-draw_pass_1 = SubResource( 3 )
+draw_pass_1 = SubResource( 4 )
 
 [node name="Column" type="Particles" parent="Apparition"]
 cast_shadow = 0
@@ -60,7 +61,7 @@ amount = 20
 speed_scale = 0.44
 local_coords = false
 process_material = ExtResource( 1 )
-draw_pass_1 = SubResource( 3 )
+draw_pass_1 = SubResource( 4 )
 
 [node name="CameraPivot" type="Spatial" parent="Apparition"]
 transform = Transform( 1, 0, 0, 0, 0.860706, 0.509102, 0, -0.509102, 0.860706, 0, 2.78633, 2.68489 )
@@ -78,16 +79,16 @@ omni_range = 13.4
 [node name="SpotLight" type="SpotLight" parent="Apparition"]
 transform = Transform( 1, 0, 0, 0, 0.598856, 0.800857, 0, -0.800857, 0.598856, -0.48994, 2.99432, 1.7181 )
 
-[node name="Control" type="Control" parent="."]
+[node name="DebugUI" type="Control" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Label" type="Label" parent="Control"]
-margin_right = 185.0
-margin_bottom = 132.0
+[node name="Label" type="Label" parent="DebugUI"]
+anchor_right = 1.0
+margin_bottom = 14.0
 text = "Woot"
 __meta__ = {
 "_edit_use_anchors_": false
