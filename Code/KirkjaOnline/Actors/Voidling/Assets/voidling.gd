@@ -63,9 +63,17 @@ func _process(delta_time: float) -> void:
 		if Input.is_action_pressed("move_right"):
 			thrust_vector += APPARITION.transform.basis.x
 		
+		var jump_impulse: float = 50.0
+		var accelleration: float = 0.5
+		var is_jumping: bool = false
+		
 		if Input.is_action_just_pressed("jump"):
+			thrust_vector += Vector3.UP * jump_impulse
+			is_jumping = true	
 			print("Jump")
 			
+		thrust_vector += gravity_vector * accelleration
+		
 		if Input.is_action_just_released("jump"):
 			print("Unjump")
 
