@@ -4,5 +4,5 @@
 
 [resource]
 shader = ExtResource( 1 )
-shader_param/Color = Color( 0.717647, 0.717647, 0.717647, 1 )
+shader_param/Color = Color( 0.878431, 0.454902, 0.454902, 1 )
 shader_param/Emission = null

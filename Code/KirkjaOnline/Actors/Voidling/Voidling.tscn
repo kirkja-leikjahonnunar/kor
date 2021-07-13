@@ -21,8 +21,7 @@ material = SubResource( 4 )
 
 [node name="Voidling" type="KinematicBody"]
 script = ExtResource( 3 )
-PrimaryColor = Color( 0.941176, 0.129412, 0.470588, 1 )
-SecondaryColor = Color( 0.266667, 0.611765, 0.815686, 1 )
+JoypadLookSpeed = 4.0
 
 [node name="CollisionShape" type="CollisionShape" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0 )

@@ -32,14 +32,14 @@ environment = ExtResource( 2 )
 
 [node name="Level" type="Spatial" parent="Node3D/Void"]
 
-[node name="Area" type="KinematicBody" parent="Node3D/Void/Level"]
+[node name="Floor" type="StaticBody" parent="Node3D/Void/Level"]
 
-[node name="Floor" type="MeshInstance" parent="Node3D/Void/Level/Area"]
+[node name="MechInstance" type="MeshInstance" parent="Node3D/Void/Level/Floor"]
 transform = Transform( 88.2981, 0, 0, 0, -4.37114e-08, 1, 0, -69.0041, -3.01627e-06, 0, -1, -2.91429 )
 mesh = SubResource( 1 )
 material/0 = SubResource( 2 )
 
-[node name="CollisionShape" type="CollisionShape" parent="Node3D/Void/Level/Area"]
+[node name="CollisionShape" type="CollisionShape" parent="Node3D/Void/Level/Floor"]
 transform = Transform( 88.2981, 0, 0, 0, -4.37114e-08, 1, 0, -69.0041, -3.01627e-06, 0, -1, -2.91429 )
 shape = SubResource( 3 )
 

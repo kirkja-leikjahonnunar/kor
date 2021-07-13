@@ -1,38 +1,50 @@
 extends KinematicBody
 class_name Voidling
 
-onready var signpost_ps: PackedScene = preload("res://Actors/Signpost/Signpost.tscn")
+# Signals.
+signal attacked(damage)
+const DAMAGE: int = 25
+func attack(damage: int = DAMAGE) -> void:
+	emit_signal("attacked", damage)
+
+# Hook up the 
+onready var beacon_ps: PackedScene = preload("res://Actors/Beacon/Beacon.tscn")
+onready var FLOORCAST: RayCast = $FloorCast
+onready var APPARITION: Area = $Apparition
+onready var LASERCAST: RayCast = $Apparition/LaserCast
 
 enum TravelMode { GLIDE, WALK }
 
 # Properties.
 export var MouseSenesitivity: float = 0.01
 export var JoypadLookSpeed: float = 5.0
-
 export var PrimaryColor: Color = Color.purple
 export var SecondaryColor: Color = Color.chartreuse
 export var EmissionColor: Color = Color.black
+export var thrust_power: float = 0.3 # m/s
+export var max_speed: float = 1.0   # m/s not m/s tho :(
+export var min_speed: float = 0.01   # m/s
+export var break_power: float = 0.95 # Good enough friction.
 
 # Motion.
 export var travel_mode = TravelMode.GLIDE
 
 
-# Class member variables.
-var main: Node = null # warning-ignore:shadowed_variable
-var pronouns: String = "all / any" # warning-ignore:shadowed_variable
-var gravity_vector: Vector3 = Vector3.DOWN
+# Private member variables.
+var main: Node = null
+var pronouns: String = "all / any"
+var gravity_point: Vector3 = Vector3.ZERO
 
 
-onready var FLOORCAST: RayCast = $FloorCast
-onready var APPARITION: Area = $Apparition
-onready var LASERCAST: RayCast = $Apparition/LaserCast
+
+
 
 
 var velocity: Vector3 = Vector3.ZERO
-export var thrust_power: float = 0.3 # m/s
-export var max_speed: float = 1.0   # m/s not m/s tho :(
-export var min_speed: float = 0.01   # m/s
-export var break_power: float = 0.95 # Good enough friction.
+var jump_impulse: float = 50.0
+var gravity_force: float = 0.5
+var is_jumping: bool = false
+var gravity_vector: Vector3
 
 ######################
 # Voidling Functions #
@@ -63,19 +75,19 @@ func _process(delta_time: float) -> void:
 		if Input.is_action_pressed("move_right"):
 			thrust_vector += APPARITION.transform.basis.x
 		
-		var jump_impulse: float = 50.0
-		var accelleration: float = 0.5
-		var is_jumping: bool = false
-		
 		if Input.is_action_just_pressed("jump"):
-			thrust_vector += Vector3.UP * jump_impulse
-			is_jumping = true	
+			thrust_vector += -gravity_vector * jump_impulse
 			print("Jump")
-			
-		thrust_vector += gravity_vector * accelleration
-		
+
 		if Input.is_action_just_released("jump"):
 			print("Unjump")
+					
+		# Playing around.
+		gravity_vector.distance_to(gravity_point)
+		gravity_vector.direction_to(gravity_point)
+		gravity_vector.reflect(Vector3.UP)
+		thrust_vector += gravity_vector * gravity_force
+		
 
 		if Input.is_action_pressed("move_up"):
 			thrust_vector -= Vector3.UP
@@ -97,15 +109,15 @@ func _process(delta_time: float) -> void:
 			velocity *= break_power
 			
 			
-		
-		if Input.is_action_just_pressed("post_sign") and FLOORCAST.is_colliding():
+		# Drop Beacon.
+		if Input.is_action_just_pressed("drop_beacon") and FLOORCAST.is_colliding():
 			var collision_point: Vector3 = FLOORCAST.get_collision_point()
 			
-			var signpost: Signpost = signpost_ps.instance()
-			signpost.Initialize(PrimaryColor, SecondaryColor)
-			signpost.translation = collision_point
-			self.main.VOID.add_child(signpost)
-			print("Post sign.")
+			var beacon: Beacon = beacon_ps.instance()
+			beacon.Initialize(PrimaryColor, SecondaryColor)
+			beacon.translation = collision_point
+			self.main.VOID.add_child(beacon)
+			print("Beacon dropped.")
 
 	translate(velocity) #velocity = move_and_slide(velocity)
 	Raycast()
@@ -128,14 +140,14 @@ func _input(event: InputEvent) -> void:
 				APPARITION.rotate_y(event.get_relative().x * -MouseSenesitivity) # Yaw.
 				APPARITION.rotate_object_local(Vector3.RIGHT, event.get_relative().y * -MouseSenesitivity) # Pitch.
 				
-		
-
 			
-		
+	
 
-
-
-# Initialize.
+#---------------------------------
+# Initialize()
+# warning-ignore:shadowed_variable
+# warning-ignore:shadowed_variable
+#---------------------------------
 func Initialize(main: Node, pronouns: String):
 	self.main = main
 	self.pronouns = pronouns

@@ -15,8 +15,8 @@ var player: Spatial = null
 func Hey(message: String) -> void:
 	print(message)
 	
-func HeyUI(message: String) -> void:
-	$DebugUI.Print(message)
+#func HeyUI(message: String) -> void:
+#	DEBUGUI.Print(message)
 	
 func Reparent(node: Node, new_parent: Node):
 	node.get_parent().remove_child(node)
