@@ -1,18 +1,49 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://Actors/Planet/assets/planet.gd" type="Script" id=1]
+[ext_resource path="res://Shaders/fresnel_vs.tres" type="Shader" id=2]
 
-[sub_resource type="SphereMesh" id=1]
+[sub_resource type="SphereShape" id=1]
+radius = 3.0
+
+[sub_resource type="SphereMesh" id=2]
+radius = 3.0
+height = 6.0
+
+[sub_resource type="ShaderMaterial" id=3]
+shader = ExtResource( 2 )
+shader_param/FresnelColor = Color( 0, 0, 1, 1 )
+shader_param/Invert = false
+shader_param/FresnelPower = 0.669
+
+[sub_resource type="SphereShape" id=4]
+
+[sub_resource type="SphereMesh" id=5]
+
+[sub_resource type="ShaderMaterial" id=6]
+shader = ExtResource( 2 )
+shader_param/FresnelColor = Color( 1, 1, 1, 1 )
+shader_param/Invert = true
+shader_param/FresnelPower = 1.46
 
 [node name="Planet" type="Spatial"]
 script = ExtResource( 1 )
 
-[node name="OmniLight" type="OmniLight" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.44757, 1.94152 )
-
 [node name="Area" type="Area" parent="."]
-gravity_point = true
 
-[node name="MeshInstance" type="MeshInstance" parent="."]
-mesh = SubResource( 1 )
-material/0 = null
+[node name="Atmo" type="CollisionShape" parent="Area"]
+shape = SubResource( 1 )
+
+[node name="AtmoMesh" type="MeshInstance" parent="Area"]
+mesh = SubResource( 2 )
+material/0 = SubResource( 3 )
+
+[node name="Ground" type="CollisionShape" parent="Area"]
+shape = SubResource( 4 )
+
+[node name="GroundMesh" type="MeshInstance" parent="Area"]
+mesh = SubResource( 5 )
+material/0 = SubResource( 6 )
+
+[node name="OmniLight" type="OmniLight" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.48003, 2.74856 )

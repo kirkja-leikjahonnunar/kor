@@ -93,7 +93,7 @@ __meta__ = {
 [node name="Label" type="Label" parent="DebugUI"]
 anchor_right = 1.0
 margin_bottom = 14.0
-text = "Woot"
+text = "Still me."
 __meta__ = {
 "_edit_use_anchors_": false
 }

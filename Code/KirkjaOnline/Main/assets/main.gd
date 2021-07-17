@@ -1,5 +1,4 @@
 extends Node
-class_name Main
 
 # Preload resource assets.
 onready var voidling_ps: PackedScene = preload("res://Actors/Voidling/Voidling.tscn")
@@ -14,32 +13,19 @@ var player: Spatial = null
 # Hey.
 func Hey(message: String) -> void:
 	print(message)
-	
-#func HeyUI(message: String) -> void:
-#	DEBUGUI.Print(message)
-	
-func Reparent(node: Node, new_parent: Node):
-	node.get_parent().remove_child(node)
-	new_parent.add_child(node)
-	
-	print("Reparented to: %s, %s" % [node.get_path(), node.name])
-	
-#func AddMe(node: Node):
-#	VOID.add_child(node)
 
-###################
-# Godot Functions #
-###################
+
+#----------------
+# Godot Functions
+#---------------- 
 
 # One shot after our node is instanced.
 func _ready() -> void:
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
-	var voidling: Voidling = voidling_ps.instance()
-	voidling.Initialize(self, "Harvy / Nuts")
-	voidling.translation = Vector3(0, 2, 0)
+	var voidling: Voidling = voidling_ps.instance().Init(self, "Harvy / Nuts")
+	voidling.translation = Vector3.ZERO
 	VOID.add_child(voidling)
-	
-	
+	print("Ready")
 
 
 # [ Escape ] key.

@@ -1,8 +1,7 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://Main/assets/main.gd" type="Script" id=1]
 [ext_resource path="res://Main/assets/environment.tres" type="Environment" id=2]
-[ext_resource path="res://Actors/Bubble/Bubble.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Music/voidling.ogg" type="AudioStream" id=4]
 
 [sub_resource type="PrismMesh" id=1]
@@ -82,9 +81,6 @@ transform = Transform( 0.7597, -0.315001, -0.568885, 0.649674, 0.405249, 0.64319
 light_bake_mode = 0
 shadow_enabled = true
 shadow_color = Color( 0.0156863, 0.0666667, 0.235294, 1 )
-
-[node name="Bubble" parent="Node3D/Void" instance=ExtResource( 3 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -9.82502, 4.79921, 0 )
 
 [node name="Timer" type="Timer" parent="Node3D"]
 autostart = true

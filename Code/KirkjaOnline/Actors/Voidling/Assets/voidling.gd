@@ -29,16 +29,10 @@ export var break_power: float = 0.95 # Good enough friction.
 # Motion.
 export var travel_mode = TravelMode.GLIDE
 
-
 # Private member variables.
-var main: Node = null
+var main: Node
 var pronouns: String = "all / any"
 var gravity_point: Vector3 = Vector3.ZERO
-
-
-
-
-
 
 var velocity: Vector3 = Vector3.ZERO
 var jump_impulse: float = 50.0
@@ -46,20 +40,47 @@ var gravity_force: float = 0.5
 var is_jumping: bool = false
 var gravity_vector: Vector3
 
-######################
-# Voidling Functions #
-######################
 
-# TODO: Does this message apear anywhere like the todo list in VS?
+#------------------------------------------------------------------------------
+# Initialize()
+# warning-ignore:shadowed_variable
+# warning-ignore:shadowed_variable
+#------------------------------------------------------------------------------
+func Init(main: Node, pronouns: String) -> Voidling:
+	self.main = main
+	self.pronouns = pronouns
+	self.main.Hey("Hey Main thank's for spawning me.\nYours truley,\n- %s" % [self.pronouns])
+	
+	var material: Material = $Apparition/MeshInstance.get_surface_material(0)
+	material.set_shader_param("Color", PrimaryColor)
+	material.set_shader_param("Emission", EmissionColor)
+	
+	$Apparition/Column.process_material.set_color(SecondaryColor)
+	$Apparition/CentralLight.set_color(SecondaryColor)
+	
+	return self
 
-			
-###################
-# Godot Functions #
-###################
 
-#----------
-# Update().
-#----------
+#------------------------------------------------------------------------------
+# Racast logic.
+#------------------------------------------------------------------------------
+func Raycast() -> void:
+	if Input.is_action_just_pressed("enable_laser"):
+		LASERCAST.set_enabled(true)
+		FLOORCAST.set_enabled(true)
+	elif Input.is_action_just_released("enable_laser"):
+		LASERCAST.set_enabled(false)
+		FLOORCAST.set_enabled(false)
+	
+	if LASERCAST.is_enabled() and LASERCAST.is_colliding():
+		var other_object: Object = LASERCAST.get_collider()
+		if other_object.owner is Bubble:
+			other_object.queue_free()
+
+#------------------------------------------------------------------------------
+# Process each frame in the main game loop.
+# The time between the last frame and this one is stored in delta_time.
+#------------------------------------------------------------------------------
 func _process(delta_time: float) -> void:
 	if travel_mode == TravelMode.GLIDE:
 				
@@ -83,9 +104,9 @@ func _process(delta_time: float) -> void:
 			print("Unjump")
 					
 		# Playing around.
-		gravity_vector.distance_to(gravity_point)
-		gravity_vector.direction_to(gravity_point)
-		gravity_vector.reflect(Vector3.UP)
+		#gravity_vector.distance_to(gravity_point)
+		#gravity_vector.direction_to(gravity_point)
+		#gravity_vector.reflect(Vector3.UP)
 		thrust_vector += gravity_vector * gravity_force
 		
 
@@ -113,8 +134,8 @@ func _process(delta_time: float) -> void:
 		if Input.is_action_just_pressed("drop_beacon") and FLOORCAST.is_colliding():
 			var collision_point: Vector3 = FLOORCAST.get_collision_point()
 			
-			var beacon: Beacon = beacon_ps.instance()
-			beacon.Initialize(PrimaryColor, SecondaryColor)
+			var beacon: Beacon = beacon_ps.instance().Init(PrimaryColor, SecondaryColor)
+			#beacon.Initialize(PrimaryColor, SecondaryColor)
 			beacon.translation = collision_point
 			self.main.VOID.add_child(beacon)
 			print("Beacon dropped.")
@@ -123,9 +144,9 @@ func _process(delta_time: float) -> void:
 	Raycast()
 
 
-#-------
+#------------------------------------------------------------------------------
 # Input.
-#-------
+#------------------------------------------------------------------------------
 func _input(event: InputEvent) -> void:
 	if travel_mode == TravelMode.GLIDE:
 		
@@ -143,37 +164,8 @@ func _input(event: InputEvent) -> void:
 			
 	
 
-#---------------------------------
-# Initialize()
-# warning-ignore:shadowed_variable
-# warning-ignore:shadowed_variable
-#---------------------------------
-func Initialize(main: Node, pronouns: String):
-	self.main = main
-	self.pronouns = pronouns
-	#self.main.Hey("Hey Main thank's for spawning me.\nYours truley,\n- %s" % [self.pronouns])
-	
-	var material: Material = $Apparition/MeshInstance.get_surface_material(0)
-	material.set_shader_param("Color", PrimaryColor)
-	material.set_shader_param("Emission", EmissionColor)
-	
-	$Apparition/Column.process_material.set_color(SecondaryColor)
-	$Apparition/CentralLight.set_color(SecondaryColor)
-	
-	
-# Racast logic.
-func Raycast() -> void:
-	if Input.is_action_just_pressed("enable_laser"):
-		LASERCAST.set_enabled(true)
-		FLOORCAST.set_enabled(true)
-	elif Input.is_action_just_released("enable_laser"):
-		LASERCAST.set_enabled(false)
-		FLOORCAST.set_enabled(false)
-	
-	if LASERCAST.is_enabled() and LASERCAST.is_colliding():
-		var other_object: Object = LASERCAST.get_collider()
-		if other_object.owner is Bubble:
-			other_object.queue_free()
+
+
 
 	
 	
