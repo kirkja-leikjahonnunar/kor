@@ -7,8 +7,9 @@ const DAMAGE: int = 25
 func attack(damage: int = DAMAGE) -> void:
 	emit_signal("attacked", damage)
 
-# Hook up the 
-onready var beacon_ps: PackedScene = preload("res://Actors/Beacon/Beacon.tscn")
+# Hook up the constant resources.
+const BEACON_PS: PackedScene = preload("res://Actors/Beacon/Beacon.tscn")
+
 onready var FLOORCAST: RayCast = $FloorCast
 onready var APPARITION: Area = $Apparition
 onready var LASERCAST: RayCast = $Apparition/LaserCast
@@ -134,7 +135,7 @@ func _process(delta_time: float) -> void:
 		if Input.is_action_just_pressed("drop_beacon") and FLOORCAST.is_colliding():
 			var collision_point: Vector3 = FLOORCAST.get_collision_point()
 			
-			var beacon: Beacon = beacon_ps.instance().Init(PrimaryColor, SecondaryColor)
+			var beacon: Beacon = BEACON_PS.instance().Init(PrimaryColor, SecondaryColor)
 			#beacon.Initialize(PrimaryColor, SecondaryColor)
 			beacon.translation = collision_point
 			self.main.VOID.add_child(beacon)

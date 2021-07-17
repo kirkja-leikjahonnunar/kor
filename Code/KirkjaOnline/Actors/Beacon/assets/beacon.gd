@@ -12,8 +12,8 @@ func Init(primary: Color, secondary: Color) -> Beacon:
 	material.set_shader_param("Color", secondary)
 	
 	var animations = $AnimationPlayer.get_animation_list()
-	var rand = rand_range(0, animations.size())
-	$AnimationPlayer.play(animations[rand])
+	var rand_anim = rand_range(0, animations.size())
+	$AnimationPlayer.play(animations[rand_anim])
 	return self
 
 

@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://Actors/Beacon/assets/beacon.gd" type="Script" id=1]
 [ext_resource path="res://Actors/Signpost/assets/secondary_m.tres" type="Material" id=2]
@@ -20,7 +20,8 @@ is_hemisphere = true
 
 [sub_resource type="Animation" id=4]
 resource_name = "grow"
-length = 0.5
+length = 0.3
+loop = true
 tracks/0/type = "value"
 tracks/0/path = NodePath(".:scale")
 tracks/0/interp = 1
@@ -36,6 +37,8 @@ tracks/0/keys = {
 
 [sub_resource type="Animation" id=5]
 resource_name = "jump_flip"
+length = 0.9
+loop = true
 tracks/0/type = "value"
 tracks/0/path = NodePath("Pivot/Post:transform")
 tracks/0/interp = 1
@@ -49,41 +52,13 @@ tracks/0/keys = {
 "values": [ Transform( 0.135802, 0, 0, 0, 0.135802, 0, 0, 0, 0.135802, 0, 0.141727, 0 ), Transform( 0.661026, 0, 0, 0, 0.888436, 0, 0, 0, 0.661026, 0, 0.89723, 0 ), Transform( 0.394097, 0.36051, 0, -0.276606, 0.51364, 0, 0, 0, 0.481481, -0.117157, 2.19559, 0 ), Transform( -0.319589, 0.570047, 0, -0.46944, -0.38808, 0, 0, 0, 0.567901, -0.148768, 3.42165, 0 ), Transform( -0.546075, -0.344844, 0, 0.360467, -0.522408, 0, 0, 0, 0.65432, 0.251696, 3.47836, 0 ), Transform( 0.598356, -0.325872, 0, 0.383548, 0.508378, 0, 0, 0, 0.710745, -0.0533505, 2.25584, 0 ), Transform( 0.76711, -0.00992415, 0, 0.00700193, 0.581663, 0, 0, 0, 0.76717, 0.0363264, 0.586616, 0 ), Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.68898, 0 ) ]
 }
 
-[sub_resource type="Animation" id=6]
-resource_name = "wipped"
-tracks/0/type = "value"
-tracks/0/path = NodePath("Pivot/Post:translation")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0, 0.4, 0.6, 0.9, 1 ),
-"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
-"update": 0,
-"values": [ Vector3( 0, 0.89916, 0 ), Vector3( 0, 1.64151, 0 ), Vector3( 0, 1.49949, 0 ), Vector3( 0, 1.02946, 0 ), Vector3( 0, 1.02946, 0 ) ]
-}
-tracks/1/type = "value"
-tracks/1/path = NodePath("Pivot/Post:scale")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/keys = {
-"times": PoolRealArray( 0, 0.4, 0.5, 0.7, 1 ),
-"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
-"update": 0,
-"values": [ Vector3( 0.267102, 0.875481, 0.267102 ), Vector3( 3.23555, 1.6427, 3.23555 ), Vector3( 1.89462, 1.41833, 1.89462 ), Vector3( 1, 1, 1 ), Vector3( 1, 1, 1 ) ]
-}
-
 [node name="Beacon" type="Spatial"]
-transform = Transform( 0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0, 0 )
 script = ExtResource( 1 )
 
 [node name="Pivot" type="Spatial" parent="."]
 
 [node name="Post" type="MeshInstance" parent="Pivot"]
-transform = Transform( 0.267102, 0, 0, 0, 0.875481, 0, 0, 0, 0.267102, 0, 0.89916, 0 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.68898, 0 )
 mesh = SubResource( 1 )
 material/0 = ExtResource( 3 )
 
@@ -108,6 +83,5 @@ autostart = true
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 anims/grow = SubResource( 4 )
 anims/jump_flip = SubResource( 5 )
-anims/wipped = SubResource( 6 )
 
 [connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]
