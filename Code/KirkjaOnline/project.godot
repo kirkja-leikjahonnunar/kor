@@ -20,6 +20,11 @@ _global_script_classes=[ {
 "path": "res://Actors/Bubble/assets/bubble.gd"
 }, {
 "base": "Spatial",
+"class": "Maze",
+"language": "GDScript",
+"path": "res://Actors/Maze/assets/maze.gd"
+}, {
+"base": "Spatial",
 "class": "Planet",
 "language": "GDScript",
 "path": "res://Actors/Planet/assets/planet.gd"
@@ -42,6 +47,7 @@ _global_script_classes=[ {
 _global_script_class_icons={
 "Beacon": "",
 "Bubble": "",
+"Maze": "",
 "Planet": "",
 "PlayerPrefs": "",
 "Signpost": "",
