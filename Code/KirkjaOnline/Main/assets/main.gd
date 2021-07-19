@@ -15,11 +15,9 @@ func Hey(message: String) -> void:
 	print(message)
 
 
-#----------------
-# Godot Functions
-#---------------- 
-
-# One shot after our node is instanced.
+#------------------------------------------------------------------------------
+# One shot once the instance has been created.
+#------------------------------------------------------------------------------
 func _ready() -> void:
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	var voidling: Voidling = voidling_ps.instance().Init(self, "Harvy / Nuts")
@@ -28,7 +26,9 @@ func _ready() -> void:
 	print("Ready")
 
 
+#------------------------------------------------------------------------------
 # [ Escape ] key.
+#------------------------------------------------------------------------------
 func _unhandled_input(event):
 	if event is InputEventKey:
 		if event.pressed and event.scancode == KEY_ESCAPE:
@@ -38,7 +38,9 @@ func _unhandled_input(event):
 			get_tree().quit()
 
 
+#------------------------------------------------------------------------------
 # Spawn bubble.
+#------------------------------------------------------------------------------
 func _on_Timer_timeout() -> void:
 	var bubble = bubble_ps.instance()
 	
