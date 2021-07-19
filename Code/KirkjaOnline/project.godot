@@ -35,6 +35,11 @@ _global_script_classes=[ {
 "path": "res://Experimental/PlayerPrefs.gd"
 }, {
 "base": "Spatial",
+"class": "Room",
+"language": "GDScript",
+"path": "res://Actors/Maze/assets/room.gd"
+}, {
+"base": "Spatial",
 "class": "Signpost",
 "language": "GDScript",
 "path": "res://Actors/Signpost/assets/signpost.gd"
@@ -50,6 +55,7 @@ _global_script_class_icons={
 "Maze": "",
 "Planet": "",
 "PlayerPrefs": "",
+"Room": "",
 "Signpost": "",
 "Voidling": ""
 }

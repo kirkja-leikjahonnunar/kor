@@ -1,14 +1,8 @@
 extends Spatial
 class_name Maze
 
-# Struct-like.
-class Cell:
-	var x: int
-	var y: int
-	var visited: bool = false
-	var neighbours: Array = []
+const ROOM_PS: PackedScene = preload("res://Actors/Maze/assets/Room.tscn")
 
-		
 export var ColumnCount: int = 5
 export var RowCount: int = 5
 
@@ -26,44 +20,55 @@ func _ready():
 func Init(maze_width: int, maze_height: int) -> void:
 
 	# Single array aproach.
-	var cells: Array = [] # Access the array thusly: cells[y * maze_width + x]
+	var rooms: Array = [] # Access the array thusly: rooms[y * maze_width + x]
+	var visited: Array = []
 	var current_x: int = 0
 	var current_y: int = 0
 	
 	var starting_x: int = randi() % maze_width # 0 - 4 inclusive.
 	var starting_y: int = randi() % maze_height # 0 - 4 inclusive.
 	
+	#-----------------------------------
 	# Fill the array with default Cells.
+	#-----------------------------------
 	for y in maze_height:
 		for x in maze_width:
-			var cell = Cell.new()
-			cell.x = x
-			cell.y = y
-			cell.visited = false
-			cells.append(cell)
+			var room: Room = ROOM_PS.instance()
+			room.x = x
+			room.y = y
+			room.visited = false
+			room.translation = Vector3(x, 0, y)
+			rooms.append(room)
+			add_child(room)
 			
-	print(cells.size())
+	print(rooms.size())
 	
-	
-	# Find all neighbours to a particular cell.
-	for cell in cells:
-		
-		# Left Neighbour?
-		if cell.x - 1 >= 0:
-			cell.neighbours.append(cells[(cell.y) * maze_width + cell.x - 1])
-		
-		# Right Neighbour?
-		if cell.x + 1 < maze_width:
-			cell.neighbours.append(cells[(cell.y) * maze_width + cell.x + 1])
+	#------------------------------------------
+	# Find all neighbours to a particular room.
+	#------------------------------------------
+	for room in rooms:
+		if room is Room: # Cast to Cell.
 			
-		# Up Neighbour?
-		if cell.y - 1 >= 0:
-			cell.neighbours.append(cells[(cell.y - 1) * maze_width + cell.x])
+			if room.x - 1 >= 0: # Look left.
+				room.AddNeighbour(rooms[(room.y) * maze_width + room.x - 1])
+
+			if room.x + 1 < maze_width: # Look right.
+				room.AddNeighbour(rooms[(room.y) * maze_width + room.x + 1])
+
+			if room.y - 1 >= 0: # Look up.
+				room.AddNeighbour(rooms[(room.y - 1) * maze_width + room.x])
+
+			if room.y + 1 < maze_height: # Look down.
+				room.AddNeighbour(rooms[(room.y + 1) * maze_width + room.x])
+
+			print(room.neighbours.size())
+
+	#-------------------
+	# Pathfinding Logic.
+	#-------------------
+	current_x = 0
+	current_y = 0
 	
-		# Down Neighbour?
-		if cell.y + 1 < maze_height:
-			cell.neighbours.append(cells[(cell.y + 1) * maze_width + cell.x])
-	
-		print(cell.neighbours.size())
-	
+#	for i in rooms:
+#		rooms[i]
 	
