@@ -69,6 +69,8 @@ func Init(maze_width: int, maze_height: int) -> void:
 	current_x = 0
 	current_y = 0
 	
-#	for i in rooms:
-#		rooms[i]
+	# TODO: Here tomorrow.
+	for room in rooms:
+		if room is Room:
+			room.neighbours[0].Visited()
 	
