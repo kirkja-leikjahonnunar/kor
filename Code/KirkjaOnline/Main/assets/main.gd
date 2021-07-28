@@ -1,9 +1,9 @@
 extends Node
 
 # Preload resource assets.
-onready var voidling_ps: PackedScene = preload("res://Actors/Voidling/Voidling.tscn")
-onready var sign_ps: PackedScene = preload("res://Actors/Signpost/Signpost.tscn")
-onready var bubble_ps: PackedScene = preload("res://Actors/Bubble/Bubble.tscn")
+const voidling_ps: PackedScene = preload("res://Actors/Voidling/Voidling.tscn")
+const sign_ps: PackedScene = preload("res://Actors/Signpost/Signpost.tscn")
+const bubble_ps: PackedScene = preload("res://Actors/Bubble/Bubble.tscn")
 
 # Node refrences.
 onready var VOID: Spatial = $Node3D/Void

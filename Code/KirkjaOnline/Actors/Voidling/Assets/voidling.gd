@@ -30,27 +30,28 @@ export var break_power: float = 0.95 # Good enough friction.
 # Motion.
 export var travel_mode = TravelMode.GLIDE
 
-# Private member variables.
-var main: Node
-var pronouns: String = "all / any"
-var gravity_point: Vector3 = Vector3.ZERO
-
 var velocity: Vector3 = Vector3.ZERO
+var gravity_multiplier: float = 0.5
+
 var jump_impulse: float = 50.0
-var gravity_force: float = 0.5
 var is_jumping: bool = false
-var gravity_vector: Vector3
+
+
+
+# Init() variables.
+var my_main: Node
+var my_planet: Planet
+var my_pronouns: String = "all / any"
+#var gravity_point: Vector3 = Vector3.ZERO
 
 
 #------------------------------------------------------------------------------
 # Initialize()
-# warning-ignore:shadowed_variable
-# warning-ignore:shadowed_variable
 #------------------------------------------------------------------------------
-func Init(main: Node, pronouns: String) -> Voidling:
-	self.main = main
-	self.pronouns = pronouns
-	self.main.Hey("Hey Main thank's for spawning me.\nYours truley,\n- %s" % [self.pronouns])
+func Init(main: Node, planet: Planet, pronouns: String) -> Voidling:
+	my_main = main
+	my_pronouns = pronouns
+	my_main.Hey("Hey Main thank's for spawning me.\nYours truley,\n- %s" % [self.pronouns])
 	
 	var material: Material = $Apparition/MeshInstance.get_surface_material(0)
 	material.set_shader_param("Color", PrimaryColor)
@@ -97,18 +98,24 @@ func _process(delta_time: float) -> void:
 		if Input.is_action_pressed("move_right"):
 			thrust_vector += APPARITION.transform.basis.x
 		
-		if Input.is_action_just_pressed("jump"):
-			thrust_vector += -gravity_vector * jump_impulse
-			print("Jump")
+		
+		
+		
+#		if Input.is_action_just_pressed("jump"):
+#			thrust_vector += -gravity_vector * jump_impulse
+#			print("Jump")
 
 		if Input.is_action_just_released("jump"):
 			print("Unjump")
 					
 		# Playing around.
+		var distance_to_planet: float = my_planet.translation.distance_to(self.translation)
+		print(distance_to_planet)
+		
 		#gravity_vector.distance_to(gravity_point)
 		#gravity_vector.direction_to(gravity_point)
 		#gravity_vector.reflect(Vector3.UP)
-		thrust_vector += gravity_vector * gravity_force
+		#thrust_vector += gravity_vector * (distance_to_planet * gravity_multiplier)
 		
 
 		if Input.is_action_pressed("move_up"):

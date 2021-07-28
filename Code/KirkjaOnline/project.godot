@@ -19,10 +19,25 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Actors/Bubble/assets/bubble.gd"
 }, {
+"base": "Control",
+"class": "Lobby",
+"language": "GDScript",
+"path": "res://Experimental/Net/Lobby.gd"
+}, {
 "base": "Spatial",
 "class": "Maze",
 "language": "GDScript",
 "path": "res://Actors/Maze/assets/maze.gd"
+}, {
+"base": "Spatial",
+"class": "NetGame",
+"language": "GDScript",
+"path": "res://Experimental/Net/NetGame.gd"
+}, {
+"base": "KinematicBody",
+"class": "NetPlayer",
+"language": "GDScript",
+"path": "res://Experimental/Net/NetPlayer.gd"
 }, {
 "base": "Spatial",
 "class": "Planet",
@@ -52,7 +67,10 @@ _global_script_classes=[ {
 _global_script_class_icons={
 "Beacon": "",
 "Bubble": "",
+"Lobby": "",
 "Maze": "",
+"NetGame": "",
+"NetPlayer": "",
 "Planet": "",
 "PlayerPrefs": "",
 "Room": "",
@@ -63,7 +81,7 @@ _global_script_class_icons={
 [application]
 
 config/name="KirkjaOnline"
-run/main_scene="res://Main/Main.tscn"
+run/main_scene="res://Experimental/Net/Lobby.tscn"
 config/icon="res://Main/icon.png"
 
 [input]
@@ -177,3 +195,4 @@ common/enable_pause_aware_picking=true
 [rendering]
 
 quality/filters/msaa=4
+environment/default_environment="res://environment.tres"
