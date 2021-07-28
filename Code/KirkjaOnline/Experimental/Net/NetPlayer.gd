@@ -6,10 +6,9 @@ var speed: float = 5.0
 var direction: Vector3 = Vector3.ZERO
 
 
-func Init(id: int) -> NetPlayer:
-	my_id = id
-	return self
-
+remote func SetPosition(position):
+	global_transform.origin = position
+	
 
 func _physics_process(delta):
 	direction = Vector3.ZERO
@@ -21,5 +20,9 @@ func _physics_process(delta):
 	
 	direction = direction.normalized()
 	
-	if is_network_master():
-		move_and_slide(direction * speed, Vector3.UP)
+	if direction != Vector3():
+		if is_network_master():		
+			move_and_slide(direction * speed, Vector3.UP)
+			
+	# Remote Procedural Call
+	rpc_unreliable("SetPosition", global_transform.origin)

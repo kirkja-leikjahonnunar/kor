@@ -84,6 +84,10 @@ config/name="KirkjaOnline"
 run/main_scene="res://Experimental/Net/Lobby.tscn"
 config/icon="res://Main/icon.png"
 
+[autoload]
+
+Globals="*res://Experimental/Net/Globals.gd"
+
 [input]
 
 ui_end={

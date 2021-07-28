@@ -35,7 +35,7 @@ shadow_enabled = true
 environment = SubResource( 3 )
 
 [node name="PlayerPos1" type="Position3D" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.36395, 0.372651, 0 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.36395, 1.05986, 0 )
 
 [node name="PlayerPos2" type="Position3D" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.54755, 0.372651, 0 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.54755, 1.05986, 0 )

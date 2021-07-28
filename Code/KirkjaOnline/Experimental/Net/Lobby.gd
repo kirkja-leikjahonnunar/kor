@@ -1,7 +1,7 @@
 extends Control
 class_name Lobby
 
-var player_id: int = -1
+#var current_id: int = -1
 
 #------------------------------------------------------------------------------
 # Ready()
@@ -33,7 +33,10 @@ func _on_JoinButton_pressed() -> void:
 # PlayerConnected()
 #------------------------------------------------------------------------------
 func PlayerConnected(id: int) -> void:
-	print("Player %s connected." % player_id)
-	var game = preload("res://Experimental/Net/NetGame.tscn").instance().Init(id)
+	Globals.player_id = id # Store for next time.
+	print("Player %s connected." % id)
+	
+	var game = preload("res://Experimental/Net/NetGame.tscn").instance()
 	get_tree().get_root().add_child(game) # Add game as a child of the Lobby.
+	
 	self.hide()
