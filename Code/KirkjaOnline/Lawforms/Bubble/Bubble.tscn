@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=2]
 
-[ext_resource path="res://Actors/Bubble/assets/bubble.gd" type="Script" id=1]
+[ext_resource path="res://Lawforms/Bubble/assets/bubble.gd" type="Script" id=1]
 
 [sub_resource type="SphereMesh" id=1]
 

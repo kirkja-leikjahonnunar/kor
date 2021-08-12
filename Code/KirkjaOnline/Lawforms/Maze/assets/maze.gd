@@ -1,7 +1,7 @@
 extends Spatial
 class_name Maze
 
-const ROOM_PS: PackedScene = preload("res://Actors/Maze/assets/Room.tscn")
+const ROOM_PS: PackedScene = preload("res://Lawforms/Maze/assets/Room.tscn")
 
 export var ColumnCount: int = 5
 export var RowCount: int = 5

@@ -8,7 +8,7 @@ func attack(damage: int = DAMAGE) -> void:
 	emit_signal("attacked", damage)
 
 # Hook up the constant resources.
-const BEACON_PS: PackedScene = preload("res://Actors/Beacon/Beacon.tscn")
+const BEACON_PS: PackedScene = preload("res://Lawforms/Beacon/Beacon.tscn")
 
 onready var FLOORCAST: RayCast = $FloorCast
 onready var APPARITION: Area = $Apparition
@@ -36,15 +36,10 @@ var gravity_multiplier: float = 0.5
 var jump_impulse: float = 50.0
 var is_jumping: bool = false
 
-
-
-# Init() variables.
 var my_main: Node
 var my_planet: Planet
 var my_pronouns: String = "all / any"
-#var gravity_point: Vector3 = Vector3.ZERO
-
-
+	
 #------------------------------------------------------------------------------
 # Initialize()
 #------------------------------------------------------------------------------

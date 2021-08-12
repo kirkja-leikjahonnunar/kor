@@ -12,12 +12,12 @@ _global_script_classes=[ {
 "base": "Spatial",
 "class": "Beacon",
 "language": "GDScript",
-"path": "res://Actors/Beacon/assets/beacon.gd"
+"path": "res://Lawforms/Beacon/assets/beacon.gd"
 }, {
 "base": "Spatial",
 "class": "Bubble",
 "language": "GDScript",
-"path": "res://Actors/Bubble/assets/bubble.gd"
+"path": "res://Lawforms/Bubble/assets/bubble.gd"
 }, {
 "base": "Control",
 "class": "Lobby",
@@ -27,7 +27,7 @@ _global_script_classes=[ {
 "base": "Spatial",
 "class": "Maze",
 "language": "GDScript",
-"path": "res://Actors/Maze/assets/maze.gd"
+"path": "res://Lawforms/Maze/assets/maze.gd"
 }, {
 "base": "Spatial",
 "class": "NetGame",
@@ -42,7 +42,7 @@ _global_script_classes=[ {
 "base": "Spatial",
 "class": "Planet",
 "language": "GDScript",
-"path": "res://Actors/Planet/assets/planet.gd"
+"path": "res://Lawforms/Planet/assets/planet.gd"
 }, {
 "base": "Reference",
 "class": "PlayerPrefs",
@@ -52,17 +52,17 @@ _global_script_classes=[ {
 "base": "Spatial",
 "class": "Room",
 "language": "GDScript",
-"path": "res://Actors/Maze/assets/room.gd"
+"path": "res://Lawforms/Maze/assets/room.gd"
 }, {
 "base": "Spatial",
 "class": "Signpost",
 "language": "GDScript",
-"path": "res://Actors/Signpost/assets/signpost.gd"
+"path": "res://Lawforms/Signpost/assets/signpost.gd"
 }, {
 "base": "KinematicBody",
 "class": "Voidling",
 "language": "GDScript",
-"path": "res://Actors/Voidling/assets/voidling.gd"
+"path": "res://Lawforms/Voidling/assets/voidling.gd"
 } ]
 _global_script_class_icons={
 "Beacon": "",
@@ -81,7 +81,7 @@ _global_script_class_icons={
 [application]
 
 config/name="KirkjaOnline"
-run/main_scene="res://Experimental/Net/Lobby.tscn"
+run/main_scene="res://Main/Main.tscn"
 config/icon="res://Main/icon.png"
 
 [autoload]

@@ -1,8 +1,8 @@
 [gd_scene load_steps=8 format=2]
 
-[ext_resource path="res://Actors/Signpost/assets/signpost.gd" type="Script" id=1]
-[ext_resource path="res://Actors/Signpost/assets/secondary_m.tres" type="Material" id=2]
-[ext_resource path="res://Actors/Signpost/assets/primary_m.tres" type="Material" id=3]
+[ext_resource path="res://Lawforms/Signpost/assets/signpost.gd" type="Script" id=1]
+[ext_resource path="res://Lawforms/Signpost/assets/secondary_m.tres" type="Material" id=2]
+[ext_resource path="res://Lawforms/Signpost/assets/primary_m.tres" type="Material" id=3]
 
 [sub_resource type="CylinderMesh" id=1]
 top_radius = 0.25
