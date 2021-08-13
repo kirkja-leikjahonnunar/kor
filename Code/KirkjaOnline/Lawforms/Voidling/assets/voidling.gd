@@ -7,9 +7,10 @@ const DAMAGE: int = 25
 func attack(damage: int = DAMAGE) -> void:
 	emit_signal("attacked", damage)
 
-# Hook up the constant resources.
+# Resources.
 const BEACON_PS: PackedScene = preload("res://Lawforms/Beacon/Beacon.tscn")
 
+# Nodes.
 onready var FLOORCAST: RayCast = $FloorCast
 onready var APPARITION: Area = $Apparition
 onready var LASERCAST: RayCast = $Apparition/LaserCast
@@ -31,7 +32,7 @@ export var break_power: float = 0.95 # Good enough friction.
 export var travel_mode = TravelMode.GLIDE
 
 var velocity: Vector3 = Vector3.ZERO
-var gravity_multiplier: float = 0.5
+var gravity_multiplier: float = 2.0
 
 var jump_impulse: float = 50.0
 var is_jumping: bool = false
@@ -45,8 +46,9 @@ var my_pronouns: String = "all / any"
 #------------------------------------------------------------------------------
 func Init(main: Node, planet: Planet, pronouns: String) -> Voidling:
 	my_main = main
+	my_planet = planet
 	my_pronouns = pronouns
-	my_main.Hey("Hey Main thank's for spawning me.\nYours truley,\n- %s" % [self.pronouns])
+	my_main.Hey("Hey Main thank's for spawning me.\nYours truley,\n- %s" % [self.my_pronouns])
 	
 	var material: Material = $Apparition/MeshInstance.get_surface_material(0)
 	material.set_shader_param("Color", PrimaryColor)
@@ -92,46 +94,49 @@ func _process(delta_time: float) -> void:
 			thrust_vector -= APPARITION.transform.basis.x
 		if Input.is_action_pressed("move_right"):
 			thrust_vector += APPARITION.transform.basis.x
+		if Input.is_action_pressed("move_up"):
+			thrust_vector -= Vector3.UP
+		if Input.is_action_pressed("move_down"):
+			thrust_vector -= Vector3.DOWN
 		
-		
-		
-		
-#		if Input.is_action_just_pressed("jump"):
-#			thrust_vector += -gravity_vector * jump_impulse
-#			print("Jump")
 
-		if Input.is_action_just_released("jump"):
-			print("Unjump")
+		var gravity_vector: Vector3 = translation.direction_to(my_planet.translation)
+
+		# Smoosh the thrust and gravity together.
+		velocity += thrust_vector * thrust_power
+		velocity += gravity_vector * gravity_multiplier
+		
+
 					
 		# Playing around.
-		var distance_to_planet: float = my_planet.translation.distance_to(self.translation)
-		print(distance_to_planet)
+		#var distance_to_planet: float = my_planet.translation.distance_to(self.translation)
+		#print(distance_to_planet)
+		
+		
 		
 		#gravity_vector.distance_to(gravity_point)
 		#gravity_vector.direction_to(gravity_point)
 		#gravity_vector.reflect(Vector3.UP)
 		#thrust_vector += gravity_vector * (distance_to_planet * gravity_multiplier)
 		
+		
+#		if Input.is_action_just_pressed("jump"):
+#			thrust_vector += -gravity_vector * jump_impulse
+#			print("Jump")
 
-		if Input.is_action_pressed("move_up"):
-			thrust_vector -= Vector3.UP
-		if Input.is_action_pressed("move_down"):
-			thrust_vector -= Vector3.DOWN
+#		if Input.is_action_just_released("jump"):
+#			print("Unjump")
+
 
 		# The gamepad bit.
 		APPARITION.rotate_y(-(Input.get_action_strength("look_right") - Input.get_action_strength("look_left")) * JoypadLookSpeed * delta_time) # Yaw.
 		APPARITION.rotate_object_local(Vector3.RIGHT, -(Input.get_action_strength("look_down") - Input.get_action_strength("look_up")) * JoypadLookSpeed * delta_time) # Pitch.
 
-		# Any thrusting going on?
-		if thrust_vector != Vector3.ZERO:
-			velocity += thrust_vector * thrust_power * delta_time
-			
-			
+
 			
 		# Brakes for all.
 		if Input.is_action_pressed("appy_breaks"):
 			velocity *= break_power
-			
 			
 		# Drop Beacon.
 		if Input.is_action_just_pressed("drop_beacon") and FLOORCAST.is_colliding():
@@ -143,7 +148,8 @@ func _process(delta_time: float) -> void:
 			self.main.VOID.add_child(beacon)
 			print("Beacon dropped.")
 
-	translate(velocity) #velocity = move_and_slide(velocity)
+	move_and_slide(velocity)
+	#translate(velocity) #velocity = move_and_slide(velocity)
 	Raycast()
 
 
@@ -155,9 +161,11 @@ func _input(event: InputEvent) -> void:
 		
 		# The mouse bit.
 		if event is InputEventMouseMotion:
-			if Input.is_action_pressed("move_forward") or Input.is_action_pressed("move_back") or \
-			Input.is_action_pressed("move_left") or Input.is_action_pressed("move_right") or \
-			Input.is_action_pressed("enable_steering"):
+			if Input.is_action_pressed("move_forward") \
+			or Input.is_action_pressed("move_back") \
+			or Input.is_action_pressed("move_left") \
+			or Input.is_action_pressed("move_right") \
+			or Input.is_action_pressed("enable_steering"):
 				self.rotate_y(event.get_relative().x * -MouseSenesitivity) # Yaw.
 				APPARITION.rotate_object_local(Vector3.RIGHT, event.get_relative().y * -MouseSenesitivity) # Pitch.
 			else:

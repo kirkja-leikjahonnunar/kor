@@ -35,6 +35,7 @@ script = ExtResource( 1 )
 shape = SubResource( 1 )
 
 [node name="AtmoMesh" type="MeshInstance" parent="Area"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0168991, -0.0303459, -0.015954 )
 mesh = SubResource( 2 )
 material/0 = SubResource( 3 )
 

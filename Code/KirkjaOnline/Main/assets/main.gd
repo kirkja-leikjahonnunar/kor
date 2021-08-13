@@ -1,14 +1,11 @@
 extends Node
 
-# Preload resource assets.
-const voidling_ps: PackedScene = preload("res://Lawforms/Voidling/Voidling.tscn")
-const sign_ps: PackedScene = preload("res://Lawforms/Signpost/Signpost.tscn")
+# Resources.
+const VOIDLING_PS: PackedScene = preload("res://Lawforms/Voidling/Voidling.tscn")
 const bubble_ps: PackedScene = preload("res://Lawforms/Bubble/Bubble.tscn")
 
-# Node refrences.
+# Nodes.
 onready var VOID: Spatial = $Node3D/Void
-
-var player: Spatial = null
 
 # Hey.
 func Hey(message: String) -> void:
@@ -20,14 +17,14 @@ func Hey(message: String) -> void:
 #------------------------------------------------------------------------------
 func _ready() -> void:
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
-	var voidling: Voidling = voidling_ps.instance().Init(self, "Harvy / Nuts")
+	var voidling: Voidling = VOIDLING_PS.instance().Init(self, $WorldEnvironment/Planet, "Harvy / Nuts")
 	voidling.translation = Vector3.ZERO
 	VOID.add_child(voidling)
 	print("Ready")
 
 
 #------------------------------------------------------------------------------
-# [ Escape ] key.
+# [ Escape ] key. Quit game.
 #------------------------------------------------------------------------------
 func _unhandled_input(event):
 	if event is InputEventKey:
