@@ -23,16 +23,18 @@ export var JoypadLookSpeed: float = 5.0
 export var PrimaryColor: Color = Color.purple
 export var SecondaryColor: Color = Color.chartreuse
 export var EmissionColor: Color = Color.black
+
 export var thrust_power: float = 0.3 # m/s
 export var max_speed: float = 1.0   # m/s not m/s tho :(
 export var min_speed: float = 0.01   # m/s
 export var break_power: float = 0.95 # Good enough friction.
+export var gravity_multiplier: float = 0.05
 
 # Motion.
 export var travel_mode = TravelMode.GLIDE
 
 var velocity: Vector3 = Vector3.ZERO
-var gravity_multiplier: float = 2.0
+
 
 var jump_impulse: float = 50.0
 var is_jumping: bool = false

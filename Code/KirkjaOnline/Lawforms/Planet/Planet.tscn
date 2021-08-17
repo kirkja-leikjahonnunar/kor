@@ -12,7 +12,7 @@ height = 6.0
 
 [sub_resource type="ShaderMaterial" id=3]
 shader = ExtResource( 2 )
-shader_param/FresnelColor = Color( 0, 0, 1, 1 )
+shader_param/FresnelColor = Color( 0.211765, 0.298039, 0.705882, 1 )
 shader_param/Invert = false
 shader_param/FresnelPower = 0.669
 
@@ -29,22 +29,24 @@ shader_param/FresnelPower = 1.46
 [node name="Planet" type="Spatial"]
 script = ExtResource( 1 )
 
-[node name="Area" type="Area" parent="."]
+[node name="OmniLight" type="OmniLight" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.48003, 2.74856 )
 
-[node name="Atmo" type="CollisionShape" parent="Area"]
+[node name="Atmo" type="StaticBody" parent="."]
+
+[node name="AtmoBounds" type="CollisionShape" parent="Atmo"]
 shape = SubResource( 1 )
 
-[node name="AtmoMesh" type="MeshInstance" parent="Area"]
+[node name="AtmoMesh" type="MeshInstance" parent="Atmo"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0168991, -0.0303459, -0.015954 )
 mesh = SubResource( 2 )
 material/0 = SubResource( 3 )
 
-[node name="Ground" type="CollisionShape" parent="Area"]
+[node name="Ground" type="StaticBody" parent="."]
+
+[node name="GroundBounds" type="CollisionShape" parent="Ground"]
 shape = SubResource( 4 )
 
-[node name="GroundMesh" type="MeshInstance" parent="Area"]
+[node name="GroundMesh" type="MeshInstance" parent="Ground"]
 mesh = SubResource( 5 )
 material/0 = SubResource( 6 )
-
-[node name="OmniLight" type="OmniLight" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.48003, 2.74856 )

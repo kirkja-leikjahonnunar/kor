@@ -28,6 +28,13 @@ environment = ExtResource( 2 )
 
 [node name="Planet" parent="WorldEnvironment" instance=ExtResource( 3 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 20.9418, 9.48446, 4.51093 )
+atmo_color = Color( 0.705882, 0.211765, 0.501961, 1 )
+ground_color = Color( 1, 1, 1, 1 )
+
+[node name="Planet2" parent="WorldEnvironment" instance=ExtResource( 3 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 41.8773, 9.48446, 23.7262 )
+atmo_color = Color( 0.705882, 0.211765, 0.501961, 1 )
+ground_color = Color( 1, 1, 1, 1 )
 
 [node name="Node3D" type="Spatial" parent="."]
 
