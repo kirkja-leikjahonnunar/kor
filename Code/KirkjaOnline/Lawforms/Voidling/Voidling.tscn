@@ -103,3 +103,5 @@ text = "Still me."
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[connection signal="area_entered" from="Apparition" to="." method="_on_Apparition_area_entered"]

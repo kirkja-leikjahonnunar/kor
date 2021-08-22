@@ -1,25 +1,38 @@
+tool
 extends Spatial
 class_name Planet
 
 # Nodes.
-onready var ATMO: StaticBody = $Atmo
+onready var ATMO: Area = $Atmo
 onready var ATMO_MESH: MeshInstance = $Atmo/AtmoMesh
-
 onready var GROUND: StaticBody = $Ground
 onready var GROUND_MESH: MeshInstance = $Ground/GroundMesh
 
 # Properties.
-export var atmo_radius: float = 2
-export var atmo_color: Color = Color.white
+export var atmo_radius: float = 4 setget set_atmo_radius
+export var atmo_color: Color = Color.blue setget set_atmo_color
+export var ground_radius: float = 2 setget set_ground_radius
+export var ground_color: Color = Color.white setget set_ground_color
 
-export var ground_radius: float = 3
-export var ground_color: Color = Color.blue
+func set_atmo_radius(value):
+	atmo_radius = value
+	$Atmo.scale = Vector3(atmo_radius, atmo_radius, atmo_radius)
+	
+func set_atmo_color(value):
+	atmo_color = value
+	$Atmo/AtmoMesh.get_surface_material(0).set_shader_param("FresnelColor", atmo_color)
+	
+func set_ground_radius(value):
+	ground_radius = value
+	$Ground.scale = Vector3(ground_radius, ground_radius, ground_radius)
+	
+func set_ground_color(value):
+	ground_color = value
+	$Ground/GroundMesh.get_surface_material(0).set_shader_param("FresnelColor", ground_color)
+	
 
 #------------------------------------------------------------------------------
 # Ready()
 #------------------------------------------------------------------------------
 func _ready() -> void:
-	ATMO.scale_object_local(Vector3.ONE) #(atmo_radius, atmo_radius, atmo_radius))
-	GROUND.scale_object_local(Vector3.ONE)
-	ATMO_MESH.get_surface_material(0).set_shader_param("FresnelColor", atmo_color)
-	GROUND_MESH.get_surface_material(0).set_shader_param("FresnelColor", ground_color)
+	ATMO.scale = Vector3(atmo_radius, atmo_radius, atmo_radius)

@@ -40,15 +40,14 @@ var jump_impulse: float = 50.0
 var is_jumping: bool = false
 
 var my_main: Node
-var my_planet: Planet
+var my_planets: Array
 var my_pronouns: String = "all / any"
 	
 #------------------------------------------------------------------------------
 # Initialize()
 #------------------------------------------------------------------------------
-func Init(main: Node, planet: Planet, pronouns: String) -> Voidling:
+func Init(main: Node, pronouns: String) -> Voidling:
 	my_main = main
-	my_planet = planet
 	my_pronouns = pronouns
 	my_main.Hey("Hey Main thank's for spawning me.\nYours truley,\n- %s" % [self.my_pronouns])
 	
@@ -102,7 +101,11 @@ func _process(delta_time: float) -> void:
 			thrust_vector -= Vector3.DOWN
 		
 
-		var gravity_vector: Vector3 = translation.direction_to(my_planet.translation)
+		# Calculate all the planets' gravity.
+		var gravity_vector: Vector3 = Vector3.ZERO
+		for planet in my_planets:
+			gravity_vector += translation.direction_to(planet.translation) * translation.distance_squared_to(planet.translation)
+		
 
 		# Smoosh the thrust and gravity together.
 		velocity += thrust_vector * thrust_power
@@ -193,3 +196,7 @@ func _input(event: InputEvent) -> void:
 #			print("Off")
 #			reset_to_zero = false
 
+
+
+func _on_Apparition_area_entered(area):
+	print("Hell yeah!")

@@ -17,7 +17,7 @@ func Hey(message: String) -> void:
 #------------------------------------------------------------------------------
 func _ready() -> void:
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
-	var voidling: Voidling = VOIDLING_PS.instance().Init(self, $WorldEnvironment/Planet, "Harvy / Nuts")
+	var voidling: Voidling = VOIDLING_PS.instance().Init(self, "Harvy / Nuts")
 	voidling.translation = Vector3.ZERO
 	VOID.add_child(voidling)
 	print("Ready")
