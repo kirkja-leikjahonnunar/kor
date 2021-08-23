@@ -105,3 +105,4 @@ __meta__ = {
 }
 
 [connection signal="area_entered" from="Apparition" to="." method="_on_Apparition_area_entered"]
+[connection signal="area_exited" from="Apparition" to="." method="_on_Apparition_area_exited"]

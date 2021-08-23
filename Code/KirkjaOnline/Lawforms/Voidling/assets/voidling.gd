@@ -103,8 +103,8 @@ func _process(delta_time: float) -> void:
 
 		# Calculate all the planets' gravity.
 		var gravity_vector: Vector3 = Vector3.ZERO
-		for planet in my_planets:
-			gravity_vector += translation.direction_to(planet.translation) * translation.distance_squared_to(planet.translation)
+		#for planet in my_planets:
+		#	gravity_vector += translation.direction_to(planet.translation) * translation.distance_squared_to(planet.translation)
 		
 
 		# Smoosh the thrust and gravity together.
@@ -199,4 +199,11 @@ func _input(event: InputEvent) -> void:
 
 
 func _on_Apparition_area_entered(area):
-	print("Hell yeah!")
+	my_planets.append(area.get_owner())
+	for planet in my_planets:
+		print(planet.name)
+
+
+func _on_Apparition_area_exited(area):
+	my_planets.remove(my_planets.find(area.get_parent()))
+	print("Pheew.")
