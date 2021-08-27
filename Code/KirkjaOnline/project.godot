@@ -88,6 +88,10 @@ config/icon="res://Main/icon.png"
 
 Globals="*res://Experimental/Net/Globals.gd"
 
+[editor_plugins]
+
+enabled=PoolStringArray( "res://addons/Todo_Manager/plugin.cfg" )
+
 [input]
 
 ui_end={

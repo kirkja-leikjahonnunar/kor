@@ -9,9 +9,10 @@ onready var GROUND: StaticBody = $Ground
 onready var GROUND_MESH: MeshInstance = $Ground/GroundMesh
 
 # Properties.
-export var atmo_radius: float = 4 setget set_atmo_radius
+export var mass: float = 0.1
+export var atmo_radius: float = 4.0 setget set_atmo_radius
 export var atmo_color: Color = Color.blue setget set_atmo_color
-export var ground_radius: float = 2 setget set_ground_radius
+export var ground_radius: float = 2.0 setget set_ground_radius
 export var ground_color: Color = Color.white setget set_ground_color
 
 func set_atmo_radius(value):

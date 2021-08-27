@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://Lawforms/Planet/assets/planet.gd" type="Script" id=1]
 [ext_resource path="res://Shaders/fresnel_vs.tres" type="Shader" id=2]
@@ -20,6 +20,8 @@ shader = ExtResource( 2 )
 shader_param/FresnelColor = Color( 0, 0, 1, 1 )
 shader_param/Invert = false
 shader_param/FresnelPower = 0.669
+
+[sub_resource type="PhysicsMaterial" id=8]
 
 [sub_resource type="SphereShape" id=5]
 
@@ -51,6 +53,7 @@ material/0 = SubResource( 4 )
 
 [node name="Ground" type="StaticBody" parent="."]
 transform = Transform( 2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0 )
+physics_material_override = SubResource( 8 )
 
 [node name="GroundBounds" type="CollisionShape" parent="Ground"]
 shape = SubResource( 5 )

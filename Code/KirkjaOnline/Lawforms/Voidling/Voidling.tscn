@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://Lawforms/Voidling/assets/column_pm.tres" type="Material" id=1]
 [ext_resource path="res://Lawforms/Voidling/assets/orbitor_pm.tres" type="Material" id=2]
@@ -11,7 +11,10 @@ extents = Vector3( 0.5, 0.5, 0.5 )
 [sub_resource type="CubeMesh" id=2]
 size = Vector3( 1, 1, 1 )
 
-[sub_resource type="BoxShape" id=3]
+[sub_resource type="SphereShape" id=6]
+
+[sub_resource type="SphereMesh" id=7]
+radius = 0.895
 
 [sub_resource type="SpatialMaterial" id=4]
 vertex_color_use_as_albedo = true
@@ -27,30 +30,37 @@ JoypadLookSpeed = 4.0
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0 )
 shape = SubResource( 1 )
 
-[node name="FloorCast" type="RayCast" parent="."]
+[node name="Forward" type="MeshInstance" parent="."]
+transform = Transform( 0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 1, -2 )
+mesh = SubResource( 2 )
+material/0 = ExtResource( 4 )
+
+[node name="FloorRay" type="RayCast" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0 )
 enabled = true
 cast_to = Vector3( 0, -10, 0 )
 
-[node name="Forward" type="MeshInstance" parent="."]
-transform = Transform( 0.22, 0, 0, 0, 0.22, 0, 0, 0, 0.22, 0, 1, -2 )
-mesh = SubResource( 2 )
-material/0 = ExtResource( 4 )
+[node name="VelocityRay" type="RayCast" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0 )
+enabled = true
+cast_to = Vector3( 0, 0, -30 )
 
 [node name="Apparition" type="Area" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0 )
 gravity_vec = Vector3( 0, 0, 0 )
 
 [node name="CollisionShape" type="CollisionShape" parent="Apparition"]
-shape = SubResource( 3 )
-
-[node name="LaserCast" type="RayCast" parent="Apparition"]
-cast_to = Vector3( 0, 0, -10 )
+shape = SubResource( 6 )
 
 [node name="MeshInstance" type="MeshInstance" parent="Apparition"]
 transform = Transform( 1.1, 0, 0, 0, 1.1, 0, 0, 0, 1.1, 0, 0, 0 )
-mesh = SubResource( 2 )
+mesh = SubResource( 7 )
 material/0 = ExtResource( 4 )
+
+[node name="LaserRay" type="RayCast" parent="Apparition"]
+visible = false
+enabled = true
+cast_to = Vector3( 0, 0, -10 )
 
 [node name="Orbitors" type="Particles" parent="Apparition"]
 visible = false
