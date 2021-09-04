@@ -1,9 +1,9 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://Lawforms/Voidling/assets/column_pm.tres" type="Material" id=1]
 [ext_resource path="res://Lawforms/Voidling/assets/orbitor_pm.tres" type="Material" id=2]
 [ext_resource path="res://Lawforms/Voidling/assets/voidling.gd" type="Script" id=3]
-[ext_resource path="res://Lawforms/Voidling/assets/voidling_material.tres" type="Material" id=4]
+[ext_resource path="res://Lawforms/Voidling/assets/voidling_m.tres" type="Material" id=4]
 
 [sub_resource type="BoxShape" id=1]
 extents = Vector3( 0.5, 0.5, 0.5 )
@@ -11,16 +11,19 @@ extents = Vector3( 0.5, 0.5, 0.5 )
 [sub_resource type="CubeMesh" id=2]
 size = Vector3( 1, 1, 1 )
 
-[sub_resource type="SphereShape" id=6]
+[sub_resource type="SphereShape" id=3]
+
+[sub_resource type="CylinderMesh" id=4]
+radial_segments = 5
 
 [sub_resource type="SphereMesh" id=7]
-radius = 0.895
+is_hemisphere = true
 
-[sub_resource type="SpatialMaterial" id=4]
+[sub_resource type="SpatialMaterial" id=5]
 vertex_color_use_as_albedo = true
 
-[sub_resource type="CubeMesh" id=5]
-material = SubResource( 4 )
+[sub_resource type="CubeMesh" id=6]
+material = SubResource( 5 )
 
 [node name="Voidling" type="KinematicBody"]
 script = ExtResource( 3 )
@@ -50,10 +53,15 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0 )
 gravity_vec = Vector3( 0, 0, 0 )
 
 [node name="CollisionShape" type="CollisionShape" parent="Apparition"]
-shape = SubResource( 6 )
+shape = SubResource( 3 )
 
-[node name="MeshInstance" type="MeshInstance" parent="Apparition"]
-transform = Transform( 1.1, 0, 0, 0, 1.1, 0, 0, 0, 1.1, 0, 0, 0 )
+[node name="Pentagon" type="MeshInstance" parent="Apparition"]
+transform = Transform( 1.1, 0, 0, 0, 0.213717, 0, 0, 0, 1.1, 0, -0.21536, 0 )
+mesh = SubResource( 4 )
+material/0 = ExtResource( 4 )
+
+[node name="MeshInstance2" type="MeshInstance" parent="Apparition"]
+transform = Transform( 0.58579, 0, 0, 0, 0.286824, 0, 0, 0, 0.58579, 0, -0.164131, 0 )
 mesh = SubResource( 7 )
 material/0 = ExtResource( 4 )
 
@@ -67,7 +75,7 @@ visible = false
 amount = 20
 local_coords = false
 process_material = ExtResource( 2 )
-draw_pass_1 = SubResource( 5 )
+draw_pass_1 = SubResource( 6 )
 
 [node name="Column" type="Particles" parent="Apparition"]
 cast_shadow = 0
@@ -75,7 +83,7 @@ amount = 20
 speed_scale = 0.44
 local_coords = false
 process_material = ExtResource( 1 )
-draw_pass_1 = SubResource( 5 )
+draw_pass_1 = SubResource( 6 )
 
 [node name="CameraPivot" type="Spatial" parent="Apparition"]
 transform = Transform( 1, 0, 0, 0, 0.860706, 0.509102, 0, -0.509102, 0.860706, 0, 2.78633, 2.68489 )

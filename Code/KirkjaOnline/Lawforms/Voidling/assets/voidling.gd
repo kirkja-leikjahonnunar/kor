@@ -50,7 +50,7 @@ func Init(main: Node, pronouns: String) -> Voidling:
 	my_pronouns = pronouns
 	my_main.Hey("Hey Main thank's for spawning me.\nYours truley,\n- %s" % [self.my_pronouns])
 	
-	var material: Material = $Apparition/MeshInstance.get_surface_material(0)
+	var material: Material = $Apparition/Pentagon.get_surface_material(0)
 	material.set_shader_param("Color", PrimaryColor)
 	material.set_shader_param("Emission", EmissionColor)
 	
@@ -81,6 +81,7 @@ func Raycast() -> void:
 # The time between the last frame and this one is stored in delta_time.
 #------------------------------------------------------------------------------
 func _process(delta_time: float) -> void:
+	$Apparition/Pentagon.rotate_y(13 * delta_time)
 	if travel_mode == TravelMode.GLIDE:
 		
 		# Set to zero every time through.
