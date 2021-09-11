@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://Lawforms/Planet/assets/planet.gd" type="Script" id=1]
 [ext_resource path="res://Shaders/fresnel_vs.tres" type="Shader" id=2]
@@ -21,18 +21,25 @@ shader_param/FresnelColor = Color( 0, 0, 1, 1 )
 shader_param/Invert = false
 shader_param/FresnelPower = 0.669
 
-[sub_resource type="PhysicsMaterial" id=8]
+[sub_resource type="PhysicsMaterial" id=5]
 
-[sub_resource type="SphereShape" id=5]
+[sub_resource type="SphereShape" id=6]
 
-[sub_resource type="SphereMesh" id=6]
+[sub_resource type="SphereMesh" id=7]
 
-[sub_resource type="ShaderMaterial" id=7]
+[sub_resource type="ShaderMaterial" id=8]
 resource_local_to_scene = true
 shader = ExtResource( 2 )
-shader_param/FresnelColor = Color( 1, 1, 1, 1 )
+shader_param/FresnelColor = Color( 0.839216, 0.129412, 0.129412, 1 )
 shader_param/Invert = true
-shader_param/FresnelPower = 1.46
+shader_param/FresnelPower = 1.262
+
+[sub_resource type="ShaderMaterial" id=9]
+resource_local_to_scene = true
+shader = ExtResource( 2 )
+shader_param/FresnelColor = Color( 0.333333, 0.592157, 0.341176, 1 )
+shader_param/Invert = true
+shader_param/FresnelPower = 0.01
 
 [node name="Planet" type="Spatial"]
 script = ExtResource( 1 )
@@ -47,17 +54,21 @@ transform = Transform( 4, 0, 0, 0, 4, 0, 0, 0, 4, 0, 0, 0 )
 shape = SubResource( 1 )
 
 [node name="AtmoMesh" type="MeshInstance" parent="Atmo"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0168991, -0.0303459, -0.015954 )
 mesh = SubResource( 3 )
 material/0 = SubResource( 4 )
 
 [node name="Ground" type="StaticBody" parent="."]
 transform = Transform( 2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0 )
-physics_material_override = SubResource( 8 )
+physics_material_override = SubResource( 5 )
 
 [node name="GroundBounds" type="CollisionShape" parent="Ground"]
-shape = SubResource( 5 )
+shape = SubResource( 6 )
 
 [node name="GroundMesh" type="MeshInstance" parent="Ground"]
-mesh = SubResource( 6 )
-material/0 = SubResource( 7 )
+mesh = SubResource( 7 )
+material/0 = SubResource( 8 )
+
+[node name="Surface" type="MeshInstance" parent="Ground"]
+transform = Transform( 0.753716, 0, 0, 0, 0.753716, 0, 0, 0, 0.753716, 0, 0, 0 )
+mesh = SubResource( 7 )
+material/0 = SubResource( 9 )
