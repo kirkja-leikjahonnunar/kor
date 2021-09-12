@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://Lawforms/Voidling/assets/column_pm.tres" type="Material" id=1]
 [ext_resource path="res://Lawforms/Voidling/assets/orbitor_pm.tres" type="Material" id=2]
@@ -11,58 +11,48 @@ extents = Vector3( 0.5, 0.5, 0.5 )
 [sub_resource type="CubeMesh" id=2]
 size = Vector3( 1, 1, 1 )
 
-[sub_resource type="SphereShape" id=3]
+[sub_resource type="BoxShape" id=9]
+extents = Vector3( 0.195422, 0.188195, 0.18814 )
 
-[sub_resource type="CylinderMesh" id=4]
-radial_segments = 5
-
-[sub_resource type="SphereMesh" id=5]
-is_hemisphere = true
+[sub_resource type="CubeMesh" id=8]
+size = Vector3( 0.35, 0.35, 0.35 )
 
 [sub_resource type="SpatialMaterial" id=6]
 vertex_color_use_as_albedo = true
 
 [sub_resource type="CubeMesh" id=7]
 material = SubResource( 6 )
+size = Vector3( 1, 1, 1 )
 
 [node name="Voidling" type="KinematicBody"]
 script = ExtResource( 3 )
 JoypadLookSpeed = 4.0
+top_speed = 5.0
 
 [node name="CollisionShape" type="CollisionShape" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0 )
 shape = SubResource( 1 )
 
 [node name="Forward" type="MeshInstance" parent="."]
-transform = Transform( 0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 1, -2 )
+transform = Transform( 0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0, -1.42143 )
 mesh = SubResource( 2 )
 material/0 = ExtResource( 4 )
 
 [node name="FloorRay" type="RayCast" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0 )
 enabled = true
 cast_to = Vector3( 0, -10, 0 )
 
 [node name="VelocityRay" type="RayCast" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0 )
 enabled = true
 cast_to = Vector3( 0, 0, -30 )
 
 [node name="Apparition" type="Area" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 6.20093, 1, 0 )
 gravity_vec = Vector3( 0, 0, 0 )
 
 [node name="CollisionShape" type="CollisionShape" parent="Apparition"]
-shape = SubResource( 3 )
+shape = SubResource( 9 )
 
-[node name="Pentagon" type="MeshInstance" parent="Apparition"]
-transform = Transform( 1.1, 0, 0, 0, 0.213717, 0, 0, 0, 1.1, 0, -0.21536, 0 )
-mesh = SubResource( 4 )
-material/0 = ExtResource( 4 )
-
-[node name="MeshInstance2" type="MeshInstance" parent="Apparition"]
-transform = Transform( 0.58579, 0, 0, 0, 0.286824, 0, 0, 0, 0.58579, 0, -0.164131, 0 )
-mesh = SubResource( 5 )
+[node name="Orb" type="MeshInstance" parent="Apparition"]
+mesh = SubResource( 8 )
 material/0 = ExtResource( 4 )
 
 [node name="LaserRay" type="RayCast" parent="Apparition"]
@@ -86,10 +76,10 @@ process_material = ExtResource( 1 )
 draw_pass_1 = SubResource( 7 )
 
 [node name="CameraPivot" type="Spatial" parent="Apparition"]
-transform = Transform( 1, 0, 0, 0, 0.860706, 0.509102, 0, -0.509102, 0.860706, 0, 2.78633, 2.68489 )
+transform = Transform( 1, 0, 0, 0, 0.860706, 0.509102, 0, -0.509102, 0.860706, 0, 0, 0 )
 
 [node name="Camera" type="Camera" parent="Apparition/CameraPivot"]
-transform = Transform( 1, 0, 0, 0, 1, 2.98023e-08, 0, -2.98023e-08, 1, 0, 2.38419e-07, 13.0315 )
+transform = Transform( 1, 0, 0, 0, 1, 2.98023e-08, 0, -2.98023e-08, 1, 0, 1.43051e-06, 5.36834 )
 fov = 66.0
 far = 500.0
 
@@ -100,6 +90,7 @@ omni_range = 13.4
 
 [node name="SpotLight" type="SpotLight" parent="Apparition"]
 transform = Transform( 1, 0, 0, 0, 0.598856, 0.800857, 0, -0.800857, 0.598856, -0.48994, 2.99432, 1.7181 )
+spot_angle = 38.6836
 
 [node name="DebugUI" type="Control" parent="."]
 anchor_right = 1.0

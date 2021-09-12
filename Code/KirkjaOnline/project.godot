@@ -54,10 +54,15 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Lawforms/Maze/assets/room.gd"
 }, {
-"base": "Spatial",
+"base": "StaticBody",
 "class": "Signpost",
 "language": "GDScript",
 "path": "res://Lawforms/Signpost/assets/signpost.gd"
+}, {
+"base": "Spatial",
+"class": "Spawner",
+"language": "GDScript",
+"path": "res://Lawforms/Spawner/assets/spawner.gd"
 }, {
 "base": "KinematicBody",
 "class": "Voidling",
@@ -75,6 +80,7 @@ _global_script_class_icons={
 "PlayerPrefs": "",
 "Room": "",
 "Signpost": "",
+"Spawner": "",
 "Voidling": ""
 }
 
