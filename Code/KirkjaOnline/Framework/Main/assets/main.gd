@@ -2,7 +2,7 @@ extends Node
 
 export(Array, PackedScene) var levels
 
-onready var VOID: Spatial = $Node3D/Void
+onready var VOID: Spatial = $Void
 
 
 #------------------------------------------------------------------------------
@@ -10,8 +10,9 @@ onready var VOID: Spatial = $Node3D/Void
 #------------------------------------------------------------------------------
 func _ready() -> void:
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
-	if levels.size() > 0:
-		var instance = levels[0].instance()
+	for level in levels:
+		var instance = level.instance()
+		VOID.add_child(instance)
 
 
 #------------------------------------------------------------------------------

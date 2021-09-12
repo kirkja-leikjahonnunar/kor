@@ -54,10 +54,10 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Lawforms/Maze/assets/room.gd"
 }, {
-"base": "StaticBody",
+"base": "Reference",
 "class": "Signpost",
 "language": "GDScript",
-"path": "res://Lawforms/Signpost/assets/signpost.gd"
+"path": "res://Tools/Signpost/assets/signpost.gd"
 }, {
 "base": "Spatial",
 "class": "Spawner",
@@ -87,8 +87,8 @@ _global_script_class_icons={
 [application]
 
 config/name="KirkjaOnline"
-run/main_scene="res://Bioms/Main/Main.tscn"
-config/icon="res://Bioms/Main/icon.png"
+run/main_scene="res://Framework/Main/Main.tscn"
+config/icon="res://Framework/Main/icon.png"
 
 [autoload]
 

@@ -1,0 +1,102 @@
+[gd_scene load_steps=11 format=2]
+
+[ext_resource path="res://Lawforms/Bubble/Bubble.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Lawforms/Voidling/Voidling.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Lawforms/Spawner/Spawner.tscn" type="PackedScene" id=3]
+
+[sub_resource type="BoxShape" id=1]
+
+[sub_resource type="CubeMesh" id=2]
+
+[sub_resource type="PrismMesh" id=3]
+
+[sub_resource type="SpatialMaterial" id=4]
+albedo_color = Color( 0.4, 0.4, 0.4, 1 )
+
+[sub_resource type="BoxShape" id=5]
+
+[sub_resource type="SphereMesh" id=6]
+
+[sub_resource type="CubeMesh" id=7]
+
+[node name="TheDelta" type="Spatial"]
+
+[node name="Floor" type="StaticBody" parent="."]
+
+[node name="CollisionShape" type="CollisionShape" parent="Floor"]
+transform = Transform( 11.7504, 0, 0, 0, 1, 0, 0, 0, 11.7504, 0, -1, 0 )
+shape = SubResource( 1 )
+
+[node name="MeshInstance" type="MeshInstance" parent="Floor/CollisionShape"]
+mesh = SubResource( 2 )
+material/0 = null
+
+[node name="Node3D" type="Spatial" parent="."]
+visible = false
+
+[node name="Void" type="Spatial" parent="Node3D"]
+
+[node name="Level" type="Spatial" parent="Node3D/Void"]
+
+[node name="Floor" type="StaticBody" parent="Node3D/Void/Level"]
+
+[node name="MechInstance" type="MeshInstance" parent="Node3D/Void/Level/Floor"]
+transform = Transform( 88.2981, 0, 0, 0, -4.37114e-08, 1, 0, -69.0041, -3.01627e-06, 0.891895, -0.857121, -3.36132 )
+mesh = SubResource( 3 )
+material/0 = SubResource( 4 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Node3D/Void/Level/Floor"]
+transform = Transform( 88.2981, 0, 0, 0, -4.37114e-08, 1, 0, -69.0041, -3.01627e-06, 0, -1, -2.91429 )
+shape = SubResource( 5 )
+
+[node name="MeshInstance" type="MeshInstance" parent="Node3D/Void/Level"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 5.73908, 0, 0 )
+mesh = SubResource( 6 )
+material/0 = null
+
+[node name="MeshInstance2" type="MeshInstance" parent="Node3D/Void/Level"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 5.73908, 0, -7.35101 )
+mesh = SubResource( 6 )
+material/0 = null
+
+[node name="MeshInstance3" type="MeshInstance" parent="Node3D/Void/Level"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 5.73908, 0, -17.9869 )
+mesh = SubResource( 6 )
+material/0 = null
+
+[node name="MeshInstance4" type="MeshInstance" parent="Node3D/Void/Level"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -7.26092, 0, 0 )
+mesh = SubResource( 7 )
+material/0 = null
+
+[node name="MeshInstance5" type="MeshInstance" parent="Node3D/Void/Level"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -7.26092, 0, -7.35101 )
+mesh = SubResource( 7 )
+material/0 = null
+
+[node name="MeshInstance6" type="MeshInstance" parent="Node3D/Void/Level"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -7.26092, 0, -17.9869 )
+mesh = SubResource( 7 )
+material/0 = null
+
+[node name="Tree" type="MeshInstance" parent="Node3D/Void/Level"]
+
+[node name="Lights" type="Spatial" parent="Node3D/Void"]
+
+[node name="DirectionalLight" type="DirectionalLight" parent="Node3D/Void/Lights"]
+transform = Transform( 0.7597, -0.315001, -0.568885, 0.649674, 0.405249, 0.643193, 0.0279335, -0.858224, 0.512515, -0.0425873, 27.8801, 22.0444 )
+light_bake_mode = 0
+shadow_enabled = true
+shadow_color = Color( 0.372549, 0.0666667, 0.392157, 1 )
+
+[node name="PlayerStart" parent="Node3D/Void" instance=ExtResource( 3 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -14.1939, 1.00116, 20.1702 )
+limit_count = true
+lawform = ExtResource( 2 )
+
+[node name="Bubbles" parent="Node3D/Void" instance=ExtResource( 3 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -10.354, 1.00006, 9.96046 )
+limit_count = true
+spawn_count = 3
+spawn_interval = 2.706
+lawform = ExtResource( 1 )
