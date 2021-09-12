@@ -11,17 +11,17 @@ extents = Vector3( 0.5, 0.5, 0.5 )
 [sub_resource type="CubeMesh" id=2]
 size = Vector3( 1, 1, 1 )
 
-[sub_resource type="BoxShape" id=9]
+[sub_resource type="BoxShape" id=3]
 extents = Vector3( 0.195422, 0.188195, 0.18814 )
 
-[sub_resource type="CubeMesh" id=8]
+[sub_resource type="CubeMesh" id=4]
 size = Vector3( 0.35, 0.35, 0.35 )
 
-[sub_resource type="SpatialMaterial" id=6]
+[sub_resource type="SpatialMaterial" id=5]
 vertex_color_use_as_albedo = true
 
-[sub_resource type="CubeMesh" id=7]
-material = SubResource( 6 )
+[sub_resource type="CubeMesh" id=6]
+material = SubResource( 5 )
 size = Vector3( 1, 1, 1 )
 
 [node name="Voidling" type="KinematicBody"]
@@ -49,10 +49,10 @@ cast_to = Vector3( 0, 0, -30 )
 gravity_vec = Vector3( 0, 0, 0 )
 
 [node name="CollisionShape" type="CollisionShape" parent="Apparition"]
-shape = SubResource( 9 )
+shape = SubResource( 3 )
 
 [node name="Orb" type="MeshInstance" parent="Apparition"]
-mesh = SubResource( 8 )
+mesh = SubResource( 4 )
 material/0 = ExtResource( 4 )
 
 [node name="LaserRay" type="RayCast" parent="Apparition"]
@@ -65,7 +65,7 @@ visible = false
 amount = 20
 local_coords = false
 process_material = ExtResource( 2 )
-draw_pass_1 = SubResource( 7 )
+draw_pass_1 = SubResource( 6 )
 
 [node name="Column" type="Particles" parent="Apparition"]
 cast_shadow = 0
@@ -73,7 +73,7 @@ amount = 20
 speed_scale = 0.44
 local_coords = false
 process_material = ExtResource( 1 )
-draw_pass_1 = SubResource( 7 )
+draw_pass_1 = SubResource( 6 )
 
 [node name="CameraPivot" type="Spatial" parent="Apparition"]
 transform = Transform( 1, 0, 0, 0, 0.860706, 0.509102, 0, -0.509102, 0.860706, 0, 0, 0 )

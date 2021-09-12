@@ -87,8 +87,8 @@ _global_script_class_icons={
 [application]
 
 config/name="KirkjaOnline"
-run/main_scene="res://Main/Main.tscn"
-config/icon="res://Main/icon.png"
+run/main_scene="res://Bioms/Main/Main.tscn"
+config/icon="res://Bioms/Main/icon.png"
 
 [autoload]
 

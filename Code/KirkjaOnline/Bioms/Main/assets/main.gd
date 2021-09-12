@@ -1,9 +1,19 @@
-extends Node2D
+extends Node
+
+export(Array, PackedScene) var levels
+
+onready var VOID: Spatial = $Node3D/Void
 
 
-func _ready():
-	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
-	
+#------------------------------------------------------------------------------
+# One shot once the instance has been created.
+#------------------------------------------------------------------------------
+func _ready() -> void:
+	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+	if levels.size() > 0:
+		var instance = levels[0].instance()
+
+
 #------------------------------------------------------------------------------
 # [ Escape ] key. Quit game.
 #------------------------------------------------------------------------------

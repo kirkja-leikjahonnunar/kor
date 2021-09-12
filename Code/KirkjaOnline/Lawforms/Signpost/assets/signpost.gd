@@ -23,8 +23,9 @@ func set_font_size(value):
 
 func set_font_color(value):
 	font_color = value
-	var color: Color = $Viewport/Control/Panel/TextEdit/.get_color("font_color")
-	print(color)
+	$Viewport/Control/Panel/TextEdit/.set("custom_colors/font_color", font_color)
+	print(font_color)
+
 	
 #func set_frame_color(value):
 #
