@@ -19,13 +19,13 @@ enum TravelMode { GLIDE, WALK }
 
 # Properties.
 export var MouseSenesitivity: float = 0.01
-export var JoypadLookSpeed: float = 5.0
+export var JoypadLookSpeed: float = 4.0
 export var PrimaryColor: Color = Color.purple
 export var SecondaryColor: Color = Color.chartreuse
 export var EmissionColor: Color = Color.black
 
 export var thrust_power: float = 0.3 # m/s
-export var top_speed: float = 10.0   # m/s
+export var top_speed: float = 7.0   # m/s
 export var stop_speed: float = 1.0   # m/s
 export var break_power: float = 0.95 # Good enough friction.
 

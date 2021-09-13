@@ -54,7 +54,7 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Lawforms/Maze/assets/room.gd"
 }, {
-"base": "Reference",
+"base": "StaticBody",
 "class": "Signpost",
 "language": "GDScript",
 "path": "res://Tools/Signpost/assets/signpost.gd"
@@ -87,12 +87,13 @@ _global_script_class_icons={
 [application]
 
 config/name="KirkjaOnline"
-run/main_scene="res://Framework/Main/Main.tscn"
-config/icon="res://Framework/Main/icon.png"
+run/main_scene="res://Scenes/Main/Main.tscn"
+config/icon="res://Scenes/Main/icon.png"
 
 [autoload]
 
 Globals="*res://Experimental/Net/Globals.gd"
+Server="*res://Scenes/Singeltons/Server.gd"
 
 [editor_plugins]
 
