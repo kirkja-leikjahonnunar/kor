@@ -16,7 +16,7 @@ func ConnectToServer():
 	network.connect("connection_succeeded", self, "OnConnectionSucceeded")
 	
 func OnConnectionFailed():
-	printerr("Failed to connect.")
+	print("Failed to connect.")
 	
 func OnConnectionSucceeded():
 	print("Succesfuly connected.")

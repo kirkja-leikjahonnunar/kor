@@ -26,7 +26,6 @@ size = Vector3( 1, 1, 1 )
 
 [node name="Voidling" type="KinematicBody"]
 script = ExtResource( 3 )
-top_speed = 5.0
 
 [node name="CollisionShape" type="CollisionShape" parent="."]
 shape = SubResource( 1 )
