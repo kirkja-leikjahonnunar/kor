@@ -86,7 +86,7 @@ _global_script_class_icons={
 
 [application]
 
-config/name="KirkjaOnline"
+config/name="Client"
 run/main_scene="res://Scenes/Main/Main.tscn"
 config/icon="res://Scenes/Main/icon.png"
 

@@ -10,13 +10,8 @@ config_version=4
 
 [application]
 
-config/name="Gateway"
+config/name="Authentication"
 config/icon="res://icon.png"
-
-[autoload]
-
-Authenticate="*res://Scenes/Singeltons/Authenticate.gd"
-Gateway="*res://Scenes/Singeltons/Gateway.gd"
 
 [physics]
 
