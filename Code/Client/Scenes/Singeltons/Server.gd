@@ -5,13 +5,14 @@ extends Node
 
 var network = NetworkedMultiplayerENet.new()
 var ip = "127.0.0.1"
-var port = 2021
+var port = 2019
 
 #------------------------------------------------------------------------------
 # Ready to roll
 #------------------------------------------------------------------------------
 func _ready():
-	ConnectToServer()
+	pass
+	#ConnectToServer()
 
 #------------------------------------------------------------------------------
 # Create a client for the network and connect the listener functions.

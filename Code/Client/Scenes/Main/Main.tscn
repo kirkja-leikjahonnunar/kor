@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://Scenes/Main/assets/environment.tres" type="Environment" id=1]
-[ext_resource path="res://Biomes/TheDelta/TheDelta.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Scenes/LoginScreen/LoginScreen.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Scenes/Main/assets/main.gd" type="Script" id=3]
 [ext_resource path="res://Framework/Music/voidling.ogg" type="AudioStream" id=4]
 

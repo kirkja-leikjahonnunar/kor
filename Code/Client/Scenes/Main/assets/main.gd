@@ -10,7 +10,7 @@ onready var VOID: Spatial = $Void
 #------------------------------------------------------------------------------
 func _ready() -> void:
 	#Server.FetchPlayerPassword("k2", get_instance_id())
-	rpc_id(1, "Print", "Here!")
+	#rpc_id(1, "Print", "Here!")
 	
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	for level in levels:
@@ -30,7 +30,3 @@ func _unhandled_input(event):
 	if event is InputEventJoypadButton:
 		if event.pressed and event.button_index == 11: # Joypad [Start] button.
 			get_tree().quit()
-
-#
-func PrintPass(password):
-	print(password)

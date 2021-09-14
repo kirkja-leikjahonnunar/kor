@@ -1,7 +1,7 @@
 extends Node
 
 var network = NetworkedMultiplayerENet.new()
-var port = 2021 # TCP & UDP port in between Artemis and Civ IV.
+var port = 2019
 var max_players = 100
 
 #------------------------------------------------------------------------------

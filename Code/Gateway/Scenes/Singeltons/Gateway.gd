@@ -10,6 +10,12 @@ var max_players = 100
 func _ready():
 	StartServer()
 
+
+func _process(delta):
+	if not custom_multiplayer.has_network_peer():
+		return
+	custom_multiplayer.poll()
+
 #------------------------------------------------------------------------------
 #------------------------------------------------------------------------------
 func StartServer():
@@ -31,3 +37,13 @@ func _Peer_Connected(player_id):
 #------------------------------------------------------------------------------
 func _Peer_Disconnected(player_id):
 	print("User Disconnected ID: " + str(player_id))
+
+
+remote func LoginRequest(username, password):
+	print("Login request recieved.")
+	var player_id = custom_multiplayer.get_rpc_sender_id()
+	Authenticate.AuthenticatePlayer(username, password, player_id)
+	
+func RetunLoginRequest(result, player_id):
+	rpc_id(player_id, "ReturnRequest", result)
+	network.disconnect_peer(player_id)

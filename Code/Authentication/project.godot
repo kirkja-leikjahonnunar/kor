@@ -11,7 +11,12 @@ config_version=4
 [application]
 
 config/name="Authentication"
+run/main_scene="res://Scenes/Main/Authentication.tscn"
 config/icon="res://icon.png"
+
+[autoload]
+
+PlayerData="*res://Scenes/Singeltons/PlayerData.gd"
 
 [physics]
 

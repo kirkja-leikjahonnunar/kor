@@ -87,12 +87,12 @@ _global_script_class_icons={
 [application]
 
 config/name="Client"
-run/main_scene="res://Scenes/Main/Main.tscn"
+run/main_scene="res://Scenes/LoginScreen/LoginScreen.tscn"
 config/icon="res://Scenes/Main/icon.png"
 
 [autoload]
 
-Globals="*res://Experimental/Net/Globals.gd"
+Gateway="*res://Scenes/Singeltons/Gateway.gd"
 Server="*res://Scenes/Singeltons/Server.gd"
 
 [editor_plugins]

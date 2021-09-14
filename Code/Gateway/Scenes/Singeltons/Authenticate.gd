@@ -4,7 +4,6 @@ var network = NetworkedMultiplayerENet.new()
 var ip = "127.0.0.1"
 var port = 2021
 
-
 func _ready():
 	ConnectToServer()
 
@@ -21,5 +20,10 @@ func _OnConnectionFailed():
 func _OnConnectionSucceeded():
 	print("Successfully connected to autentication server.")
 	
-remote func AuthenticatePlayer(username, password, player_id):
-	pass
+func AuthenticatePlayer(username, password, player_id):
+	print("Sending out authentication request.")
+	rpc_id(1, "AuthenticatePlayer", username, password, player_id)
+	
+remote func AuthenticationResults(result, player_id):
+	print("Results recieved and replying to player login request.")
+	Gateway.ReturnLoginRequest(result, player_id)
