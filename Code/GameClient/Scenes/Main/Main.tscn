@@ -1,0 +1,19 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://Scenes/Main/assets/environment.tres" type="Environment" id=1]
+[ext_resource path="res://Scenes/LoginScreen/LoginScreen.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Scenes/Main/assets/main.gd" type="Script" id=3]
+[ext_resource path="res://Framework/Music/voidling.ogg" type="AudioStream" id=4]
+
+[node name="Main" type="Node"]
+script = ExtResource( 3 )
+levels = [ ExtResource( 2 ) ]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = ExtResource( 1 )
+
+[node name="Void" type="Spatial" parent="."]
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 4 )
+volume_db = -10.0

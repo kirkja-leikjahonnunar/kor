@@ -1,0 +1,8 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=2]
+
+[ext_resource path="res://Framework/Shaders/mesh_shader.tres" type="Shader" id=1]
+
+[resource]
+shader = ExtResource( 1 )
+shader_param/Color = Color( 0.690196, 0.52549, 0.670588, 1 )
+shader_param/Emission = null
