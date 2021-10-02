@@ -10,8 +10,8 @@ config_version=4
 
 [application]
 
-config/name="Authentication"
-run/main_scene="res://Scenes/Main/Authentication.tscn"
+config/name="Authenticate"
+run/main_scene="res://Scenes/Main/Authenticate.tscn"
 config/icon="res://icon.png"
 
 [autoload]

@@ -1,0 +1,35 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://Scenes/Main/LoginScreen.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Scenes/Main/GameClient.gd" type="Script" id=2]
+[ext_resource path="res://Scenes/Main/PlayerStats.tscn" type="PackedScene" id=3]
+
+[node name="GameClient" type="Node"]
+script = ExtResource( 2 )
+
+[node name="MainUI" type="Control" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="PlayerStats" parent="MainUI" instance=ExtResource( 3 )]
+
+[node name="Button" type="Button" parent="MainUI"]
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -735.958
+margin_top = -508.796
+margin_right = -515.958
+margin_bottom = -441.796
+text = "Fetch Player Stats"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="LoginScreen" parent="." instance=ExtResource( 1 )]
+
+[connection signal="pressed" from="MainUI/Button" to="." method="_on_Button_pressed"]

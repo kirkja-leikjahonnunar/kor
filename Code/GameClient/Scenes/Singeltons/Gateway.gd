@@ -1,33 +1,26 @@
 extends Node
 
-onready var BUTTON = get_node("../LoginScreen/VBoxContainer/Button")
-
 var network = NetworkedMultiplayerENet.new()
 var gateway_api = MultiplayerAPI.new()
 var ip = "127.0.0.1"
-var port = 2019
+var port = 1910
 
 var username
 var password
 
-#------------------------------------------------------------------------------
-# Ready to roll
-#------------------------------------------------------------------------------
+
 func _ready():
 	pass
 	
-func _process(delta):
+	
+func _process(_delta):
 	if get_custom_multiplayer() == null:
 		return
-		
-	if custom_multiplayer.has_network_peer():
+	if not custom_multiplayer.has_network_peer():
 		return
-		
 	custom_multiplayer.poll()
-
-#------------------------------------------------------------------------------
-# Create a client for the network and connect the listener functions.
-#------------------------------------------------------------------------------
+	
+	
 func ConnectToServer(_username, _password):
 	network = NetworkedMultiplayerENet.new()
 	gateway_api = MultiplayerAPI.new()
@@ -40,42 +33,34 @@ func ConnectToServer(_username, _password):
 	
 	network.connect("connection_failed", self, "_OnConnectionFailed")
 	network.connect("connection_succeeded", self, "_OnConnectionSucceeded")
-
-#------------------------------------------------------------------------------
-# Connection failed.
-#------------------------------------------------------------------------------
+	
+	
 func _OnConnectionFailed():
 	print("Failed to connect to login server.")
-	BUTTON.disabled = false
-
-#------------------------------------------------------------------------------
-# Connection succeeded.
-#------------------------------------------------------------------------------
+	get_node("../Main/LoginScreen/Button").disabled = false
+	
+	
 func _OnConnectionSucceeded():
-	print("Succesfuly connected.")
+	print("Succesfully connected to Gateway server.")
 	RequestLogin()
 	
-
-#------------------------------------------------------------------------------
-# Get the password from the server.
-#------------------------------------------------------------------------------
+	
 func RequestLogin():
-	print("Connecting to login server.")
-	rpc_id(1, "LoginRequest", username, password) # Of the Server.
-	username = ""
+	print("Connecting to gateway to request login.")
+	rpc_id(1, "LoginRequest", username, password)
+	#username = ""
 	password = ""
-
-#------------------------------------------------------------------------------
-# RPC for Server to connect with.
-#------------------------------------------------------------------------------
+	
+	
 remote func ReturnLoginRequest(results):
-	print("Results recieved")
+	print("Results recieved.")
+	
 	if results == true:
-		Server.ConnectToServer()
-		queue_free()
+		GameServer.ConnectToServer()
+		get_node("../GameClient/LoginScreen").queue_free()
 	else:
-		print("Please provide a valid username and password.")
-		BUTTON.disabled = false
+		print("Please provide correct username and password.")
+		get_node("../GameClient/LoginScreen/Button").disabled = false
 		
 	network.disconnect("connection_failed", self, "_OnConnectionFailed")
 	network.disconnect("connection_succeeded", self, "_OnConnectionSucceeded")

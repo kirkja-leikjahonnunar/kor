@@ -1,8 +1,12 @@
+#------------------------------------------------------------------------------
+# Interface to the Authentication server.
+#------------------------------------------------------------------------------
 extends Node
 
 var network = NetworkedMultiplayerENet.new()
 var ip = "127.0.0.1"
-var port = 2021
+#var ip = "10.0.10.101"
+var port = 1911
 
 func _ready():
 	ConnectToServer()
@@ -27,3 +31,10 @@ func AuthenticatePlayer(username, password, player_id):
 remote func AuthenticationResults(result, player_id):
 	print("Results recieved and replying to player login request.")
 	Gateway.ReturnLoginRequest(result, player_id)
+	
+func Pingu():
+	print("Ping Request pending...")
+	rpc_id(1, "Pingu")
+	
+remote func PinguResults(result):
+	print(result)
