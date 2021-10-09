@@ -1,0 +1,36 @@
+/* IMAGES */
+Image: placeholder-jumbotron1.jpg
+Author: allinonemovie
+URL: https://pixabay.com/illustrations/minecraft-video-game-blocks-block-1106252/
+License: Pixabay License (Free for commercial use, No attribution required)
+
+Image: placeholder-jumbotron2.jpg
+Author: Javier Martinez
+URL: https://unsplash.com/photos/hUD0PUczwJQ
+License: Unsplash License (Commercial and non-commercial purposes, No permission needed)
+
+Image: placeholder-program1.jpg
+Author: Nicole Geri
+URL: https://unsplash.com/photos/mmmyiQj8Yvg
+License: Unsplash License (Commercial and non-commercial purposes, No permission needed)
+
+Image: placeholder-program2.jpg
+Author: John Schnobrich
+URL: https://unsplash.com/photos/2FPjlAyMQTA
+License: Unsplash License (Commercial and non-commercial purposes, No permission needed)
+
+Image: placeholder-program3.jpg
+Author: Fotis Fotopoulos
+URL: https://unsplash.com/photos/6sAl6aQ4OWI
+License: Unsplash License (Commercial and non-commercial purposes, No permission needed)
+
+Avatar generated using DiceBear Avatars
+https://avatars.dicebear.com/
+https://github.com/dicebear/dicebear
+
+
+/* SITE */
+Last update: 2021/10/4
+Standards: HTML5, CSS3, JS
+Components: Bootstrap 5, jQuery
+Software: Laragon, Sublime Text 3
