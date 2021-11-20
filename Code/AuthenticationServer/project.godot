@@ -16,7 +16,17 @@ config/icon="res://icon.png"
 
 [autoload]
 
+GameServers="*res://Scenes/Singeltons/GameServers.gd"
 PlayerData="*res://Scenes/Singeltons/PlayerData.gd"
+
+[display]
+
+window/size/width=600
+window/size/height=300
+
+[editor_plugins]
+
+enabled=PoolStringArray( "res://addons/Todo_Manager/plugin.cfg", "res://addons/godot-sqlite/plugin.cfg" )
 
 [physics]
 

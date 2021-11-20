@@ -1,0 +1,40 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://Attractions/NetClicker/AllForksDay/Forksgiving/Invitation/Invitation.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Attractions/NetClicker/AllForksDay/Forksgiving/Forksgiving.gd" type="Script" id=2]
+[ext_resource path="res://Attractions/NetClicker/AllForksDay/Forksgiving/ForkFlipper/ForkFlipper.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Attractions/NetClicker/AllForksDay/Forksgiving/UI/UI.tscn" type="PackedScene" id=8]
+
+[node name="Forksgiving" type="Node"]
+script = ExtResource( 2 )
+
+[node name="DrawersField" type="Node2D" parent="."]
+
+[node name="ForksField" type="Node2D" parent="."]
+
+[node name="UI" parent="." instance=ExtResource( 8 )]
+mouse_filter = 2
+
+[node name="ForkFlipper" parent="." instance=ExtResource( 3 )]
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -153.0
+margin_top = -152.0
+margin_right = 0.0
+margin_bottom = 0.0
+
+[node name="DrawerTimer" type="Timer" parent="."]
+wait_time = 2.5
+autostart = true
+
+[node name="ForkTimer" type="Timer" parent="."]
+wait_time = 2.5
+autostart = true
+
+[node name="Invitation" parent="." instance=ExtResource( 1 )]
+visible = false
+
+[connection signal="timeout" from="DrawerTimer" to="." method="_on_DrawerTimer_timeout"]
+[connection signal="timeout" from="ForkTimer" to="." method="_on_ForkTimer_timeout"]

@@ -26,8 +26,16 @@ margin_left = 50.0
 margin_top = 50.0
 margin_right = -50.0
 margin_bottom = -50.0
-text = "Authentication Server has access to the player Data / DB.
-Can recieve remote calls from Gateways."
+custom_colors/font_color = Color( 0.670588, 0.670588, 0.670588, 1 )
+text = "The Authentication server has access to vital database information.
+
+Only the GameServers and Gateways may make requests of the Authentication server.
+
+Use RPC (Remote Phunction Calls) from Gateways & GameServers to talk with the Authentication server.
+
+
+"
+autowrap = true
 __meta__ = {
 "_edit_use_anchors_": false
 }

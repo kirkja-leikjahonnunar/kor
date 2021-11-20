@@ -1,18 +1,16 @@
-#------------------------------------------------------------------------------
+#==============================================================================
 # Interface to the Authentication server.
 #------------------------------------------------------------------------------
 extends Node
 
 var network = NetworkedMultiplayerENet.new()
-var ip = "127.0.0.1"
+#var auth_ip = "127.0.0.1"
 #var ip = "10.0.10.101"
 var port = 1911
 
-func _ready():
-	ConnectToServer()
 
-func ConnectToServer():
-	network.create_client(ip, port)
+func ConnectToServer(auth_ip):
+	network.create_client(auth_ip, port)
 	get_tree().set_network_peer(network)
 	
 	network.connect("connection_failed", self, "_OnConnectionFailed")
@@ -24,17 +22,22 @@ func _OnConnectionFailed():
 func _OnConnectionSucceeded():
 	print("Successfully connected to autentication server.")
 	
-func AuthenticatePlayer(username, password, player_id):
-	print("Sending out authentication request.")
-	rpc_id(1, "AuthenticatePlayer", username, password, player_id)
 	
-remote func AuthenticationResults(result, player_id):
-	print("Results recieved and replying to player login request.")
-	Gateway.ReturnLoginRequest(result, player_id)
+# Called from Gateway.
+func LoginRequest(username, password, player_id):
+	rpc_id(1, "LoginRequest", username, password, player_id) # RPC to Authenticate.
+	print("Requesting authentication.")
 	
-func Pingu():
+# Called from Gateway UI button click.
+func PingRequest():
+	rpc_id(1, "PingRequest") # RPC request to Authentication server.
 	print("Ping Request pending...")
-	rpc_id(1, "Pingu")
 	
-remote func PinguResults(result):
-	print(result)
+
+# Called from AuthenticationServer.ValidateLogin()
+remote func AuthorizationResponse(result, player_id, authentication_token):
+	Gateway.AuthorizationResponse(result, player_id, authentication_token)
+	print("Results recieved and replying to player login request.")
+	
+remote func PingResponse(message: String):
+	print(message)
