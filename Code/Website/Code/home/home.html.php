@@ -10,10 +10,10 @@
 	<meta id="viewport" name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, minimum-scale=0.5, maximum-scale=2.0"/>
 
 	<!-- CSS -->
-	<link rel="icon" href="favicon.png">
+	<link rel="icon" href="<?php echo BASE_URL; ?>favicon.png">
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
-	<link rel="stylesheet" href="default.css" media="all" type="text/css"/>
+	<link rel="stylesheet" href="<?php echo BASE_URL; ?>css/default.css" media="all" type="text/css"/>
 
 	<meta name="distribution" content="global"/>
 	<meta name="rating" content="general"/>
@@ -72,7 +72,7 @@
 		<div class="navbar navbar-dark bg-dark shadow-sm">
 			<div class="container">
 				<h1 class="navbar-brand d-flex align-items-center">
-					<img src="img/logo.png" class="float-start" width="24" height="24" alt="Kirkja logo">
+					<img src="<?php echo BASE_URL; ?>img/logo.png" class="float-start" width="24" height="24" alt="Kirkja logo">
 					<!-- <i class="bi bi-controller"></i> -->
 					Kirkja
 				</h1>
@@ -91,7 +91,7 @@
 				Under construction: Pre-Alpha: Bugs and errors abound!
 			</div>
 
-			<div class="jumbotron p-5 mb-4 bg-secondary text-white">
+			<div class="jumbotron p-5 mb-4 bg-secondary text-white" style="background-image: url('<?php echo BASE_URL; ?>img/placeholder_jumbotron1.jpg');">
 				<div class="container py-5">
 					<h1 class="display-5 fw-bold">Kirkja Mission Statement</h1>
 					<p class="col-md-8 fs-4">Kirkja uses the lens of game design to develop and provide unfettered access to lifelong educational tools, techniques, playgrounds, and systems for creating balanced communities of earthling ecosystems.</p>
@@ -106,7 +106,7 @@
 						<p class="lead">Kirkja aims to provide several programs that intermingle different disciplines. The various programs fall under two general headings: Online &amp; IRL.</p>
 					</div>
 					<div class="col-md-5">
-						<img src="img/placeholder_program3.jpg"  width="400" height="400" alt="Computer desk">
+						<img src="<?php echo BASE_URL; ?>img/placeholder_program3.jpg"  width="400" height="400" alt="Computer desk">
 					</div>
 				</div>
 
@@ -123,7 +123,7 @@
 						</ul>
 					</div>
 					<div class="col-md-5 order-md-1">
-						<img src="img/placeholder_program1.jpg"  width="400" height="400" alt="Student studying in front of computer">
+						<img src="<?php echo BASE_URL; ?>img/placeholder_program1.jpg"  width="400" height="400" alt="Student studying in front of computer">
 					</div>
 				</div>
 
@@ -135,7 +135,7 @@
 						<p class="lead">Kirkja IRL (in real life) is comprised of everything that isn't happening in Kirkja Online. For example, local meet-ups, game jams, concerts, industry talks.</p>
 					</div>
 					<div class="col-md-5">
-						<img src="img/placeholder_program2.jpg"  width="400" height="400" alt="Students gather in front of a laptop">
+						<img src="<?php echo BASE_URL; ?>img/placeholder_program2.jpg"  width="400" height="400" alt="Students gather in front of a laptop">
 					</div>
 				</div>
 
