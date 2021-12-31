@@ -1,0 +1,494 @@
+[gd_scene load_steps=20 format=2]
+
+[ext_resource path="res://Main/LoginScreen.gd" type="Script" id=1]
+[ext_resource path="res://Content/Fonts/AGENCYB.TTF" type="DynamicFontData" id=2]
+[ext_resource path="res://Content/Textures/Logos/kirkja_rect.png" type="Texture" id=4]
+[ext_resource path="res://Content/Fonts/AGENCYR.TTF" type="DynamicFontData" id=5]
+
+
+[sub_resource type="DynamicFont" id=7]
+size = 40
+extra_spacing_char = 2
+extra_spacing_space = 2
+font_data = ExtResource( 2 )
+
+[sub_resource type="DynamicFont" id=17]
+size = 28
+font_data = ExtResource( 2 )
+
+[sub_resource type="Gradient" id=2]
+offsets = PoolRealArray( 0.0755556, 0.335165, 0.571429 )
+colors = PoolColorArray( 0.168627, 0.980392, 0.196078, 0.701961, 0.411765, 0.964706, 0.431373, 0.0862745, 0.905882, 0.117647, 0.117647, 0.960784 )
+
+[sub_resource type="GradientTexture" id=3]
+gradient = SubResource( 2 )
+
+[sub_resource type="Curve" id=4]
+_data = [ Vector2( 0, 0.614773 ), 0.0, 0.0, 0, 0, Vector2( 0.346341, 0.275 ), 0.0433406, 0.0433406, 0, 0, Vector2( 0.673171, 0.520455 ), 0.0, 0.0, 0, 0, Vector2( 1, 0 ), 0.469697, 0.0, 0, 0 ]
+
+[sub_resource type="CurveTexture" id=5]
+curve = SubResource( 4 )
+
+[sub_resource type="ParticlesMaterial" id=6]
+lifetime_randomness = 0.06
+emission_shape = 2
+emission_box_extents = Vector3( 5, 600, 1 )
+flag_disable_z = true
+spread = 0.0
+gravity = Vector3( 0, 0, 0 )
+initial_velocity = 117.86
+initial_velocity_random = 0.66
+angular_velocity = 400.0
+angular_velocity_random = 1.0
+orbit_velocity = 0.0
+orbit_velocity_random = 0.0
+scale = 24.0
+scale_curve = SubResource( 5 )
+color_ramp = SubResource( 3 )
+hue_variation = -0.24
+hue_variation_random = 0.28
+
+[sub_resource type="DynamicFont" id=10]
+size = 24
+font_data = ExtResource( 5 )
+
+[sub_resource type="DynamicFont" id=11]
+size = 42
+extra_spacing_bottom = 10
+extra_spacing_char = 2
+font_data = ExtResource( 2 )
+
+[sub_resource type="Gradient" id=12]
+offsets = PoolRealArray( 0.0755556, 0.335165, 0.571429 )
+colors = PoolColorArray( 0.168627, 0.980392, 0.196078, 0.701961, 0.411765, 0.964706, 0.431373, 0.0862745, 0.905882, 0.117647, 0.117647, 0.960784 )
+
+[sub_resource type="GradientTexture" id=13]
+gradient = SubResource( 12 )
+
+[sub_resource type="Curve" id=14]
+_data = [ Vector2( 0, 1 ), 0.0, 0.0, 0, 0, Vector2( 0.317073, 0.527273 ), 0.130021, 0.130021, 0, 0, Vector2( 0.658537, 0.745455 ), 0.0, 0.0, 0, 0, Vector2( 1, 0.427273 ), 0.469697, 0.0, 0, 0 ]
+
+[sub_resource type="CurveTexture" id=15]
+curve = SubResource( 14 )
+
+[sub_resource type="ParticlesMaterial" id=16]
+emission_shape = 2
+emission_box_extents = Vector3( 5, 600, 1 )
+flag_disable_z = true
+spread = 0.0
+gravity = Vector3( 0, 0, 0 )
+initial_velocity = 66.0
+initial_velocity_random = 0.66
+angular_velocity = 400.0
+angular_velocity_random = 1.0
+orbit_velocity = 0.0
+orbit_velocity_random = 0.0
+scale = 28.7
+scale_curve = SubResource( 15 )
+color_ramp = SubResource( 13 )
+hue_variation = -0.24
+hue_variation_random = 0.28
+
+[sub_resource type="DynamicFont" id=9]
+size = 29
+extra_spacing_char = 2
+extra_spacing_space = 2
+font_data = ExtResource( 5 )
+
+[node name="LoginScreen" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="BG" type="ColorRect" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 0.192157, 0.0156863, 0.172549, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Kirkja" type="TextureRect" parent="."]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -180.0
+margin_top = 45.0
+margin_right = 180.0
+margin_bottom = 140.0
+texture = ExtResource( 4 )
+expand = true
+stretch_mode = 6
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Online" type="Label" parent="."]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -52.0
+margin_top = 131.0
+margin_right = 50.0
+margin_bottom = 180.0
+custom_colors/font_color = Color( 0.764706, 0.34902, 0.8, 1 )
+custom_fonts/font = SubResource( 7 )
+text = "online"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="NewAccountWindow" type="Control" parent="."]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="NewUsername" type="LineEdit" parent="NewAccountWindow"]
+anchor_left = 0.501
+anchor_top = 0.322
+anchor_right = 0.501
+anchor_bottom = 0.322
+margin_left = -160.024
+margin_top = 20.8
+margin_right = 159.976
+margin_bottom = 44.8
+custom_colors/cursor_color = Color( 0, 1, 0.0392157, 1 )
+custom_colors/font_color = Color( 0, 1, 0.109804, 1 )
+align = 1
+placeholder_text = "recovery email"
+placeholder_alpha = 0.308
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="NewPassword" type="LineEdit" parent="NewAccountWindow"]
+anchor_left = 0.5
+anchor_top = 0.389667
+anchor_right = 0.5
+anchor_bottom = 0.389667
+margin_left = -160.0
+margin_top = 61.2002
+margin_right = 160.0
+margin_bottom = 85.2002
+custom_colors/cursor_color = Color( 0, 1, 0.109804, 1 )
+custom_colors/font_color = Color( 0, 1, 0.109804, 1 )
+align = 1
+secret = true
+placeholder_text = "password"
+placeholder_alpha = 0.308
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="RepeatPassword" type="LineEdit" parent="NewAccountWindow"]
+anchor_left = 0.5
+anchor_top = 0.456334
+anchor_right = 0.5
+anchor_bottom = 0.456334
+margin_left = -160.0
+margin_top = 61.2002
+margin_right = 160.0
+margin_bottom = 85.2002
+custom_colors/cursor_color = Color( 0, 1, 0.109804, 1 )
+custom_colors/font_color = Color( 0, 1, 0.109804, 1 )
+align = 1
+secret = true
+placeholder_text = "repeat password"
+placeholder_alpha = 0.308
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="RecoveryEmail" type="LineEdit" parent="NewAccountWindow"]
+anchor_left = 0.501
+anchor_top = 0.322
+anchor_right = 0.501
+anchor_bottom = 0.322
+margin_left = -160.024
+margin_top = 20.8
+margin_right = 159.976
+margin_bottom = 44.8
+custom_colors/cursor_color = Color( 0, 1, 0.0392157, 1 )
+custom_colors/font_color = Color( 0, 1, 0.109804, 1 )
+align = 1
+placeholder_text = "recovery email"
+placeholder_alpha = 0.308
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="CreateAccount" type="Button" parent="NewAccountWindow"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -85.5
+margin_top = 97.0
+margin_right = 85.5
+margin_bottom = 191.0
+custom_colors/font_color = Color( 0.0509804, 0.929412, 0.12549, 1 )
+custom_fonts/font = SubResource( 17 )
+text = "Create Account"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="MainLogin" type="Button" parent="NewAccountWindow"]
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -104.0
+margin_top = -28.0
+margin_right = -8.0
+margin_bottom = -8.0
+text = "New Account"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="MainLoginWindow" type="Control" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Username" type="LineEdit" parent="MainLoginWindow"]
+anchor_left = 0.501
+anchor_top = 0.322
+anchor_right = 0.501
+anchor_bottom = 0.322
+margin_left = -160.024
+margin_top = 20.8
+margin_right = 159.976
+margin_bottom = 44.8
+custom_colors/cursor_color = Color( 0, 1, 0.0392157, 1 )
+custom_colors/font_color = Color( 0, 1, 0.109804, 1 )
+text = "unblinky"
+align = 1
+placeholder_text = "username"
+placeholder_alpha = 0.308
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Password" type="LineEdit" parent="MainLoginWindow"]
+anchor_left = 0.5
+anchor_top = 0.389667
+anchor_right = 0.5
+anchor_bottom = 0.389667
+margin_left = -160.0
+margin_top = 21.2002
+margin_right = 160.0
+margin_bottom = 45.2002
+custom_colors/cursor_color = Color( 0, 1, 0.109804, 1 )
+custom_colors/font_color = Color( 0, 1, 0.109804, 1 )
+text = "123"
+align = 1
+secret = true
+placeholder_text = "password"
+placeholder_alpha = 0.308
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="NewAccount" type="Button" parent="MainLoginWindow"]
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -104.0
+margin_top = -28.0
+margin_right = -8.0
+margin_bottom = -8.0
+text = "New Account"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ParticlesBG2" type="Particles2D" parent="MainLoginWindow"]
+position = Vector2( 512.125, 609.924 )
+rotation = -1.57079
+amount = 24
+lifetime = 27.74
+speed_scale = 2.0
+process_material = SubResource( 6 )
+
+[node name="TabContainer" type="TabContainer" parent="MainLoginWindow"]
+margin_left = 301.0
+margin_top = 294.0
+margin_right = 737.0
+margin_bottom = 512.0
+custom_colors/font_color_bg = Color( 0.606132, 0.158386, 0.675781, 1 )
+custom_colors/font_color_fg = Color( 0.0509804, 0.929412, 0.12549, 1 )
+custom_fonts/font = SubResource( 10 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Studio LAN" type="Tabs" parent="MainLoginWindow/TabContainer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 4.0
+margin_top = 47.0
+margin_right = -4.0
+margin_bottom = -4.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="LAN Button" type="Button" parent="MainLoginWindow/TabContainer/Studio LAN"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 66.0
+margin_top = 20.0
+margin_right = -66.0
+margin_bottom = -20.0
+custom_colors/font_color = Color( 0.784314, 0.905882, 0.764706, 1 )
+custom_fonts/font = SubResource( 11 )
+text = "Login > LAN"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Localhost" type="Tabs" parent="MainLoginWindow/TabContainer"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 4.0
+margin_top = 47.0
+margin_right = -4.0
+margin_bottom = -4.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+tab_align = 0
+
+[node name="Localhost Button" type="Button" parent="MainLoginWindow/TabContainer/Localhost"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -194.0
+margin_top = -33.5
+margin_right = 194.0
+margin_bottom = 33.5
+custom_colors/font_color = Color( 0.784314, 0.905882, 0.764706, 1 )
+custom_fonts/font = SubResource( 11 )
+text = "Login > Localhost"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Velmeran" type="Tabs" parent="MainLoginWindow/TabContainer"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 4.0
+margin_top = 47.0
+margin_right = -4.0
+margin_bottom = -4.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MainLoginWindow/TabContainer/Velmeran"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 20.0
+margin_top = 20.0
+margin_right = -20.0
+margin_bottom = -20.0
+custom_constants/separation = 13
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MainLoginWindow/TabContainer/Velmeran/VBoxContainer"]
+margin_right = 388.0
+margin_bottom = 24.0
+
+[node name="GatewayIP" type="LineEdit" parent="MainLoginWindow/TabContainer/Velmeran/VBoxContainer/HBoxContainer"]
+margin_right = 296.0
+margin_bottom = 24.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+size_flags_stretch_ratio = 3.41
+custom_colors/cursor_color = Color( 0, 1, 0.109804, 1 )
+custom_colors/font_color = Color( 0, 1, 0.105882, 1 )
+text = "73.67.218.85"
+align = 1
+placeholder_text = "Gateway IP"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="GatewayPort" type="LineEdit" parent="MainLoginWindow/TabContainer/Velmeran/VBoxContainer/HBoxContainer"]
+margin_left = 300.0
+margin_right = 388.0
+margin_bottom = 24.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_colors/cursor_color = Color( 0, 1, 0.109804, 1 )
+custom_colors/font_color = Color( 0, 1, 0.105882, 1 )
+text = "1910"
+align = 1
+placeholder_text = "Gateway IP"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Velmeran Button" type="Button" parent="MainLoginWindow/TabContainer/Velmeran/VBoxContainer"]
+margin_top = 37.0
+margin_right = 388.0
+margin_bottom = 127.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_colors/font_color = Color( 0.784314, 0.905882, 0.764706, 1 )
+custom_fonts/font = SubResource( 11 )
+text = "Login > Velmeran"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ParticlesFG" type="Particles2D" parent="."]
+position = Vector2( 520.601, 660.778 )
+rotation = -1.57079
+amount = 24
+lifetime = 20.0
+process_material = SubResource( 16 )
+
+[node name="ParticlesBottomFG" type="Particles2D" parent="."]
+position = Vector2( 512.125, 609.924 )
+rotation = -1.57079
+amount = 48
+lifetime = 1.75
+speed_scale = 0.66
+process_material = SubResource( 6 )
+
+[node name="Opine" type="Label" parent="."]
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = -84.0
+custom_colors/font_color = Color( 0.290196, 0.776471, 0.203922, 1 )
+custom_colors/font_color_shadow = Color( 0.360073, 0.218262, 0.375, 1 )
+custom_constants/shadow_offset_x = 1
+custom_constants/shadow_offset_y = 1
+custom_constants/shadow_as_outline = 1
+custom_fonts/font = SubResource( 9 )
+text = "everything is fine."
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[connection signal="pressed" from="NewAccountWindow/CreateAccount" to="." method="_on_CreateAccount_pressed"]
+[connection signal="pressed" from="NewAccountWindow/MainLogin" to="." method="_on_MainLogin_pressed"]
+[connection signal="pressed" from="MainLoginWindow/NewAccount" to="." method="_on_NewAccount_pressed"]
+[connection signal="pressed" from="MainLoginWindow/TabContainer/Studio LAN/LAN Button" to="." method="_on_LAN_Button_pressed"]
+[connection signal="pressed" from="MainLoginWindow/TabContainer/Localhost/Localhost Button" to="." method="_on_Localhost_Button_pressed"]
+[connection signal="pressed" from="MainLoginWindow/TabContainer/Velmeran/VBoxContainer/Velmeran Button" to="." method="_on_Velmeran_Button_pressed"]

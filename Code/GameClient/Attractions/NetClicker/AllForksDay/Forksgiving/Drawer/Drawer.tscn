@@ -1,0 +1,24 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://Attractions/NetClicker/AllForksDay/Forksgiving/Drawer/Assets/fork_template.png" type="Texture" id=1]
+[ext_resource path="res://Attractions/NetClicker/AllForksDay/Forksgiving/Drawer/Drawer.gd" type="Script" id=2]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 27, 300 )
+
+[node name="Drawer" type="Area2D"]
+script = ExtResource( 2 )
+
+[node name="Sprite" type="Sprite" parent="."]
+modulate = Color( 0.701961, 0.113725, 0.113725, 1 )
+position = Vector2( 60, 300 )
+scale = Vector2( 0.58, 0.58 )
+texture = ExtResource( 1 )
+hframes = 5
+region_rect = Rect2( 736, 100, 153, 194 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2( -25, 300 )
+shape = SubResource( 1 )
+
+[connection signal="area_entered" from="." to="." method="_on_Drawer_area_entered"]

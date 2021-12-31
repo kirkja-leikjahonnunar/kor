@@ -1,0 +1,149 @@
+[gd_scene load_steps=12 format=2]
+
+[ext_resource path="res://Content/Fonts/calibriz.ttf" type="DynamicFontData" id=1]
+[ext_resource path="res://Content/Fonts/calibri.ttf" type="DynamicFontData" id=2]
+[ext_resource path="res://Attractions/TimeScrap/TimelineEvent/TimelineEvent.gd" type="Script" id=3]
+[ext_resource path="res://Attractions/TimeScrap/Assets/timelines_theme.tres" type="Theme" id=4]
+[ext_resource path="res://Content/Fonts/calibrib.ttf" type="DynamicFontData" id=5]
+
+[sub_resource type="DynamicFont" id=3]
+size = 22
+font_data = ExtResource( 1 )
+
+[sub_resource type="DynamicFont" id=4]
+size = 22
+font_data = ExtResource( 5 )
+
+[sub_resource type="DynamicFont" id=5]
+size = 22
+font_data = ExtResource( 5 )
+
+[sub_resource type="DynamicFont" id=6]
+size = 22
+font_data = ExtResource( 2 )
+
+[sub_resource type="StyleBoxFlat" id=1]
+content_margin_left = 13.0
+content_margin_right = 13.0
+content_margin_top = 7.0
+content_margin_bottom = 7.0
+bg_color = Color( 0.130297, 0.0214539, 0.148438, 1 )
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color( 0.266667, 0.0392157, 0.360784, 1 )
+corner_radius_top_left = 13
+corner_radius_top_right = 13
+
+[sub_resource type="StyleBoxFlat" id=2]
+content_margin_left = 13.0
+content_margin_right = 13.0
+content_margin_top = 7.0
+content_margin_bottom = 7.0
+bg_color = Color( 0.130297, 0.0214539, 0.148438, 1 )
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color( 0.266667, 0.0392157, 0.360784, 1 )
+corner_radius_bottom_right = 13
+corner_radius_bottom_left = 13
+
+[node name="TimelineEvent" type="PanelContainer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_right = -87.0
+margin_bottom = -562.0
+mouse_filter = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme = ExtResource( 4 )
+script = ExtResource( 3 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Column" type="VBoxContainer" parent="."]
+margin_right = 937.0
+margin_bottom = 38.0
+mouse_filter = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+size_flags_stretch_ratio = 7.02
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Title" type="RichTextLabel" parent="Column"]
+margin_right = 937.0
+margin_bottom = 38.0
+focus_mode = 2
+custom_fonts/bold_italics_font = SubResource( 3 )
+custom_fonts/italics_font = SubResource( 4 )
+custom_fonts/bold_font = SubResource( 5 )
+custom_fonts/normal_font = SubResource( 6 )
+custom_styles/normal = SubResource( 1 )
+bbcode_enabled = true
+bbcode_text = "Let's [b][i]DO A BIG italic[/i][/b]!"
+text = "Let's DO A BIG italic!"
+fit_content_height = true
+selection_enabled = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TitleEdit" type="TextEdit" parent="Column/Title"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+text = "Wimpy description.
+Do [b]bold[/b] like this.
+Do [i]italics[/i] like thus.
+Do [u]underline[/u] when needed.
+Do [s]strikethrough[/s] just so.
+Combine [b][i]bold italic[/i][/b] other."
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Description" type="RichTextLabel" parent="Column"]
+visible = false
+margin_top = 42.0
+margin_right = 1024.0
+margin_bottom = 176.0
+custom_styles/normal = SubResource( 2 )
+bbcode_enabled = true
+bbcode_text = "Wimpy description.
+Do [b]bold[/b] like this.
+Do [i]italics[/i] like thus.
+Do [u]underline[/u] when needed.
+Do [s]strikethrough[/s] just so.
+Combine [b][i]bold italic[/i][/b] other."
+text = "Wimpy description.
+Do bold like this.
+Do italics like thus.
+Do underline when needed.
+Do strikethrough just so.
+Combine bold italic other."
+fit_content_height = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="DescriptionEdit" type="TextEdit" parent="Column/Description"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+text = "Wimpy description.
+Do [b]bold[/b] like this.
+Do [i]italics[/i] like thus.
+Do [u]underline[/u] when needed.
+Do [s]strikethrough[/s] just so.
+Combine [b][i]bold italic[/i][/b] other."
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[connection signal="gui_input" from="Column/Title" to="." method="_on_Title_gui_input"]
+[connection signal="gui_input" from="Column/Description" to="." method="_on_Description_gui_input"]

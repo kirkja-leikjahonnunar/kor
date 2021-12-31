@@ -1,0 +1,81 @@
+{ "timelines":
+  [
+    {
+      "title": "Ottoman Empire",
+      "description": "The borders of civilization moving.",
+      "events":
+      [
+        {
+          "title": "Good[b][i] Day[/i][/b]!",
+          "description": "Not today reaper!",
+          "begin_time": {"day":13, "dst":false, "hour":7, "minute":29, "month":12, "second":33, "weekday":1, "year":2021},
+          "end_time": {"day":13, "dst":false, "hour":7, "minute":29, "month":12, "second":33, "weekday":0, "year":2022},
+          "begin_accuracy": {"day":13, "dst":false, "hour":7, "minute":29, "month":12, "second":33, "weekday":0, "year":2022},
+          "end_accuracy": {"day":13, "dst":false, "hour":7, "minute":29, "month":12, "second":33, "weekday":0, "year":2022},
+          "color": {"r": 0, "g": 1, "b": 0.5, "a": 1}
+        },
+        {
+          "title": "Bad day!",
+          "description": "Not today reaper!
+you shall not
+have me this day!",
+          "begin_time": {"day":13, "dst":false, "hour":7, "minute":29, "month":12, "second":33, "weekday":1, "year":2021},
+          "end_time": {"day":13, "dst":false, "hour":7, "minute":29, "month":12, "second":33, "weekday":0, "year":2022},
+          "begin_accuracy": {"day":13, "dst":false, "hour":7, "minute":29, "month":12, "second":33, "weekday":0, "year":2022},
+          "end_accuracy": {"day":13, "dst":false, "hour":7, "minute":29, "month":12, "second":33, "weekday":0, "year":2022},
+          "color": {"r": 0, "g": 0, "b": 0, "a": 1}
+        },
+        {
+          "title": "Meh day!",
+          "description": "Just Wed.",
+          "begin_time": {"day":13, "dst":false, "hour":7, "minute":29, "month":12, "second":33, "weekday":1, "year":2021},
+          "end_time": {"day":13, "dst":false, "hour":7, "minute":29, "month":12, "second":33, "weekday":0, "year":2022},
+          "begin_accuracy": {"day":13, "dst":false, "hour":7, "minute":29, "month":12, "second":33, "weekday":0, "year":2022},
+          "end_accuracy": {"day":13, "dst":false, "hour":7, "minute":29, "month":12, "second":33, "weekday":0, "year":2022},
+          "color": {"r": 1, "g": 1, "b": 1, "a": 0.5}
+        },
+        {
+          "title": "SHIT day!",
+          "description": "So close, but so far away...",
+          "begin_time": {"day":13, "dst":false, "hour":7, "minute":29, "month":12, "second":33, "weekday":1, "year":2021},
+          "end_time": {"day":13, "dst":false, "hour":7, "minute":29, "month":12, "second":33, "weekday":0, "year":2022},
+          "begin_accuracy": {"day":13, "dst":false, "hour":7, "minute":29, "month":12, "second":33, "weekday":0, "year":2022},
+          "end_accuracy": {"day":13, "dst":false, "hour":7, "minute":29, "month":12, "second":33, "weekday":0, "year":2022},
+          "color": {"r": 1, "g": 1, "b": 1, "a": 1}
+        }
+      ]
+    },
+    {
+      "title": "Roman Empire",
+      "description": "Bloody... bloody Romans.",
+      "events":
+      [
+        {
+          "title": "Today we gladiated!",
+          "description": "Blood sports!",
+          "begin_time": {"day":13, "dst":false, "hour":7, "minute":29, "month":12, "second":33, "weekday":1, "year":2021},
+          "end_time": {"day":13, "dst":false, "hour":7, "minute":29, "month":12, "second":33, "weekday":0, "year":2022},
+          "begin_accuracy": {"day":13, "dst":false, "hour":7, "minute":29, "month":12, "second":33, "weekday":0, "year":2022},
+          "end_accuracy": {"day":13, "dst":false, "hour":7, "minute":29, "month":12, "second":33, "weekday":0, "year":2022},
+          "color": {"r": 1, "g": 0, "b": 0, "a": 1}
+        }
+      ]
+    },
+    {
+      "title": "Pop Tarts™",
+      "description": "Pop Tarts™ are good so what?",
+      "events":
+      [
+        {
+          "title": "Popping day!",
+          "description": "I like the blueberry ones.",
+          "begin_time": {"day":13, "dst":false, "hour":7, "minute":29, "month":12, "second":33, "weekday":1, "year":2021},
+          "end_time": {"day":13, "dst":false, "hour":7, "minute":29, "month":12, "second":33, "weekday":0, "year":2022},
+          "begin_accuracy": {"day":13, "dst":false, "hour":7, "minute":29, "month":12, "second":33, "weekday":0, "year":2022},
+          "end_accuracy": {"day":13, "dst":false, "hour":7, "minute":29, "month":12, "second":33, "weekday":0, "year":2022},
+          "color": {"r": 0.5, "g": 0.5, "b": 0.9, "a": 1}
+        }
+      ]
+    }
+  ]
+}
