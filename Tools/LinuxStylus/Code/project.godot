@@ -11,8 +11,9 @@ config_version=4
 [application]
 
 config/name="LinuxStylus"
-run/main_scene="res://Code/Main/Main.tscn"
-config/icon="res://Code/Main/icon.png"
+run/main_scene="res://Main/Main.tscn"
+boot_splash/image="res://Main/ko_icon.png"
+config/icon="res://Main/ko_icon.png"
 
 [display]
 

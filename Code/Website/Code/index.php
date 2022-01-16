@@ -58,8 +58,10 @@
 
   <body>
     <p>
-      Our games, tools, and events aim to bridge the divide between online
-      gaming and irl human interaction for educational settings.
+      Krikja believes in the power of gameplay as a method of building one's resiliance.
+      Our games and playgrounds aim to bridge the divide between online and irl play.
+      We blur the lines between computer and human interaction.
+      Individual and group dynamics thrive in settings tailored for digital and unplugged play.
     </p>
     <p>
       Kirkja uses the lens of game design to develop and provide unfettered access to
