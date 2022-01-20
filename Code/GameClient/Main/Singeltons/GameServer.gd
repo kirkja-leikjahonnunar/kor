@@ -1,7 +1,6 @@
 #------------------------------------------------------------------------------
 # Interface to the Game Server
 #------------------------------------------------------------------------------
-
 extends Node
 
 var network = NetworkedMultiplayerENet.new()
@@ -54,7 +53,16 @@ remote func VerificationResponse(is_authorized: bool):
 		login.Opine("Login failed, please try again.")
 		print("Login failed, please try again.")
 	
-	
+#==============================================================================
+# PLAYER DICTIONARY FUNCTIONS
+#==============================================================================
+func RequestPlayerDictionary():
+	# TODO: rpc_id(1, "RequestPlayerDictionary")
+	return ["hello", "11", "peter"]
+
+remote func UpdatePlayerDictionary(data_table: Array):
+	var dictionary = get_node("../GameClient/NetClicker/NoFrills")
+	dictionary.Update(data_table)
 	
 #==============================================================================
 # NET CLICKER FUNCTIONS

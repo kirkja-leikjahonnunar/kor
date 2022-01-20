@@ -61,7 +61,7 @@ remote func LoginRequest(username: String, password: String, player_id: int) -> 
 		authorization_token = str(randi()).sha256_text() + str(OS.get_unix_time())
 		print("Token: %s" % authorization_token)
 		
-		var game_server = "GameServer1" # Replace with loadbalance.
+		var game_server = "GameServer1" # TODO: Replace with loadbalance.
 		GameServers.DistributeAuthenticationToken(authorization_token, game_server)
 		
 	# Respond to the Gateway.
