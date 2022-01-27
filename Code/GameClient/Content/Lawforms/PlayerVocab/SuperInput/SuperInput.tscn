@@ -1,0 +1,57 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://Content/Lawforms/PlayerVocab/SuperInput/SuperInput.gd" type="Script" id=1]
+
+[node name="SuperInput" type="Control"]
+margin_right = 588.0
+margin_bottom = 128.0
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="RichText" type="RichTextLabel" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+bbcode_enabled = true
+bbcode_text = "Here is [b]some[/b] bold text."
+text = "Here is some bold text."
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="InputText" type="TextEdit" parent="."]
+modulate = Color( 1, 1, 1, 0.447059 )
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_colors/member_variable_color = Color( 0, 0, 0, 1 )
+custom_colors/code_folding_color = Color( 0, 0, 0, 1 )
+custom_colors/function_color = Color( 0, 0, 0, 1 )
+custom_colors/safe_line_number_color = Color( 0, 0, 0, 1 )
+custom_colors/symbol_color = Color( 0, 0, 0, 1 )
+custom_colors/caret_background_color = Color( 0, 0, 0, 1 )
+custom_colors/bookmark_color = Color( 0, 0, 0, 1 )
+custom_colors/selection_color = Color( 0, 0, 0, 1 )
+custom_colors/caret_color = Color( 0, 0, 0, 1 )
+custom_colors/breakpoint_color = Color( 0, 0, 0, 1 )
+custom_colors/font_color_selected = Color( 0, 0, 0, 1 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_colors/line_number_color = Color( 0, 0, 0, 1 )
+custom_colors/completion_font_color = Color( 0, 0, 0, 1 )
+custom_colors/completion_scroll_color = Color( 0, 0, 0, 1 )
+custom_colors/background_color = Color( 0, 0, 0, 1 )
+custom_colors/number_color = Color( 0, 0, 0, 1 )
+custom_colors/completion_background_color = Color( 0, 0, 0, 1 )
+custom_colors/brace_mismatch_color = Color( 0, 0, 0, 1 )
+custom_colors/current_line_color = Color( 0, 0, 0, 1 )
+custom_colors/completion_selected_color = Color( 0, 0, 0, 1 )
+custom_colors/executing_line_color = Color( 0, 0, 0, 1 )
+custom_colors/mark_color = Color( 0, 0, 0, 1 )
+custom_colors/word_highlighted_color = Color( 0, 0, 0, 1 )
+custom_colors/font_color_readonly = Color( 0, 0, 0, 1 )
+custom_colors/completion_existing_color = Color( 0, 0, 0, 1 )
+syntax_highlighting = true
+wrap_enabled = true
+__meta__ = {
+"_edit_use_anchors_": false
+}

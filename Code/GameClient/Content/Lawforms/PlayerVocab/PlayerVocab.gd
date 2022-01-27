@@ -1,10 +1,21 @@
 extends Node
 class_name PlayerVocab
 
+onready var DICTIONARY_UI := $Dictionary
+onready var SUPER_INPUT := $SuperInput
+
 var words: Array
 
 func _ready():
-	GameServer.RequestPlayerDictionary()
+	#TODO: The Game Server would call Initialize() eventually.
+	#GameServer.RequestPlayerDictionary()
+	Initialize() # 4 now.
 
-func Update(data_table):
-	pass
+func Initialize(): #(data_table):
+	words = ["dog", "cat", "mouse"]
+	SUPER_INPUT.Initialize(words)
+	
+	# Just testing.
+	for word in words:
+		DICTIONARY_UI.text += "\n" + word
+		
