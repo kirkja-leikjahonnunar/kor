@@ -4,7 +4,7 @@
 
 [sub_resource type="CapsuleShape" id=1]
 radius = 0.523311
-height = 1.95152
+height = 0.65268
 
 [sub_resource type="CapsuleMesh" id=2]
 radius = 0.452
@@ -44,3 +44,31 @@ transform = Transform( 0.994676, -0.0515265, 0.0892464, 0, 0.866025, 0.5, -0.103
 
 [node name="Camera" type="Camera" parent="CameraPivot"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 11 )
+
+[node name="UI" type="Control" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="SpeedUI" type="Label" parent="UI"]
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -1024.0
+margin_top = -30.0
+margin_bottom = -16.0
+text = "7 :Speed"
+align = 2
+
+[node name="VelocityUI" type="Label" parent="UI"]
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -1024.0
+margin_top = -14.0
+text = "333 :Velocity"
+align = 2

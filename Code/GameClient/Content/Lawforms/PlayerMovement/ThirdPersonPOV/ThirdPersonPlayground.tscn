@@ -24,7 +24,7 @@ light_energy = 0.21
 shadow_enabled = true
 
 [node name="ThirdPersonPOV" parent="." instance=ExtResource( 1 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.52844, 8.89549 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 16.2013, 8.89549 )
 
 [node name="StaticBody" type="StaticBody" parent="."]
 
