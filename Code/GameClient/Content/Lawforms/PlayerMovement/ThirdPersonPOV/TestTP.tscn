@@ -1,8 +1,7 @@
 [gd_scene load_steps=6 format=2]
 
-[ext_resource path="res://Content/Lawforms/PlayerControllers/TPPM/TPPM.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Content/Lawforms/PlayerMovement/ThirdPersonPOV/ThirdPersonPOV.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Main/environment.tres" type="Environment" id=2]
-
 
 [sub_resource type="CylinderMesh" id=3]
 

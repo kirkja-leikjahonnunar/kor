@@ -9,13 +9,11 @@ var velocity: Vector3
 var gravity: Vector3
 var jump_impulse: Vector3
 
-# Happens one time.
 func _ready():
 	gravity = Vector3.DOWN * 9.8
 	Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 
-# Happens every frame.
 func _process(delta):
 	direction = Vector3.ZERO
 	
