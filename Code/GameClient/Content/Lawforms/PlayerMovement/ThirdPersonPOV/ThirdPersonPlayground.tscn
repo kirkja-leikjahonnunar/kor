@@ -1,8 +1,7 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://Content/Lawforms/PlayerMovement/ThirdPersonPOV/ThirdPersonPOV.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Main/environment.tres" type="Environment" id=2]
-[ext_resource path="res://Content/Lawforms/Planet3D/Planet3D.tscn" type="PackedScene" id=3]
 
 [sub_resource type="BoxShape" id=4]
 extents = Vector3( 14.007, 1.99391, 1 )
@@ -19,16 +18,13 @@ extents = Vector3( 67.3113, 1, 66.5282 )
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = ExtResource( 2 )
 
-[node name="Planet3D" parent="WorldEnvironment" instance=ExtResource( 3 )]
-transform = Transform( 20, 0, 0, 0, 20, 0, 0, 0, 20, 0, 0, 0 )
-
 [node name="DirectionalLight" type="DirectionalLight" parent="."]
 transform = Transform( 1, 0, 0, 0, 0.511158, 0.859487, 0, -0.859487, 0.511158, 9.53674e-07, 16.474, 6.47324 )
 light_energy = 0.21
 shadow_enabled = true
 
-[node name="PlayerTPS" parent="." instance=ExtResource( 1 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 25.2364, 0 )
+[node name="ThirdPersonPOV" parent="." instance=ExtResource( 1 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.52844, 8.89549 )
 
 [node name="StaticBody" type="StaticBody" parent="."]
 

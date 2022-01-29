@@ -2,19 +2,20 @@ extends KinematicBody
 
 const ONE_G = 9.807 # m/s²
 onready var PIVOT := $CameraPivot
-export var MouseSenesitivity = 0.005
 
-var direction: Vector3 # 0.0 - 1.0
-var max_speed: float = 40.0
-var speed: float = 0.0
-var acceleration: float = 1 # meter / sec?
+export var MouseSenesitivity: float = 0.005
+export var AccelerationRate: float = 0.666
+export var BreakDecay: float = 0.95 # Damp? Dammping?
+export var IsFlying: bool = true
 
+var velocity: Vector3 # Current velocity vector.
+var thrust: Vector3 # Thrust vector from the user's keyboard, mouse, or gamepad.
 var gravity: Vector3 = Vector3.DOWN * ONE_G # Can point toward other directions.
 
 func _ready():
 	Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
-
+	
 func _physics_process(delta):
 	MovementLoop(delta)
 
@@ -22,35 +23,39 @@ func _physics_process(delta):
 	if Input.is_action_just_pressed("quit"):
 		get_tree().quit()
 		
-	
+
 func MovementLoop(delta_time):
-	direction = Vector3.ZERO
+	thrust = Vector3.ZERO
 
-	if Input.is_action_pressed("move_up"):
-		direction += -transform.basis.z
-	if Input.is_action_pressed("move_down"):
-		direction += transform.basis.z
+	# TODO: Add gamepad support.
+	if Input.is_action_pressed("move_forward"):
+		thrust += -transform.basis.z * AccelerationRate
+	if Input.is_action_pressed("move_back"):
+		thrust += transform.basis.z * AccelerationRate
 	if Input.is_action_pressed("move_left"):
-		direction += -transform.basis.x
+		thrust += -transform.basis.x * AccelerationRate
 	if Input.is_action_pressed("move_right"):
-		direction += transform.basis.x
-
-#	if Input.is_action_just_pressed("jump"):
-#		gravity *= -1
-#		print("jump")
-
-	if direction == Vector3.ZERO:
-		speed = 0
-	else:
-		speed += acceleration * delta_time
-		if speed > max_speed:
-			speed = max_speed
-
-	direction = direction.rotated(Vector3.UP, PIVOT.rotation.y).normalized()
-	#print(direction)
+		thrust += transform.basis.x * AccelerationRate
 	
-	var velocity = speed * direction# + gravity 
-	move_and_slide(velocity, Vector3.UP)
+	# Fly.	
+	if Input.is_action_pressed("move_up"):
+		thrust += -transform.basis.y * AccelerationRate
+	if Input.is_action_pressed("move_down"):
+		thrust += transform.basis.y * AccelerationRate
+	
+	if Input.is_action_pressed("jump"):
+		pass
+	if Input.is_action_pressed("break"):
+		velocity *= BreakDecay
+		
+	# Orient the thrust around the player's y axis, so the [wsad] isn't orientent to true north.
+	thrust = thrust.rotated(Vector3.UP, PIVOT.rotation.y).normalized()
+
+	
+#	if velocity.length() < 20:
+	velocity += thrust
+		
+	move_and_slide(velocity, Vector3.UP) # Includes delta_time.
 
 func _input(event):
 	if event is InputEventMouseMotion:
