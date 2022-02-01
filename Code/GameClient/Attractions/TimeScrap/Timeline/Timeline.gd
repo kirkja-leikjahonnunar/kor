@@ -1,7 +1,7 @@
 extends Tabs
 class_name Timeline
 
-const EVENT_PS: PackedScene = preload("res://Attractions/Timelines/TimelineEvent/TimelineEvent.tscn")
+const EVENT_PS: PackedScene = preload("res://Attractions/TimeScrap/TimelineEvent/TimelineEvent.tscn")
 
 onready var EVENTS_CONTAINER := $VBoxContainer/ScrollContainer/EventsContainer
 onready var TITLE_UI := $VBoxContainer/Title

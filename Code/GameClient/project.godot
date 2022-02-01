@@ -81,7 +81,7 @@ _global_script_class_icons={
 [application]
 
 config/name="GameClient"
-run/main_scene="res://Main/GameClient.tscn"
+run/main_scene="res://Content/Lawforms/PlayerController/PlayerControllerPG.tscn"
 boot_splash/bg_color=Color( 0.87451, 0.121569, 0.937255, 1 )
 
 [autoload]
@@ -93,6 +93,10 @@ Tools="*res://Main/Singeltons/Tools.gd"
 [editor_plugins]
 
 enabled=PoolStringArray( "res://addons/Todo_Manager/plugin.cfg" )
+
+[global]
+
+vsync=false
 
 [input]
 
@@ -155,3 +159,7 @@ pointing/emulate_touch_from_mouse=true
 [physics]
 
 common/enable_pause_aware_picking=true
+
+[rendering]
+
+environment/default_environment="res://Content/Environments/default_env.tres"

@@ -10,15 +10,15 @@ onready var VELOCITY_UI := $UI/VelocityUI
 export var MouseSenesitivity: float = 0.005 # TODO: Doc magic number.
 
 # m/s.
+export var IsGliding: bool = true # Use flying or sticky gravity. Magnetic stick?
 export var MaxSpeed: float = 10.0
 export var MinSpeed: float = 0.1
 export var AccelerationRate: float = 0.666
 export var BreakDecay: float = 0.95 # Damping.
-export var IsGliding: bool = true # Use flying or sticky gravity. Magnetic stick?
 
 var velocity: Vector3 # velocity =  vector.
 var thrust: Vector3 # Thrust vector from the user's keyboard, mouse, or gamepad.
-var gravity: Vector3 = Vector3.DOWN * MY_G # ONE_G # Gravity vector can point toward other directions.
+var gravity: Vector3 = Vector3.DOWN * ONE_G # Gravitational velocity vector can point toward other directions.
 
 func _ready():
 	Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)

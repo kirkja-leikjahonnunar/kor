@@ -1,7 +1,7 @@
 extends Node
 
-const TIMELINE_PS: PackedScene = preload("res://Attractions/Timelines/Timeline/Timeline.tscn")
-const EVENT_PS: PackedScene = preload("res://Attractions/Timelines/TimelineEvent/TimelineEvent.tscn")
+const TIMELINE_PS: PackedScene = preload("res://Attractions/TimeScrap/Timeline/Timeline.tscn")
+const EVENT_PS: PackedScene = preload("res://Attractions/TimeScrap/TimelineEvent/TimelineEvent.tscn")
 onready var TIMELINE_TABS := $UI/TimelineTabs
 
 var file_path: String = "res://Data/my_timeline.json"
