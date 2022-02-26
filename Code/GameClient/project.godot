@@ -81,7 +81,7 @@ _global_script_class_icons={
 [application]
 
 config/name="GameClient"
-run/main_scene="res://Content/Lawforms/PlayerController/PlayerControllerPG.tscn"
+run/main_scene="res://Main/GameClient.tscn"
 boot_splash/bg_color=Color( 0.87451, 0.121569, 0.937255, 1 )
 
 [autoload]

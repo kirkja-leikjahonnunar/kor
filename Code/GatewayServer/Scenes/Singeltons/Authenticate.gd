@@ -37,7 +37,7 @@ func PingRequest():
 # Called from AuthenticationServer.ValidateLogin()
 remote func AuthorizationResponse(result, player_id, authentication_token):
 	Gateway.AuthorizationResponse(result, player_id, authentication_token)
-	print("Results recieved and replying to player login request.")
+	print("Results recieved from Authenticate and replying to player login request.")
 	
 remote func PingResponse(message: String):
 	print(message)

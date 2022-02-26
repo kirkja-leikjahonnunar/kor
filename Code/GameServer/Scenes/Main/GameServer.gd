@@ -9,7 +9,7 @@ var expected_tokens = ["91b20b2cb97add3a4064912117681ea6c5efeb23fe2179b6d88aed3b
 					   "91b20b2cb97add3a4064912117681ea6c5efeb23fe2179b6d88aed3bb071ef891633327824",
 					   "91b20b2cb97add3a4064912117681ea6c5efeb23fe2179b6d88aed3bb071ef891633226935"]
 
-onready var player_verification_process = $PlayerVerification
+onready var player_verification_process := $PlayerVerification
 
 
 func _ready():
@@ -44,7 +44,7 @@ func FetchPlayerToken(player_id):
 	rpc_id(player_id, "FetchPlayerToken") # RPC to GameClient.
 	
 
-# Called from GameClient
+# Called from GameClient.
 remote func Validate(client_token):
 	var player_id = get_tree().get_rpc_sender_id()
 	player_verification_process.Verify(player_id, client_token)

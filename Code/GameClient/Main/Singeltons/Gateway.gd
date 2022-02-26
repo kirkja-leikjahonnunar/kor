@@ -17,6 +17,7 @@ func _process(_delta):
 	custom_multiplayer.poll()
 	
 func ConnectToGatewayServer(my_username: String, my_password: String, my_gateway_ip: String, my_gateway_port: int):
+	print(my_username + " | " + my_gateway_ip + " | " + str(my_gateway_port))
 	network = NetworkedMultiplayerENet.new()
 	gateway_api = MultiplayerAPI.new()
 	

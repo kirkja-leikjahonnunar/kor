@@ -11,9 +11,7 @@ var awaiting_verification = {}
 func Start(player_id):
 	awaiting_verification[player_id] = {"Timestamp": OS.get_unix_time()}
 	game_server.FetchPlayerToken(player_id)
-	
-	# Assuming a positive token succeeded.
-	#CreatePlayerContainer(player_id)
+	print(awaiting_verification + "________________")
 
 
 #------------------------------------------------------------------------------
@@ -26,10 +24,10 @@ func Verify(player_id, player_token):
 	# Try to verify for 30 seconds.
 	while OS.get_unix_time() - int(player_token.right(64)) <= 30:
 		
-		# If Internet broke.
+		# Grant access to the player, unless the internet broke.
 		if game_server.expected_tokens.has(player_token):
 			is_authorized = true
-			CreatePlayerContainer(player_id)
+			#CreatePlayerContainer(player_id)
 			awaiting_verification.erase(player_id)
 			game_server.expected_tokens.erase(player_token)
 			break

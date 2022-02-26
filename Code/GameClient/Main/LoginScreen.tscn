@@ -5,7 +5,6 @@
 [ext_resource path="res://Content/Textures/Logos/kirkja_rect.png" type="Texture" id=4]
 [ext_resource path="res://Content/Fonts/AGENCYR.TTF" type="DynamicFontData" id=5]
 
-
 [sub_resource type="DynamicFont" id=7]
 size = 40
 extra_spacing_char = 2
@@ -332,32 +331,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Studio LAN" type="Tabs" parent="MainLoginWindow/TabContainer"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = 4.0
-margin_top = 47.0
-margin_right = -4.0
-margin_bottom = -4.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-
-[node name="LAN Button" type="Button" parent="MainLoginWindow/TabContainer/Studio LAN"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = 66.0
-margin_top = 20.0
-margin_right = -66.0
-margin_bottom = -20.0
-custom_colors/font_color = Color( 0.784314, 0.905882, 0.764706, 1 )
-custom_fonts/font = SubResource( 11 )
-text = "Login > LAN"
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
 [node name="Localhost" type="Tabs" parent="MainLoginWindow/TabContainer"]
-visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 4.0
@@ -380,6 +354,31 @@ margin_bottom = 33.5
 custom_colors/font_color = Color( 0.784314, 0.905882, 0.764706, 1 )
 custom_fonts/font = SubResource( 11 )
 text = "Login > Localhost"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Studio LAN" type="Tabs" parent="MainLoginWindow/TabContainer"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 4.0
+margin_top = 47.0
+margin_right = -4.0
+margin_bottom = -4.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="LAN Button" type="Button" parent="MainLoginWindow/TabContainer/Studio LAN"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 66.0
+margin_top = 20.0
+margin_right = -66.0
+margin_bottom = -20.0
+custom_colors/font_color = Color( 0.784314, 0.905882, 0.764706, 1 )
+custom_fonts/font = SubResource( 11 )
+text = "Login > LAN"
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -489,6 +488,6 @@ __meta__ = {
 [connection signal="pressed" from="NewAccountWindow/CreateAccount" to="." method="_on_CreateAccount_pressed"]
 [connection signal="pressed" from="NewAccountWindow/MainLogin" to="." method="_on_MainLogin_pressed"]
 [connection signal="pressed" from="MainLoginWindow/NewAccount" to="." method="_on_NewAccount_pressed"]
-[connection signal="pressed" from="MainLoginWindow/TabContainer/Studio LAN/LAN Button" to="." method="_on_LAN_Button_pressed"]
 [connection signal="pressed" from="MainLoginWindow/TabContainer/Localhost/Localhost Button" to="." method="_on_Localhost_Button_pressed"]
+[connection signal="pressed" from="MainLoginWindow/TabContainer/Studio LAN/LAN Button" to="." method="_on_LAN_Button_pressed"]
 [connection signal="pressed" from="MainLoginWindow/TabContainer/Velmeran/VBoxContainer/Velmeran Button" to="." method="_on_Velmeran_Button_pressed"]
