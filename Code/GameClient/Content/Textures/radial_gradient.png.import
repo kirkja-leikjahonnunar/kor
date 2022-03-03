@@ -2,8 +2,8 @@
 
 importer="texture"
 type="StreamTexture"
-path.s3tc="res://.import/kirkja_rect.png-9521505793275a8261c987c46fd171c7.s3tc.stex"
-path.etc2="res://.import/kirkja_rect.png-9521505793275a8261c987c46fd171c7.etc2.stex"
+path.s3tc="res://.import/radial_gradient.png-8d0d82a85b78a76fa7ec819e0b379d41.s3tc.stex"
+path.etc2="res://.import/radial_gradient.png-8d0d82a85b78a76fa7ec819e0b379d41.etc2.stex"
 metadata={
 "imported_formats": [ "s3tc", "etc2" ],
 "vram_texture": true
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://Content/Textures/Logos/kirkja_rect.png"
-dest_files=[ "res://.import/kirkja_rect.png-9521505793275a8261c987c46fd171c7.s3tc.stex", "res://.import/kirkja_rect.png-9521505793275a8261c987c46fd171c7.etc2.stex" ]
+source_file="res://Content/Textures/radial_gradient.png"
+dest_files=[ "res://.import/radial_gradient.png-8d0d82a85b78a76fa7ec819e0b379d41.s3tc.stex", "res://.import/radial_gradient.png-8d0d82a85b78a76fa7ec819e0b379d41.etc2.stex" ]
 
 [params]
 
