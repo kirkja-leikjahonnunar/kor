@@ -1,0 +1,55 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://Main/level_grid.png" type="Texture" id=1]
+[ext_resource path="res://Main/GridMaterial.tres" type="Material" id=2]
+[ext_resource path="res://Main/GridSubtraction.tres" type="Material" id=3]
+
+[sub_resource type="SpatialMaterial" id=1]
+albedo_color = Color( 0.141176, 0.137255, 0.129412, 1 )
+albedo_texture = ExtResource( 1 )
+uv1_triplanar = true
+
+[sub_resource type="SpatialMaterial" id=2]
+albedo_color = Color( 0.164706, 0.788235, 0.262745, 1 )
+albedo_texture = ExtResource( 1 )
+uv1_triplanar = true
+
+[node name="Main" type="Spatial"]
+
+[node name="DirectionalLight" type="DirectionalLight" parent="."]
+transform = Transform( 0.766044, -0.321394, 0.55667, -0.620885, -0.145827, 0.770218, -0.166366, -0.93565, -0.311259, 0, 6, 0 )
+shadow_enabled = true
+
+[node name="CSGCombiner" type="CSGCombiner" parent="."]
+
+[node name="Little" type="CSGBox" parent="CSGCombiner"]
+width = 10.0
+depth = 8.0
+material = ExtResource( 2 )
+
+[node name="Floor" type="CSGBox" parent="CSGCombiner"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0 )
+width = 38.0
+depth = 42.0
+material = SubResource( 1 )
+
+[node name="Block" type="CSGBox" parent="CSGCombiner"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -14 )
+width = 18.0
+height = 6.0
+depth = 8.0
+material = ExtResource( 2 )
+
+[node name="Sub" type="CSGBox" parent="CSGCombiner/Block"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, 4 )
+operation = 2
+width = 10.0
+height = 4.0
+depth = 8.0
+material = ExtResource( 3 )
+
+[node name="CSGPolygon" type="CSGPolygon" parent="CSGCombiner"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 2, 2 )
+polygon = PoolVector2Array( -3, 5, 0, 4, 3, 5, 3, 0, -3, 0, -5, 1, -4, 3 )
+depth = 5.17
+material = SubResource( 2 )
