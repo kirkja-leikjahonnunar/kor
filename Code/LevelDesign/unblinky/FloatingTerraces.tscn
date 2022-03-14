@@ -1,0 +1,20 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Main/GridMaterial.tres" type="Material" id=1]
+[ext_resource path="res://unblinky/FloatingTerraces.gd" type="Script" id=2]
+
+[node name="FloatingTerraces" type="Spatial"]
+script = ExtResource( 2 )
+
+[node name="CSGCombiner" type="CSGCombiner" parent="."]
+
+[node name="CSGBox" type="CSGBox" parent="CSGCombiner"]
+width = 12.0
+depth = 12.0
+material = ExtResource( 1 )
+
+[node name="CSGBox2" type="CSGBox" parent="CSGCombiner"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4, 0 )
+width = 6.0
+depth = 6.0
+material = ExtResource( 1 )
