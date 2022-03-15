@@ -1,0 +1,62 @@
+[gd_scene load_steps=10 format=2]
+
+[ext_resource path="res://Content/Shaders/black_hole.tres" type="Shader" id=1]
+[ext_resource path="res://Content/Shaders/fresnel.tres" type="Shader" id=2]
+[ext_resource path="res://Content/Materials/level_grid.tres" type="Material" id=3]
+
+[sub_resource type="SphereMesh" id=21]
+
+[sub_resource type="ShaderMaterial" id=20]
+shader = ExtResource( 1 )
+
+[sub_resource type="CylinderMesh" id=23]
+top_radius = 1.297
+bottom_radius = 1.292
+height = 0.032
+
+[sub_resource type="SpatialMaterial" id=18]
+albedo_color = Color( 0.698039, 0.701961, 0.658824, 1 )
+emission_enabled = true
+emission = Color( 1, 1, 1, 1 )
+emission_energy = 30.05
+emission_operator = 0
+emission_on_uv2 = false
+
+[sub_resource type="ShaderMaterial" id=24]
+shader = ExtResource( 2 )
+shader_param/FresnelExponent = 2.064
+shader_param/FresnelColor = Color( 0.792157, 0.137255, 0.137255, 1 )
+shader_param/Emmission = Color( 0, 0, 0, 1 )
+
+[sub_resource type="PlaneMesh" id=16]
+
+[node name="MaterialsPG" type="Spatial"]
+
+[node name="BlackHole" type="MeshInstance" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.202513, 2.76807 )
+mesh = SubResource( 21 )
+material/0 = SubResource( 20 )
+
+[node name="Disk" type="MeshInstance" parent="BlackHole"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.083929, 0 )
+cast_shadow = 0
+mesh = SubResource( 23 )
+skeleton = NodePath("../..")
+material/0 = SubResource( 18 )
+
+[node name="Bubble" type="MeshInstance" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.202513, -2.74462 )
+mesh = SubResource( 21 )
+material/0 = SubResource( 24 )
+
+[node name="Plane" type="MeshInstance" parent="."]
+transform = Transform( 7, 0, 0, 0, 7, 0, 0, 0, 7, 0, -1.96389, 0 )
+mesh = SubResource( 16 )
+material/0 = ExtResource( 3 )
+
+[node name="DirectionalLight" type="DirectionalLight" parent="."]
+transform = Transform( 1, 0, 0, 0, -0.63161, 0.775286, 0, -0.775286, -0.63161, 4.76837e-07, 6.67393, -4.76937 )
+shadow_enabled = true
+
+[node name="CSGCombiner" type="CSGCombiner" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.74882, 0 )

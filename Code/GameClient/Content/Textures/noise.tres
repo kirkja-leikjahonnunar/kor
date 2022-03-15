@@ -3,4 +3,5 @@
 [sub_resource type="OpenSimplexNoise" id=1]
 
 [resource]
+as_normalmap = true
 noise = SubResource( 1 )
