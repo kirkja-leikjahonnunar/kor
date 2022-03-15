@@ -84,7 +84,7 @@ input_name = "normal"
 input_name = "view"
 
 [sub_resource type="VisualShaderNodeScalarConstant" id=39]
-constant = 1.6
+constant = 1.698
 
 [sub_resource type="VisualShaderNodeDotProduct" id=40]
 
@@ -93,7 +93,7 @@ default_input_values = [ 0, 1.0, 1, 0.0 ]
 operator = 1
 
 [sub_resource type="VisualShaderNodeScalarConstant" id=42]
-constant = 2.5
+constant = 2.814
 
 [sub_resource type="VisualShaderNodeScalarClamp" id=9]
 
@@ -117,6 +117,7 @@ input_name = "normal"
 function = 2
 
 [sub_resource type="VisualShaderNodeTransformVecMult" id=49]
+operator = 1
 
 [sub_resource type="VisualShaderNodeVectorDecompose" id=50]
 
@@ -129,7 +130,7 @@ operator = 5
 operator = 1
 
 [sub_resource type="VisualShaderNodeScalarConstant" id=53]
-constant = 6.0
+constant = 15.544
 
 [sub_resource type="VisualShaderNodeScalarOp" id=54]
 default_input_values = [ 0, 1.0, 1, 0.0 ]
@@ -149,6 +150,7 @@ input_name = "screen_uv"
 output_port_for_preview = 0
 
 [sub_resource type="VisualShaderNodeTexture" id=59]
+output_port_for_preview = 0
 source = 1
 
 [sub_resource type="VisualShaderNodeVectorOp" id=60]
@@ -185,7 +187,7 @@ void fragment() {
 	vec3 n_out55p0 = -(n_out54p0);
 
 // TransformVectorMult:56
-	vec3 n_out56p0 = (n_out53p0 * vec4(n_out55p0, 1.0)).xyz;
+	vec3 n_out56p0 = (vec4(n_out55p0, 1.0) * n_out53p0).xyz;
 
 // VectorDecompose:57
 	float n_out57p0 = n_out56p0.x;
@@ -210,7 +212,7 @@ void fragment() {
 	float n_out48p0 = n_in48p0 - n_out47p0;
 
 // Scalar:44
-	float n_out44p0 = 1.600000;
+	float n_out44p0 = 1.698000;
 
 // ScalarOp:59
 	float n_out59p0 = pow(n_out48p0, n_out44p0);
@@ -220,7 +222,7 @@ void fragment() {
 	float n_out61p0 = n_in61p0 - n_out59p0;
 
 // Scalar:60
-	float n_out60p0 = 6.000000;
+	float n_out60p0 = 15.544000;
 
 // ScalarOp:62
 	float n_out62p0 = pow(n_out61p0, n_out60p0);
@@ -244,7 +246,7 @@ void fragment() {
 	}
 
 // Scalar:49
-	float n_out49p0 = 2.500000;
+	float n_out49p0 = 2.814000;
 
 // ScalarOp:50
 	float n_out50p0 = n_out48p0 * n_out49p0;
@@ -268,7 +270,7 @@ void light() {
 
 }
 "
-graph_offset = Vector2( -663.541, 119.844 )
+graph_offset = Vector2( 1497.27, -420.874 )
 nodes/fragment/0/position = Vector2( 3460, -340 )
 nodes/fragment/2/node = SubResource( 7 )
 nodes/fragment/2/position = Vector2( -100, 180 )
