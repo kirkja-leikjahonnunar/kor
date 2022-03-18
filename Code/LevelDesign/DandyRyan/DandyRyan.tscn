@@ -194,40 +194,40 @@ height = 1.5
 smooth_faces = false
 material = ExtResource( 4 )
 
-[node name="ChairBase" type="CSGCylinder" parent="CSGCombiner/RoomExt"]
+[node name="Chair" type="CSGCylinder" parent="CSGCombiner/RoomExt"]
 transform = Transform( 0.866025, 0, 0.5, 0, 1, 0, -0.5, 0, 0.866025, 1.1875, -3, -1 )
 height = 0.5
 cone = true
 material = ExtResource( 7 )
 
-[node name="ChairStand" type="CSGCylinder" parent="CSGCombiner/RoomExt/ChairBase"]
+[node name="ChairStand" type="CSGCylinder" parent="CSGCombiner/RoomExt/Chair"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.4375, 0 )
 radius = 0.0625
 height = 0.5
 material = ExtResource( 7 )
 
-[node name="ChairSeat" type="CSGBox" parent="CSGCombiner/RoomExt/ChairBase"]
+[node name="ChairSeat" type="CSGBox" parent="CSGCombiner/RoomExt/Chair"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6875, -0.0625 )
 width = 0.875
 height = 0.125
 depth = 0.875
 material = ExtResource( 7 )
 
-[node name="ChairArm2" type="CSGBox" parent="CSGCombiner/RoomExt/ChairBase/ChairSeat"]
+[node name="ChairArm2" type="CSGBox" parent="CSGCombiner/RoomExt/Chair/ChairSeat"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.4375, 0.3125, 0.1875 )
 width = 0.125
 height = 0.125
 depth = 0.625
 material = ExtResource( 7 )
 
-[node name="ChairArm" type="CSGBox" parent="CSGCombiner/RoomExt/ChairBase/ChairSeat"]
+[node name="ChairArm" type="CSGBox" parent="CSGCombiner/RoomExt/Chair/ChairSeat"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.4375, 0.3125, 0.1875 )
 width = 0.125
 height = 0.125
 depth = 0.625
 material = ExtResource( 7 )
 
-[node name="ChairBack" type="CSGBox" parent="CSGCombiner/RoomExt/ChairBase/ChairSeat"]
+[node name="ChairBack" type="CSGBox" parent="CSGCombiner/RoomExt/Chair/ChairSeat"]
 transform = Transform( 1, 0, 0, 0, 0.258819, 0.965926, 0, -0.965926, 0.258819, 0, 0.625, 0.625 )
 width = 0.875
 height = 0.125
