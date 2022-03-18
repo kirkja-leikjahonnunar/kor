@@ -51,7 +51,7 @@ depth = 1.75
 material = ExtResource( 2 )
 
 [node name="Window" type="CSGBox" parent="CSGCombiner/RoomExt"]
-transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 4.5, 0, 0.0625005 )
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 4.5, 0, 4.76837e-07 )
 operation = 2
 width = 1.0
 height = 4.125
@@ -174,20 +174,20 @@ height = 0.125
 depth = 0.25
 material = ExtResource( 6 )
 
-[node name="BedFrame" type="CSGBox" parent="CSGCombiner/RoomExt"]
+[node name="Bed" type="CSGBox" parent="CSGCombiner/RoomExt"]
 transform = Transform( 1.25, 0, 0, 0, 1.25, 0, 0, 0, 1.25, 2.125, -2.75, 2.75 )
 width = 3.0
 height = 0.5
 material = ExtResource( 3 )
 
-[node name="Mattress" type="CSGBox" parent="CSGCombiner/RoomExt/BedFrame"]
+[node name="Mattress" type="CSGBox" parent="CSGCombiner/RoomExt/Bed"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.125, 0 )
 width = 2.75
 height = 0.5
 depth = 1.75
 material = ExtResource( 4 )
 
-[node name="Pillow" type="CSGCylinder" parent="CSGCombiner/RoomExt/BedFrame/Mattress"]
+[node name="Pillow" type="CSGCylinder" parent="CSGCombiner/RoomExt/Bed/Mattress"]
 transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 1, 0.125, 0 )
 radius = 0.25
 height = 1.5
