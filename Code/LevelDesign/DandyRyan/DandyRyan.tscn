@@ -234,55 +234,55 @@ height = 0.125
 depth = 1.25
 material = ExtResource( 7 )
 
-[node name="Table" type="CSGBox" parent="CSGCombiner"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 1.0625, -2.625 )
+[node name="Table" type="CSGBox" parent="CSGCombiner/RoomExt"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -2, -1.9375, 3.375 )
 height = 0.125
 depth = 1.25
 material = ExtResource( 5 )
 
-[node name="TableLeg" type="CSGBox" parent="CSGCombiner/Table"]
+[node name="TableLeg" type="CSGBox" parent="CSGCombiner/RoomExt/Table"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.9375, -0.5625, -0.5625 )
 width = 0.125
 height = 1.0
 depth = 0.125
 material = ExtResource( 5 )
 
-[node name="TableLeg2" type="CSGBox" parent="CSGCombiner/Table"]
+[node name="TableLeg2" type="CSGBox" parent="CSGCombiner/RoomExt/Table"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.9375, -0.5625, 0.5625 )
 width = 0.125
 height = 1.0
 depth = 0.125
 material = ExtResource( 5 )
 
-[node name="TableLeg3" type="CSGBox" parent="CSGCombiner/Table"]
+[node name="TableLeg3" type="CSGBox" parent="CSGCombiner/RoomExt/Table"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.9375, -0.5625, 0.5625 )
 width = 0.125
 height = 1.0
 depth = 0.125
 material = ExtResource( 5 )
 
-[node name="TableLeg4" type="CSGBox" parent="CSGCombiner/Table"]
+[node name="TableLeg4" type="CSGBox" parent="CSGCombiner/RoomExt/Table"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.9375, -0.5625, -0.5625 )
 width = 0.125
 height = 1.0
 depth = 0.125
 material = ExtResource( 5 )
 
-[node name="Printer" type="CSGBox" parent="CSGCombiner/Table"]
+[node name="Printer" type="CSGBox" parent="CSGCombiner/RoomExt/Table"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1875, 0.1875 )
 width = 0.875
 height = 0.25
 depth = 0.5
 material = ExtResource( 6 )
 
-[node name="PrinterTray" type="CSGBox" parent="CSGCombiner/Table/Printer"]
+[node name="PrinterTray" type="CSGBox" parent="CSGCombiner/RoomExt/Table/Printer"]
 transform = Transform( 1, 0, 0, 0, 0.965926, -0.258819, 0, 0.258819, 0.965926, 0, 0.1875, 0.1875 )
 width = 0.625
 height = 0.25
 depth = 0.002
 material = ExtResource( 6 )
 
-[node name="PrinterOutput" type="CSGBox" parent="CSGCombiner/Table/Printer"]
+[node name="PrinterOutput" type="CSGBox" parent="CSGCombiner/RoomExt/Table/Printer"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.1875 )
 operation = 2
 width = 0.625
