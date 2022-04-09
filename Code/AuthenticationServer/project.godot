@@ -14,3 +14,7 @@ config/name="AuthenticationServer"
 run/main_scene="res://Scenes/Main/Server.tscn"
 config/icon="res://icon.png"
 config/features=PackedStringArray("4.0", "Vulkan Clustered")
+
+[autoload]
+
+PlayerData="*res://Scenes/Singletons/PlayerData.gd"
