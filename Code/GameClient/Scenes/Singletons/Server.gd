@@ -25,42 +25,29 @@ func connection_failed():
 
 func connection_succeeded():
 	print ("Connection succeeded!")
-	RequestPlayerDataLocal()
-	#RequestPlayerData("thing", get_instance_id())
+	#RequestPlayerDataLocal()
+	RequestPlayerDataLocal("thing", get_instance_id())
 
 
-#@rpc
-#func RequestPlayerData(what: String, requestor: int):
-#	print("RequestPlayerData ",what," requestor: ", requestor)
-#
-#	rpc_id(1, "RequestPlayerData", what, requestor)
-#
-#
+
 #@rpc(any_peer)
 #func PlayerDataResponse(returned, requestor):
 #	print("client received response: "+returned)
 #	#instance_from_id(requestor).dealwithit
 
 
-func RequestPlayerDataLocal():
+func RequestPlayerDataLocal(what: String, requestor: int):
 	print("RequestPlayerData on client")
 	
-	rpc_id(1, "RequestPlayerData")
+	rpc_id(1, "RequestPlayerData", what, requestor)
 
 
 # this is a stub, the true function is on the real server
-@rpc(any_peer)
-func RequestPlayerData():
-	pass
+@rpc(any_peer) func RequestPlayerData(what:String, requestor:int): pass
 
 
 @rpc(any_peer)
-func PlayerDataResponse():
-	print("client received response: ")
+func PlayerDataResponse(what:String, requestor:int):
+	print("client received response: ", what, ", requestor: ", requestor)
 	#instance_from_id(requestor).dealwithit
-
-
-#@rpc(unreliable)
-#func UpdateWhatever():
-#	pass
 

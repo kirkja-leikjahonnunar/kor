@@ -33,24 +33,15 @@ func peer_disconnected(player_id):
 	print ("User " + str(player_id) + " Disconnected!")
 
 
-#@rpc(any_peer)
-#func RequestPlayerData(what:String, requestor:int):
-#	var player_id = multiplayer.get_remote_sender_id()
-#	print("RequestPlayerData: ", what, ": ", requestor)
-#
-#	print("sending response for "+what)
-#	rpc_id(player_id, "PlayerDataResponse", what+"-booyah", requestor)
-
-
-
 @rpc(any_peer)
-func RequestPlayerData():
+func RequestPlayerData(what:String, requestor:int):
 	var player_id = multiplayer.get_remote_sender_id()
-	print("RequestPlayerData on server")
-	
-	rpc_id(player_id, "PlayerDataResponse")
+	print("RequestPlayerData: ", what, ": ", requestor)
+
+	print("sending response for "+what)
+	rpc_id(player_id, "PlayerDataResponse", what+"-booyah", requestor)
 
 
 # this is a stub, the real function is on client side
-@rpc(any_peer) func PlayerDataResponse(): pass
+@rpc(any_peer) func PlayerDataResponse(what:String, requestor:int): pass
 
