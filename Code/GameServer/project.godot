@@ -10,12 +10,6 @@ config_version=5
 
 [application]
 
-config/name="GameClient"
-run/main_scene="res://Scenes/Main/Client.tscn"
+config/name="GameServer"
 config/icon="res://icon.png"
 config/features=PackedStringArray("4.0", "Vulkan Clustered")
-
-[autoload]
-
-GameServer="*res://Scenes/Singletons/GameServer.gd"
-GatewayServer="*res://Scenes/Singletons/GatewayServer.gd"
