@@ -2,7 +2,7 @@ extends Node
 
 
 
-func _input(event):
+func _unhandled_input(event):
 #	print ("_input event", event)
 #	if Input.is_action_pressed("Quit"): 
 #		get_tree().quit()

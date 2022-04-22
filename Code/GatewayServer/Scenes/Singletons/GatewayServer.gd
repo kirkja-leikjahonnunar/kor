@@ -1,5 +1,6 @@
 extends Node
 
+# GatewayServer on GatewayServer project
 #note: this is a singleton!
 
 var network := ENetMultiplayerPeer.new()
@@ -10,6 +11,7 @@ var max_players := 100
 
 func _ready():
 	StartServer()
+
 
 func _process(_delta):
 	if not custom_multiplayer.has_multiplayer_peer():
@@ -29,26 +31,26 @@ func StartServer():
 	network.peer_disconnected.connect(peer_disconnected)
 
 
-func peer_connected(player_id):
-	print ("Authenticate peer connected! ", player_id)
+func peer_connected(game_client_id):
+	print ("Authenticate peer connected! player_id: ", game_client_id)
 
 
-func peer_disconnected(player_id):
-	print ("Authenticate peer disconnected! ", player_id)
+func peer_disconnected(game_client_id):
+	print ("Authenticate peer disconnected! player_id: ", game_client_id)
 
 
 @rpc(any_peer)
 func LoginRequest(username: String, password: String):
 	print("LoginRequest on GatewayServer")
 	
-	var player_id = custom_multiplayer.get_remote_sender_id()
-	AuthenticationServer.AuthenticatePlayer(username, password, player_id)
+	var game_client_id = custom_multiplayer.get_remote_sender_id()
+	AuthenticationServer.AuthenticatePlayer(username, password, game_client_id)
 	#rpc_id(1, "RequestPlayerData", what, requestor)
 
-@rpc
-func ReturnLoginRequest(result, player_id):
-	rpc_id(player_id, "ReturnLoginRequest", result)
-	network.get_peer(player_id).peer_disconnect()
+@rpc(any_peer)
+func ReturnLoginRequest(result, game_client_id):
+	rpc_id(game_client_id, "ReturnLoginRequest", result)
+	network.get_peer(game_client_id).peer_disconnect()
 
 
 ## this is a stub, the true function is on the real server

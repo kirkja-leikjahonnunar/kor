@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://c2inidy2c0qc"]
+
+[ext_resource type="Script" path="res://Scenes/Main/GameServer.gd" id="1_7h12j"]
+
+[node name="GameServer" type="Node3D"]
+script = ExtResource( "1_7h12j" )

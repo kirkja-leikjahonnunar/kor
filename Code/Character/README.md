@@ -28,8 +28,8 @@ TODO: This potentially allows adaptation to taking over the camera to look at po
 ## TODO
 
 ### BUGS
-- can't push rigidbodies that are just lying around
-- need to lerp velocity, diff lerp for in air, continue velocity when in air
+- can't push rigidbodies that are just lying around -> has to do with non-bidirectional mask-layer combos
+- need to lerp velocity, diff lerp for in air?, continue velocity when in air regardless of sprint?
 
 ### Basic modes and configuration
 - [x] 3rd person mode
@@ -69,11 +69,11 @@ TODO: This potentially allows adaptation to taking over the camera to look at po
 - [ ] climb
   - [ ] free climb
   - [ ] legde climb
-  - [ ] pole climb
+  - [ ] pole climb/slide
   - [ ] ladders
 
 ### Modeling, animations, ik
-- [ ] default model with various animations.. use GDQuest's?
+- [ ] default model with various animations.. use GDQuest's mannequin?
 - [ ] head look ik
 - [ ] walking on stairs ik
 - [ ] ladder ik
@@ -83,3 +83,4 @@ TODO: This potentially allows adaptation to taking over the camera to look at po
 - [ ] hand poses
 - [ ] reach indicator
 - [ ] dances?
+

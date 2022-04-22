@@ -1,10 +1,11 @@
 extends Node
 
+#AuthenticationServer on GatewayServer project
 #note: this is a singleton!
 
-var network := ENetMultiplayerPeer.new()
+var auth_network := ENetMultiplayerPeer.new()
 var ip := "127.0.0.1"
-var port := 1911
+var port := 1911 # of AuthenticationServer
 
 
 func _ready():
@@ -12,38 +13,63 @@ func _ready():
 
 
 func ConnectToServer():
-	network.create_client(ip, port)
-	multiplayer.set_multiplayer_peer(network)
+	auth_network.create_client(ip, port)
+	multiplayer.set_multiplayer_peer(auth_network)
 	
-	network.connection_failed.connect(connection_failed)
-	network.connection_succeeded.connect(connection_succeeded)
+	auth_network.connection_failed.connect(connection_failed)
+	auth_network.connection_succeeded.connect(connection_succeeded)
+	auth_network.server_disconnected.connect(ServerDisconnected)
 
 
 func connection_failed():
-	print ("Authenticate Connection failed!")
+	print ("AuthenticateServer Connection failed!")
 
 
 func connection_succeeded():
-	print ("Authenticate Connection succeeded!")
+	print ("AuthenticateServer Connection succeeded!")
 	#RequestPlayerDataLocal("thing", get_instance_id())
-
-
-@rpc
-func AuthenticatePlayer(username: String, password: String, player_id):
-	print("AuthenticatePlayer on GatewayServer")
 	
-	rpc_id(1, "AuthenticatePlayer", username, password, player_id)
+	# ping for debugging:
+	#get_tree().create_timer(1.0).timeout.connect(PingAuthServer)
+
+func ServerDisconnected():
+	print ("Auth server disconnected. Oh no!")
+
 
 @rpc
-func AuthenticationResults(result, player_id):
-	print("Auth result: ", result, " for ", player_id)
-	GatewayServer.ReturnLoginRequest(result, player_id)
+func AuthenticatePlayer(username: String, password: String, game_client_id):
+	print("calling AuthenticatePlayer from GatewayServer")
+	
+	rpc_id(1, "AuthenticatePlayer", username, password, game_client_id)
+
+@rpc
+func AuthenticationResults(result, game_client_id):
+	print("Auth result: ", result, " for ", game_client_id)
+	GatewayServer.ReturnLoginRequest(result, game_client_id)
+
+
+#----------------------- Ping test -------------------------
+var last_ping_time := 0
+var do_pings := false
+
+# for debugging rpc calls..
+func PingAuthServer():
+	do_pings = true
+	print ("Trying to ping auth server from GatewayServer...")
+	last_ping_time = Time.get_ticks_usec()
+	rpc_id(1, "PingAuthenticateServer")
+
+@rpc func PingAuthenticateServer(): pass
+@rpc func AuthPingResponse():
+	print ("Auth server ping returned! elapsed time (ms): ", (Time.get_ticks_usec()-last_ping_time)/1000.0)
+	last_ping_time = 0
+	if do_pings:
+		get_tree().create_timer(1.0).timeout.connect(PingAuthServer)
 
 
 
 ## this is a stub, the true function is on the real server
 #@rpc(any_peer) func RequestPlayerData(what:String, requestor:int): pass
-#
 #
 #@rpc(any_peer)
 #func PlayerDataResponse(what:String, requestor:int):

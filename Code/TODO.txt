@@ -1,0 +1,24 @@
+TODO:
+
+export port number across projects
+
+
+
+PORTING NOTES
+-------------
+
+get_tree().set_network_peer()   ->   ??? custom_multiplayer.set_root_path("/GatewayServer")
+custom_multiplayer.set_network_peer(network)   ->   custom_multiplayer.set_multiplayer_peer(network)
+
+
+CHEATSHEET
+----------
+One off timers:    get_tree().create_timer(1.0).timeout.connect(YourFunction)
+
+
+GRIPES
+------
+
+Searching editor settings i.e. "port", does not search across all sections!!!!!
+
+in filesystem panel, add new scene, creates new scene but does not save immediately

@@ -20,6 +20,8 @@ extends CharacterBody3D
 @export var invert_x := true
 @export var allow_mouse_toggle := true
 
+@export var SettingsOverlay : NodePath
+@onready var settings_overlay = get_node(SettingsOverlay) if !SettingsOverlay.is_empty() else null
 
 class CameraSettings: # TODO: develop this to be easier to load/save configs
 	var fov := 75.0
@@ -114,6 +116,15 @@ func _process(_delta):
 	pass
 
 func _input(event):
+	if settings_overlay && settings_overlay.visible:
+		if event is InputEventKey:
+			if event.physical_keycode == KEY_ESCAPE:
+				print ("Escaped during menu")
+				settings_overlay.visible = false
+				get_tree().root.set_input_as_handled()
+
+
+func _unhandled_input(event):
 	# turn off mouse if you click
 	if event is InputEventMouseButton:
 		SetMouseVisible(false)
@@ -123,8 +134,7 @@ func _input(event):
 		if Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED:
 			HandleCameraMove(-event.relative.x * mouse_sensitivity,
 							event.relative.y * mouse_sensitivity)
-
-func _unhandled_input(_event):
+							
 	# toggle mouse on/off
 	if allow_mouse_toggle && Input.is_action_just_pressed("char_toggle_mouse"):
 		SetMouseVisible(Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED)
@@ -171,8 +181,10 @@ func HandleCameraMove(x,y):
 func SetMouseVisible(yes: bool):
 	if yes:
 		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+		if settings_overlay: settings_overlay.visible = true
 	else:
 		Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+		if settings_overlay: settings_overlay.visible = false
 
 
 func HandleZoom(amount):

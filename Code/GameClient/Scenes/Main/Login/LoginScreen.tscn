@@ -29,11 +29,13 @@ metadata/_edit_group_ = true
 [node name="Username" type="LineEdit" parent="MainLoginWindow/VBoxContainer"]
 offset_right = 186.0
 offset_bottom = 31.0
+text = "oeuao"
 
 [node name="Password" type="LineEdit" parent="MainLoginWindow/VBoxContainer"]
 offset_top = 35.0
 offset_right = 186.0
 offset_bottom = 66.0
+text = "oeuioiu"
 secret = true
 
 [node name="Login" type="Button" parent="MainLoginWindow/VBoxContainer"]
@@ -41,3 +43,5 @@ offset_top = 70.0
 offset_right = 186.0
 offset_bottom = 101.0
 text = "Login"
+
+[connection signal="pressed" from="MainLoginWindow/VBoxContainer/Login" to="." method="_on_login_pressed"]

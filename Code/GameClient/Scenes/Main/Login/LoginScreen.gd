@@ -26,6 +26,7 @@ func _ready():
 	USERNAME_IN.grab_focus()
 	
 
+# pop up a message for user
 func Opine(message: String):
 	#OPINE.text = message
 	print(message)
@@ -42,11 +43,12 @@ func AttemptLogin():
 		GatewayServer.ConnectToServer(username, password)
 
 
-#func _on_Localhost_Button_pressed():
-#	gateway_ip = "127.0.0.1"
-#	gateway_port = 1910
-#	AttemptLogin(gateway_ip, gateway_port)
-#
+func _on_login_pressed():
+#	pass # Replace with function body.
+	gateway_ip = "127.0.0.1"
+	gateway_port = 1910
+	AttemptLogin()
+
 #func _on_LAN_Button_pressed():
 #	gateway_ip = "192.168.202.202"
 #	gateway_port = 1910
@@ -83,3 +85,5 @@ func AttemptLogin():
 #func _on_MainLogin_pressed():
 #	MAIN_LOGIN_WINDOW.show()
 #	NEW_ACCOUNT_WINDOW.hide()
+
+

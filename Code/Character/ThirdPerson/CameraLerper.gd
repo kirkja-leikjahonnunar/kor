@@ -1,3 +1,8 @@
+#
+# This camera lerps to camera targets defined by various other things,
+# like a player's camera rig or scene poi cameras.
+#
+
 extends Camera3D
 
 @export var FollowProxy : NodePath
@@ -12,5 +17,8 @@ func _ready():
 func _physics_process(delta):
 	global_transform = global_transform.interpolate_with(follow_proxy.global_transform, lerp_speed*delta)
 
-#func _process(delta):
-#	global_transform = global_transform.interpolate_with(follow_proxy.global_transform, lerp_speed * Engine.get_physics_interpolation_fraction())
+func _process(_delta):
+	if $SelectorCast.is_colliding():
+		$Indicator/TargetIndicator.global_transform.origin = $SelectorCast.get_collision_point()
+		$Indicator/TargetIndicator.visible = true
+

@@ -1,7 +1,7 @@
 extends Node
 
 var network := ENetMultiplayerPeer.new()
-var port := 1909
+var port := 1911
 var max_servers := 5
 
 
@@ -33,7 +33,7 @@ func peer_disconnected(gateway_id):
 
 
 @rpc(any_peer)
-func AuthenticatePlayer(username:String, password:String, player_id):
+func AuthenticatePlayer(username:String, password:String, game_client_id):
 	print("AuthenticatePlayer on AuthenticationServer: ", username, ": ", password)
 	var gateway_id = multiplayer.get_remote_sender_id()
 	var result
@@ -49,9 +49,22 @@ func AuthenticatePlayer(username:String, password:String, player_id):
 		result = true
 	
 	print("sending auth response for "+username, ", result: ", result)
-	rpc_id(gateway_id, "AuthenticationResults", result, player_id)
+	rpc_id(gateway_id, "AuthenticationResults", result, game_client_id)
 
 
 # these are stubs, the real functions are on client side
 #@rpc(any_peer) func PlayerDataResponse(what:String, requestor:int): pass
 @rpc(any_peer) func AuthenticationResults(_result, _player_id): pass #sends to GatewayServer
+
+
+#---------------- Ping test ----------------------------
+
+# for debugging rpc calls..
+
+@rpc(any_peer)
+func PingAuthenticateServer():
+	var gateway_id = multiplayer.get_remote_sender_id()
+	print ("Sending ping response to gateway: ", gateway_id)
+	rpc_id(gateway_id, "AuthPingResponse")
+@rpc func AuthPingResponse(): pass
+

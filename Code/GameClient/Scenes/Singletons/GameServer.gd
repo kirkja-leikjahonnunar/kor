@@ -1,5 +1,6 @@
 extends Node
 
+# GameServer on GameClient
 #note: this is a singleton!
 
 var network := ENetMultiplayerPeer.new()
@@ -8,10 +9,12 @@ var port := 1909
 
 
 func _ready():
-	ConnectToServer()
+	pass
+	#ConnectToServer()
 
 
 func ConnectToServer():
+	print ("Attempting to connect to game server...")
 	network.create_client(ip, port)
 	multiplayer.set_multiplayer_peer(network)
 	
@@ -20,11 +23,11 @@ func ConnectToServer():
 
 
 func connection_failed():
-	print ("Connection failed!")
+	print ("GameServer Connection failed!")
 
 
 func connection_succeeded():
-	print ("Connection succeeded!")
+	print ("GameServer Connection succeeded!")
 	#RequestPlayerDataLocal()
 	RequestPlayerDataLocal("thing", get_instance_id())
 
@@ -43,7 +46,7 @@ func RequestPlayerDataLocal(what: String, requestor: int):
 
 
 # this is a stub, the true function is on the real server
-@rpc(any_peer) func RequestPlayerData(what:String, requestor:int): pass
+@rpc(any_peer) func RequestPlayerData(_what:String, _requestor:int): pass
 
 
 @rpc(any_peer)
