@@ -23,10 +23,10 @@ func start_server():
 	
 	#print("peer id: "+network.)
 
-var gateway_id
-func peer_connected(gateway_id):
+var gateway_id # we only have this global to test pinging
+func peer_connected(new_gateway_id):
 	print ("Gateway " + str(gateway_id) + " Connected!")
-	self.gateway_id = gateway_id
+	gateway_id = new_gateway_id
 	# ping for debugging, auth to gateway:
 	get_tree().create_timer(1.0).timeout.connect(DoPingGatewayServer)
 
@@ -38,7 +38,7 @@ func peer_disconnected(gateway_id):
 @rpc(any_peer)
 func AuthenticatePlayer(username:String, password:String, game_client_id):
 	print("AuthenticatePlayer on AuthenticationServer: ", username, ": ", password)
-	var gateway_id = multiplayer.get_remote_sender_id()
+	var from_gateway_id = multiplayer.get_remote_sender_id()
 	var result
 
 	if not PlayerData.HasPlayer(username):
@@ -52,7 +52,7 @@ func AuthenticatePlayer(username:String, password:String, game_client_id):
 		result = true
 	
 	print("sending auth response for "+username, ", result: ", result)
-	rpc_id(gateway_id, "AuthenticationResults", result, game_client_id)
+	rpc_id(from_gateway_id, "AuthenticationResults", result, game_client_id)
 
 
 # these are stubs, the real functions are on client side
