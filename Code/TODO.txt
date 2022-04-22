@@ -22,3 +22,7 @@ GRIPES
 Searching editor settings i.e. "port", does not search across all sections!!!!!
 
 in filesystem panel, add new scene, creates new scene but does not save immediately
+
+Script editor:
+  when you collapse the file list, should still show current file name, maybe on the collapse bar (currently just dead space)
+  need better script file navigation, ie next file/ prev file

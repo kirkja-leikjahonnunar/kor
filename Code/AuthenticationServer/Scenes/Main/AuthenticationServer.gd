@@ -23,9 +23,12 @@ func start_server():
 	
 	#print("peer id: "+network.)
 
-
+var gateway_id
 func peer_connected(gateway_id):
 	print ("Gateway " + str(gateway_id) + " Connected!")
+	self.gateway_id = gateway_id
+	# ping for debugging, auth to gateway:
+	get_tree().create_timer(1.0).timeout.connect(DoPingGatewayServer)
 
 
 func peer_disconnected(gateway_id):
@@ -59,7 +62,7 @@ func AuthenticatePlayer(username:String, password:String, game_client_id):
 
 #---------------- Ping test ----------------------------
 
-# for debugging rpc calls..
+# for debugging rpc calls: gateway to auth..
 
 @rpc(any_peer)
 func PingAuthenticateServer():
@@ -67,4 +70,28 @@ func PingAuthenticateServer():
 	print ("Sending ping response to gateway: ", gateway_id)
 	rpc_id(gateway_id, "AuthPingResponse")
 @rpc func AuthPingResponse(): pass
+
+
+
+
+#----------------------- Ping test: auth ping gateway -------------------------
+var last_gateway_ping_time := 0
+var do_gateway_pings := false
+
+# for debugging rpc calls..
+func DoPingGatewayServer():
+	do_gateway_pings = true
+	last_gateway_ping_time = Time.get_ticks_usec()
+	#var gateway_id = multiplayer.get_remote_sender_id()
+	print ("Trying to ping GatewayServer from auth server to gateway: ",gateway_id,"...")
+	rpc_id(gateway_id, "PingGatewayServer")
+
+@rpc func PingGatewayServer(): pass
+@rpc(any_peer) func GatewayPingResponse():
+	print ("Gateway server ping returned! elapsed time (ms): ", (Time.get_ticks_usec()-last_gateway_ping_time)/1000.0)
+	last_gateway_ping_time = 0
+	if do_gateway_pings:
+		#var gateway_id = multiplayer.get_remote_sender_id()
+		get_tree().create_timer(1.0).timeout.connect(DoPingGatewayServer)
+
 

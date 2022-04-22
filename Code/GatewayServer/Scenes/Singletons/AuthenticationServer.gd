@@ -29,7 +29,7 @@ func connection_succeeded():
 	print ("AuthenticateServer Connection succeeded!")
 	#RequestPlayerDataLocal("thing", get_instance_id())
 	
-	# ping for debugging:
+	# ping for debugging, gateway pings auth:
 	#get_tree().create_timer(1.0).timeout.connect(PingAuthServer)
 
 func ServerDisconnected():
@@ -66,6 +66,13 @@ func PingAuthServer():
 	if do_pings:
 		get_tree().create_timer(1.0).timeout.connect(PingAuthServer)
 
+#------------ ping test: auth to gateway
+@rpc(any_peer)
+func PingGatewayServer():
+	var gateway_id = multiplayer.get_remote_sender_id()
+	print ("Sending ping response to gateway: ", gateway_id)
+	rpc_id(gateway_id, "GatewayPingResponse")
+@rpc func GatewayPingResponse(): pass
 
 
 ## this is a stub, the true function is on the real server

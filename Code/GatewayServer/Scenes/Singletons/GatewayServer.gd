@@ -23,7 +23,7 @@ func StartServer():
 	network.create_server(port, max_players)
 	set_custom_multiplayer(gateway_api)
 	#custom_multiplayer.set_root_node(self) TODO: IS THIS NECESSARY?
-	custom_multiplayer.set_root_path("/GatewayServer")
+	custom_multiplayer.set_root_path("/root/GatewayServer")
 	custom_multiplayer.set_multiplayer_peer(network)
 	print ("Gateway server started!")
 	
@@ -38,20 +38,27 @@ func peer_connected(game_client_id):
 func peer_disconnected(game_client_id):
 	print ("Authenticate peer disconnected! player_id: ", game_client_id)
 
-
+# this is called from GameClient
 @rpc(any_peer)
 func LoginRequest(username: String, password: String):
-	print("LoginRequest on GatewayServer")
+	print("LoginRequest on GatewayServer with: ", username, ": ", password)
 	
 	var game_client_id = custom_multiplayer.get_remote_sender_id()
+	print ("game_client_id (remote sender id) at LoginRequest: ", game_client_id)
 	AuthenticationServer.AuthenticatePlayer(username, password, game_client_id)
 	#rpc_id(1, "RequestPlayerData", what, requestor)
 
+# this is returned from Auth server
 @rpc(any_peer)
 func ReturnLoginRequest(result, game_client_id):
-	rpc_id(game_client_id, "ReturnLoginRequest", result)
-	network.get_peer(game_client_id).peer_disconnect()
+	print ("GatewayServer ReturnLoginRequest... send to: ", game_client_id)
+	#rpc_id(game_client_id, "LoginRequestResponse", result, game_client_id) # func on client 
+	#network.get_peer(game_client_id).peer_disconnect()
 
+# this function is implemented on client
+@rpc(any_peer)
+func LoginRequestResponse(_result, _game_client_id):
+	pass
 
 ## this is a stub, the true function is on the real server
 #@rpc(any_peer) func RequestPlayerData(what:String, requestor:int): pass

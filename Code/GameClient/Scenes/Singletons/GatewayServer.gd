@@ -38,7 +38,7 @@ func ConnectToServer(_username, _password):
 	gateway_network.create_client(ip, port)
 	set_custom_multiplayer(gateway_api)
 	#custom_multiplayer.set_root_node(self)
-	custom_multiplayer.set_root_path("/Gateway")
+	custom_multiplayer.set_root_path("/root/GatewayServer")
 	custom_multiplayer.set_multiplayer_peer(gateway_network)
 	
 	gateway_network.connection_failed.connect(connection_failed)
@@ -59,14 +59,15 @@ func connection_succeeded():
 @rpc(any_peer)
 func RequestLogin():
 	print ("calling GatewayServer to request login")
+	print("get_unique_id returns: ", custom_multiplayer.get_unique_id()) #this is game_client_id(?)
 	rpc_id(1, "LoginRequest", username, password)
 	username = ""
 	password = ""
 
 
-@rpc
-func ReturnLoginRequest(result, player_id):
-	print ("Auth result for ", player_id, ": ", result)
+@rpc(any_peer)
+func LoginRequestResponse(result, game_client_id):
+	print ("Auth result for ", game_client_id, ": ", result)
 	if result == true:
 		GameServer.ConnectToServer()
 		# free login screen
@@ -78,7 +79,9 @@ func ReturnLoginRequest(result, player_id):
 	gateway_network.connection_succeeded.disconnect(connection_succeeded)
 
 
-#this function is run on server:
+#this function is run on GatewayServer:
 @rpc(any_peer) func LoginRequest(_username: String, _password: String): pass
 
-
+@rpc(any_peer)
+func ReturnLoginRequest(result, game_client_id):
+	pass
