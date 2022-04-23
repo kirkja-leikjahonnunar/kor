@@ -50,7 +50,7 @@ func connection_failed():
 
 func connection_succeeded():
 	DoStuff()
-	
+
 func DoStuff():
 	rpc_id(1, "LoginRequest", "kyle", "1234")
 

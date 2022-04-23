@@ -45,12 +45,12 @@ func RequestPlayerDataLocal(what: String, requestor: int):
 	rpc_id(1, "RequestPlayerData", what, requestor)
 
 
-# this is a stub, the true function is on the real server
-@rpc(any_peer) func RequestPlayerData(_what:String, _requestor:int): pass
-
-
-@rpc(any_peer)
-func PlayerDataResponse(what:String, requestor:int):
-	print("client received response: ", what, ", requestor: ", requestor)
-	#instance_from_id(requestor).dealwithit
-
+## this is a stub, the true function is on the real server
+#@rpc(any_peer) func RequestPlayerData(_what:String, _requestor:int): pass
+#
+#
+#@rpc(any_peer)
+#func PlayerDataResponse(what:String, requestor:int):
+#	print("client received response: ", what, ", requestor: ", requestor)
+#	#instance_from_id(requestor).dealwithit
+#

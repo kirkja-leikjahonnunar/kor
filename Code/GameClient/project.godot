@@ -17,5 +17,5 @@ config/features=PackedStringArray("4.0", "Vulkan Clustered")
 
 [autoload]
 
-GameServer="*res://Scenes/Singletons/GameServer.gd"
 GatewayServer="*res://Scenes/Singletons/GatewayServer.gd"
+GameServer="*res://Scenes/Singletons/GameServer.gd"

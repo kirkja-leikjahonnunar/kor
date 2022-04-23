@@ -22,7 +22,6 @@ func _process(_delta):
 func StartServer():
 	network.create_server(port, max_players)
 	set_custom_multiplayer(gateway_api)
-	#custom_multiplayer.set_root_node(self) TODO: IS THIS NECESSARY?
 	custom_multiplayer.set_root_path("/root/GatewayServer")
 	custom_multiplayer.set_multiplayer_peer(network)
 	print ("Gateway server started!")
@@ -45,11 +44,10 @@ func LoginRequest(username: String, password: String):
 	
 	var game_client_id = custom_multiplayer.get_remote_sender_id()
 	print ("game_client_id (remote sender id) at LoginRequest: ", game_client_id)
-	#AuthenticationServer.AuthenticatePlayer(username, password, game_client_id)
+	AuthenticationServer.AuthenticatePlayer(username, password, game_client_id)
 
 
 # this local func is called after Auth server returns results
-@rpc(any_peer)
 func ReturnLoginRequest(result: bool, game_client_id: int):
 	print ("GatewayServer ReturnLoginRequest... send to: ", game_client_id)
 	#rpc_id(game_client_id, "LoginRequestResponse", result, game_client_id) # func on client 
