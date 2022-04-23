@@ -17,7 +17,7 @@ func _process(_delta):
 	if not custom_multiplayer.has_multiplayer_peer():
 		return
 	custom_multiplayer.poll()
-	
+
 
 func StartServer():
 	network.create_server(port, max_players)
@@ -45,27 +45,20 @@ func LoginRequest(username: String, password: String):
 	
 	var game_client_id = custom_multiplayer.get_remote_sender_id()
 	print ("game_client_id (remote sender id) at LoginRequest: ", game_client_id)
+	
 	#AuthenticationServer.AuthenticatePlayer(username, password, game_client_id)
+	ReturnLoginRequest(true, game_client_id)
 
 
-# this local func is called after Auth server returns results
+# this local func would normally be called after Auth server returns results
 @rpc(any_peer)
 func ReturnLoginRequest(result: bool, game_client_id: int):
-	print ("GatewayServer ReturnLoginRequest... send to: ", game_client_id)
-	#rpc_id(game_client_id, "LoginRequestResponse", result, game_client_id) # func on client 
+	print ("GatewayServer ReturnLoginRequest... send ",result," to: ", game_client_id)
+	rpc_id(game_client_id, "LoginRequestResponse", result, game_client_id) # func on client 
 	#network.get_peer(game_client_id).peer_disconnect()
 
 # this function is implemented on client
 @rpc(any_peer)
 func LoginRequestResponse(_result: bool, _game_client_id: int):
 	pass
-
-## this is a stub, the true function is on the real server
-#@rpc(any_peer) func RequestPlayerData(what:String, requestor:int): pass
-#
-#
-#@rpc(any_peer)
-#func PlayerDataResponse(what:String, requestor:int):
-#	print("client received response: ", what, ", requestor: ", requestor)
-#	#instance_from_id(requestor).dealwithit
 

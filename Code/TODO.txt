@@ -19,6 +19,8 @@ One off timers:    get_tree().create_timer(1.0).timeout.connect(YourFunction)
 GRIPES
 ------
 
+auto complete, would be nice to search only in bottom most class items
+
 Searching editor settings i.e. "port", does not search across all sections!!!!!
 
 in filesystem panel, add new scene, creates new scene but does not save immediately
