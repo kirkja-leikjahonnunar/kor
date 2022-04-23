@@ -20,7 +20,7 @@ func _ready():
 	pass
 
 
-func _process(_delta):
+func _process(_delta: float):
 	if get_custom_multiplayer() == null:
 		return
 	if not custom_multiplayer.has_multiplayer_peer():
@@ -29,7 +29,7 @@ func _process(_delta):
 
 
 # this is called when login button pressed
-func ConnectToServer(_username, _password):
+func ConnectToServer(_username: String, _password: String):
 	gateway_network = ENetMultiplayerPeer.new()
 	gateway_api = MultiplayerAPI.new()
 	username = _username
