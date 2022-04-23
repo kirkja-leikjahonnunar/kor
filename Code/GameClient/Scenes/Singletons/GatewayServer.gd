@@ -66,7 +66,7 @@ func RequestLogin():
 
 
 @rpc(any_peer)
-func LoginRequestResponse(result, game_client_id):
+func LoginRequestResponse(result: bool, game_client_id: int):
 	print ("Auth result for ", game_client_id, ": ", result)
 	if result == true:
 		GameServer.ConnectToServer()
@@ -83,5 +83,5 @@ func LoginRequestResponse(result, game_client_id):
 @rpc(any_peer) func LoginRequest(_username: String, _password: String): pass
 
 @rpc(any_peer)
-func ReturnLoginRequest(result, game_client_id):
+func ReturnLoginRequest(_result: bool, _game_client_id: int):
 	pass

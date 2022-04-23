@@ -37,15 +37,16 @@ func ServerDisconnected():
 
 
 @rpc
-func AuthenticatePlayer(username: String, password: String, game_client_id):
+func AuthenticatePlayer(username: String, password: String, game_client_id: int):
 	print("calling AuthenticatePlayer from GatewayServer")
 	
 	rpc_id(1, "AuthenticatePlayer", username, password, game_client_id)
 
+# This is returned from Authenticate server
 @rpc
-func AuthenticationResults(result, game_client_id):
+func AuthenticationResults(result: bool, game_client_id: int):
 	print("Auth result: ", result, " for ", game_client_id)
-	GatewayServer.ReturnLoginRequest(result, game_client_id)
+	#GatewayServer.ReturnLoginRequest(result, game_client_id)
 
 
 #----------------------- Ping test -------------------------

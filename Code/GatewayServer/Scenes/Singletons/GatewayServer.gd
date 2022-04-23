@@ -45,19 +45,19 @@ func LoginRequest(username: String, password: String):
 	
 	var game_client_id = custom_multiplayer.get_remote_sender_id()
 	print ("game_client_id (remote sender id) at LoginRequest: ", game_client_id)
-	AuthenticationServer.AuthenticatePlayer(username, password, game_client_id)
-	#rpc_id(1, "RequestPlayerData", what, requestor)
+	#AuthenticationServer.AuthenticatePlayer(username, password, game_client_id)
 
-# this is returned from Auth server
+
+# this local func is called after Auth server returns results
 @rpc(any_peer)
-func ReturnLoginRequest(result, game_client_id):
+func ReturnLoginRequest(result: bool, game_client_id: int):
 	print ("GatewayServer ReturnLoginRequest... send to: ", game_client_id)
 	#rpc_id(game_client_id, "LoginRequestResponse", result, game_client_id) # func on client 
 	#network.get_peer(game_client_id).peer_disconnect()
 
 # this function is implemented on client
 @rpc(any_peer)
-func LoginRequestResponse(_result, _game_client_id):
+func LoginRequestResponse(_result: bool, _game_client_id: int):
 	pass
 
 ## this is a stub, the true function is on the real server

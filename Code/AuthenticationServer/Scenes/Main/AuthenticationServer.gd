@@ -25,18 +25,18 @@ func start_server():
 
 var gateway_id # we only have this global to test pinging
 func peer_connected(new_gateway_id):
-	print ("Gateway " + str(gateway_id) + " Connected!")
+	print ("Gateway " + str(new_gateway_id) + " Connected!")
 	gateway_id = new_gateway_id
 	# ping for debugging, auth to gateway:
-	get_tree().create_timer(1.0).timeout.connect(DoPingGatewayServer)
+	#get_tree().create_timer(1.0).timeout.connect(DoPingGatewayServer)
 
 
-func peer_disconnected(gateway_id):
-	print ("Gateway " + str(gateway_id) + " Disconnected!")
+func peer_disconnected(old_gateway_id):
+	print ("Gateway " + str(old_gateway_id) + " Disconnected!")
 
 
 @rpc(any_peer)
-func AuthenticatePlayer(username:String, password:String, game_client_id):
+func AuthenticatePlayer(username:String, password:String, game_client_id: int):
 	print("AuthenticatePlayer on AuthenticationServer: ", username, ": ", password)
 	var from_gateway_id = multiplayer.get_remote_sender_id()
 	var result
@@ -57,7 +57,7 @@ func AuthenticatePlayer(username:String, password:String, game_client_id):
 
 # these are stubs, the real functions are on client side
 #@rpc(any_peer) func PlayerDataResponse(what:String, requestor:int): pass
-@rpc(any_peer) func AuthenticationResults(_result, _player_id): pass #sends to GatewayServer
+@rpc(any_peer) func AuthenticationResults(_result: bool, _player_id: int): pass #sends to GatewayServer
 
 
 #---------------- Ping test ----------------------------
@@ -66,9 +66,9 @@ func AuthenticatePlayer(username:String, password:String, game_client_id):
 
 @rpc(any_peer)
 func PingAuthenticateServer():
-	var gateway_id = multiplayer.get_remote_sender_id()
-	print ("Sending ping response to gateway: ", gateway_id)
-	rpc_id(gateway_id, "AuthPingResponse")
+	var from_gateway_id = multiplayer.get_remote_sender_id()
+	print ("Sending ping response to gateway: ", from_gateway_id)
+	rpc_id(from_gateway_id, "AuthPingResponse")
 @rpc func AuthPingResponse(): pass
 
 
