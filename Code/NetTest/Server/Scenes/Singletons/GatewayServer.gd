@@ -32,27 +32,21 @@ func StartServer():
 
 
 func peer_connected(game_client_id):
-	print ("Authenticate peer connected! player_id: ", game_client_id)
+	print ("peer connected! player_id: ", game_client_id)
 
 
 func peer_disconnected(game_client_id):
-	print ("Authenticate peer disconnected! player_id: ", game_client_id)
+	print ("peer disconnected! player_id: ", game_client_id)
 
 # this is called from GameClient
 @rpc(any_peer)
 func LoginRequest(username: String, password: String):
-	print("LoginRequest on GatewayServer with: ", username, ": ", password)
-	
 	var game_client_id = custom_multiplayer.get_remote_sender_id()
-	print ("game_client_id (remote sender id) at LoginRequest: ", game_client_id)
-	
 	#AuthenticationServer.AuthenticatePlayer(username, password, game_client_id)
-	ReturnLoginRequest(true, game_client_id)
+	DoResponse(game_client_id)
 
-
-# this local func would normally be called after Auth server returns results
-@rpc(any_peer)
-func ReturnLoginRequest(result: bool, game_client_id: int):
+func DoResponse(game_client_id):
+	var result = true
 	print ("GatewayServer ReturnLoginRequest... send ",result," to: ", game_client_id)
 	rpc_id(game_client_id, "LoginRequestResponse", result, game_client_id) # func on client 
 	#network.get_peer(game_client_id).peer_disconnect()
