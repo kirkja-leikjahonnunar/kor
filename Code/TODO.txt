@@ -21,6 +21,8 @@ GRIPES
 see also current github issues around 4.0: https://github.com/godotengine/godot/issues?q=is%3Aissue+is%3Aopen+milestone%3A4.0+label%3Abug+
 
 
+auto complete, would be nice to search only in bottom most class items
+
 Searching editor settings i.e. "port", does not search across all sections!!!!!
 
 in filesystem panel, add new scene, creates new scene but does not save immediately

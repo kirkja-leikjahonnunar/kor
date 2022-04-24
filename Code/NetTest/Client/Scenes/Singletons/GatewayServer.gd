@@ -3,7 +3,7 @@ extends Node
 # GatewayServer on GameClient project
 #note: this is a singleton!
 #
-# This is only active upon a login request, which
+# GatewayServer is only active upon a login request, which
 # calls ConnectToServer()
 
 var gateway_network : ENetMultiplayerPeer
@@ -20,7 +20,7 @@ func _ready():
 	pass
 
 
-func _process(_delta: float):
+func _process(_delta):
 	if get_custom_multiplayer() == null:
 		return
 	if not custom_multiplayer.has_multiplayer_peer():
@@ -28,12 +28,10 @@ func _process(_delta: float):
 	custom_multiplayer.poll()
 
 
-# this is called when login button pressed
-func ConnectToServer(_username: String, _password: String):
+# this is called when login button pressed, on singleton in client
+func ConnectToServer():
 	gateway_network = ENetMultiplayerPeer.new()
 	gateway_api = MultiplayerAPI.new()
-	username = _username
-	password = _password
 	
 	gateway_network.create_client(ip, port)
 	set_custom_multiplayer(gateway_api)
@@ -51,37 +49,29 @@ func connection_failed():
 
 
 func connection_succeeded():
-	print ("Client connection to gateway succeeded!")
-	RequestLogin()
+	DoStuff()
+
+func DoStuff():
+	rpc_id(1, "LoginRequest", "kyle", "1234")
 
 
-func RequestLogin():
-	print ("calling GatewayServer to request login")
-	#print("get_unique_id returns: ", custom_multiplayer.get_unique_id()) #this is game_client_id(?)
-	rpc_id(1, "LoginRequest", username, password)
-	username = ""
-	password = ""
+#this function is run on GatewayServer:
+@rpc(any_peer) func LoginRequest(username: String, password: String): pass
 
 
-# this is called from GatewayServer
 @rpc(any_peer)
 func LoginRequestResponse(result: bool, game_client_id: int):
 	print ("Auth result for ", game_client_id, ": ", result)
 	if result == true:
-		pass
-		#print ("FIXME:: Connect to game server")
-		#GameServer.ConnectToServer()
-		# free login screen
+		print ("Login success!")
 	else:
 		print ("Incorrect login information")
-		#.. enable login button
-	
-	#??? network.get_peer(game_client_id).peer_disconnect()
 
 	gateway_network.connection_failed.disconnect(connection_failed)
 	gateway_network.connection_succeeded.disconnect(connection_succeeded)
 
 
-#this function is run on GatewayServer:
-@rpc(any_peer) func LoginRequest(_username: String, _password: String): pass
 
+#@rpc(any_peer)
+#func ReturnLoginRequest(_result: bool, _game_client_id: int):
+#	pass
