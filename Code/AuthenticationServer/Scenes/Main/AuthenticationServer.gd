@@ -52,7 +52,7 @@ func RequestAuthentication(username:String, password:String, game_client_id: int
 		result = true
 	
 	print("sending auth response for "+username, ", result: ", result)
-	#rpc_id(from_gateway_id, "AuthenticationResponse", result, game_client_id)
+	rpc_id(from_gateway_id, "AuthenticationResponse", result, game_client_id)
 
 
 # these are stubs, the real functions are on client side

@@ -50,7 +50,7 @@ func RequestAuthentication(username: String, password: String, game_client_id: i
 @rpc
 func AuthenticationResponse(result: bool, game_client_id: int):
 	print("Auth result: ", result, " for ", game_client_id)
-	#GatewayServer.ReturnLoginRequest(result, game_client_id)
+	GatewayServer.ReturnLoginRequest(result, game_client_id)
 
 
 ##----------------------- Ping test -------------------------

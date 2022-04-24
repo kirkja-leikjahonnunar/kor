@@ -50,20 +50,14 @@ func LoginRequest(username: String, password: String):
 # this local func is called after Auth server returns results
 func ReturnLoginRequest(result: bool, game_client_id: int):
 	print ("GatewayServer ReturnLoginRequest... send to: ", game_client_id)
-	#rpc_id(game_client_id, "LoginRequestResponse", result, game_client_id) # func on client 
-	#network.get_peer(game_client_id).peer_disconnect()
+	rpc_id(game_client_id, "LoginRequestResponse", result, game_client_id) # func on client 
+	await get_tree().process_frame
+	await get_tree().process_frame
+	network.get_peer(game_client_id).peer_disconnect()
 
 # this function is implemented on client
 @rpc(any_peer)
 func LoginRequestResponse(_result: bool, _game_client_id: int):
 	pass
 
-## this is a stub, the true function is on the real server
-#@rpc(any_peer) func RequestPlayerData(what:String, requestor:int): pass
-#
-#
-#@rpc(any_peer)
-#func PlayerDataResponse(what:String, requestor:int):
-#	print("client received response: ", what, ", requestor: ", requestor)
-#	#instance_from_id(requestor).dealwithit
 

@@ -49,7 +49,9 @@ func DoResponse(game_client_id):
 	var result = true
 	print ("GatewayServer ReturnLoginRequest... send ",result," to: ", game_client_id)
 	rpc_id(game_client_id, "LoginRequestResponse", result, game_client_id) # func on client 
-	#network.get_peer(game_client_id).peer_disconnect()
+	
+	await get_tree().process_frame
+	network.get_peer(game_client_id).peer_disconnect()
 
 # this function is implemented on client
 @rpc(any_peer)

@@ -57,7 +57,7 @@ func connection_succeeded():
 
 func RequestLogin():
 	print ("calling GatewayServer to request login")
-	print("get_unique_id returns: ", custom_multiplayer.get_unique_id()) #this is game_client_id(?)
+	#print("get_unique_id returns: ", custom_multiplayer.get_unique_id()) #this is game_client_id(?)
 	rpc_id(1, "LoginRequest", username, password)
 	username = ""
 	password = ""
@@ -76,6 +76,8 @@ func LoginRequestResponse(result: bool, game_client_id: int):
 		print ("Incorrect login information")
 		#.. enable login button
 	
+	#??? network.get_peer(game_client_id).peer_disconnect()
+
 	gateway_network.connection_failed.disconnect(connection_failed)
 	gateway_network.connection_succeeded.disconnect(connection_succeeded)
 
@@ -83,5 +85,3 @@ func LoginRequestResponse(result: bool, game_client_id: int):
 #this function is run on GatewayServer:
 @rpc(any_peer) func LoginRequest(_username: String, _password: String): pass
 
-# @rpc(any_peer)
-# func ReturnLoginRequest(_result: bool, _game_client_id: int): pass
