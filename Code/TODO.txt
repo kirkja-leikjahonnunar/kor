@@ -18,6 +18,8 @@ One off timers:    get_tree().create_timer(1.0).timeout.connect(YourFunction)
 
 GRIPES
 ------
+see also current github issues around 4.0: https://github.com/godotengine/godot/issues?q=is%3Aissue+is%3Aopen+milestone%3A4.0+label%3Abug+
+
 
 auto complete, would be nice to search only in bottom most class items
 

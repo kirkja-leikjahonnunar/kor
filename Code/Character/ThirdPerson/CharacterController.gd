@@ -3,6 +3,7 @@
 #
 
 extends CharacterBody3D
+class_name CharacterController
 
 
 @export var SPEED := 5.0
@@ -23,25 +24,12 @@ extends CharacterBody3D
 @export var SettingsOverlay : NodePath
 @onready var settings_overlay = get_node(SettingsOverlay) if !SettingsOverlay.is_empty() else null
 
-class CameraSettings: # TODO: develop this to be easier to load/save configs
-	var fov := 75.0
-	var head_height := 1.5
-	var cam_h_offset := .25
-	var cam_back_offset := .25
-	var cam_top_offset := 0.0
-	var camera_mode = CameraMode.Third
-	var allow_first_person := true
-	var min_pitch := -PI/2
-	var max_pitch := PI/2
-	var min_dist := .2 # beneath this transfers to 1st person
-	var max_dist := 10
-
 
 # Get the gravity from the project settings to be synced with RigidDynamicBody nodes.
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 
 # to help smooth out the player movement:
-var target_velocity := Vector3()
+#var target_velocity := Vector3()
 var velocity_damp := .1
 
 @onready var camera_rig    = $CameraRig
@@ -77,18 +65,27 @@ func _ready():
 
 func _physics_process(delta):
 	# Add the gravity.
+	UpdateGravity()
+	
+	var target_velocity : Vector3
+	
 	if not is_on_floor():
-		velocity.y -= gravity * delta
-
-	# Handle Jump.
-	if Input.is_action_just_pressed("char_jump") and is_on_floor():
-		velocity.y = JUMP_VELOCITY
-
+		target_velocity -= (gravity * delta * 10) * up_direction
+		#velocity.y -= gravity * delta
+	else: #on floor
+		# Handle Jump.
+		if Input.is_action_just_pressed("char_jump"):
+			# replace up velocity with jump velocity.. old should be 0 since on floor
+			#velocity = velocity - (velocity * up_direction) * up_direction + JUMP_VELOCITY * up_direction
+			target_velocity = JUMP_VELOCITY * 10 * up_direction
+		#else: target_velocity = Vector3(0,velocity.y,0)
+	
+	
 	# rotate player
 	var rotate_amount = 1.0 if Input.is_action_pressed("char_rotate_right") else 0.0 \
 						- 1.0 if Input.is_action_pressed("char_rotate_left") else 0.0
 	if abs(rotate_amount) > 1e-5: camera_rig.rotate(Vector3(0,-1,0), delta * 60 * ROTATION_SPEED * rotate_amount)
-
+	
 	# Get the input direction and handle the movement/deceleration.
 	# As good practice, you should replace UI actions with custom gameplay actions.
 	var input_dir = -Input.get_vector("char_strafe_left", "char_strafe_right", "char_forward", "char_backward")
@@ -99,18 +96,44 @@ func _physics_process(delta):
 	var speed = SPRINT_SPEED if Input.is_action_pressed("char_sprint") else SPEED
 	SetCharTilt(player_dir * speed / SPEED)
 	
+	# if no weird gravity stuff:
+#	if direction:
+#		velocity.x = direction.x * speed
+#		velocity.z = direction.z * speed
+#	else: # damp toward 0
+#		velocity.x = move_toward(velocity.x, 0, speed)
+#		velocity.z = move_toward(velocity.z, 0, speed)
+	# if yes weird gravity stuff:
 	if direction:
-		velocity.x = direction.x * speed
-		velocity.z = direction.z * speed
+		target_velocity += direction * speed
 	else: # damp toward 0
-		velocity.x = move_toward(velocity.x, 0, speed)
-		velocity.z = move_toward(velocity.z, 0, speed)
+		#target_velocity.x = move_toward(velocity.x, 0, speed)
+		pass
 
-	#print ("velocity: ", velocity)
+	AlignPlayerToUp()
+	
+	
 	var dpos = position
+	#velocity.move_toward(target_velocity, .5)
+	velocity = target_velocity.lerp(velocity, .1) #note: velocity can't move_toward like a normal vector3
+	print ("velocity: ", velocity, ",  target velocity: ", target_velocity)
+	#velocity.move_toward(global_transform.basis * target_velocity, .5)
 	move_and_slide()
 	dpos -= position # this is world coordinates change in position
+	
 
+
+func AlignPlayerToUp():
+	var axis : Vector3 = global_transform.basis.y.cross(up_direction)
+	var amount = asin(axis.length())
+	if amount < 1e-6: return
+	if amount  > PI/12:
+		# damp down extreme rotations
+		global_transform.basis = global_transform.basis.rotated(axis.normalized(), PI/12 + (amount-PI/12)*.1)
+	else:
+		axis = axis.normalized()
+		#print ("axis len: ", axis.length(), " ",axis.length_squared())
+		global_transform.basis = global_transform.basis.rotated(axis, amount)
 
 func _process(_delta):
 	pass
@@ -150,12 +173,13 @@ func _unhandled_input(event):
 
 ##--------------------------- Handler Functions -----------------------------
 
+# lerping machinery:
 var target_rotation := 0.0
 var target_tilt := 0.0
 var tilt_damp := .2
 var rotation_damp := .3
 
-# Assuming direction is in player space, make player mesh point z in that direction, and also lean in that direction
+# Make player mesh point z in the provided direction (in player space), and also lean in that direction
 func SetCharTilt(direction: Vector3):
 	if direction.length() != 0: 
 		var amount = sqrt(direction.x*direction.x + direction.z*direction.z)
@@ -169,6 +193,7 @@ func SetCharTilt(direction: Vector3):
 		player_model.rotation.x = lerp_angle(player_model.rotation.x, 0, tilt_damp)
 
 
+# Update camera yaw based on mouse movement x,y.
 func HandleCameraMove(x,y):
 	if invert_x: x = -x
 	if invert_y: y = -y
@@ -178,6 +203,7 @@ func HandleCameraMove(x,y):
 	SetCameraHoverTarget()
 
 
+# Handle mouse visibility
 func SetMouseVisible(yes: bool):
 	if yes:
 		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
@@ -187,6 +213,7 @@ func SetMouseVisible(yes: bool):
 		if settings_overlay: settings_overlay.visible = false
 
 
+# Detect zoom related events and set camera boom distance
 func HandleZoom(amount):
 	if amount < 0:
 		print("zoom in")
@@ -204,6 +231,7 @@ func HandleZoom(amount):
 											min_camera_distance, max_camera_distance)
 
 
+# According to camera_hover, set the correct camera position
 func HandleHoverToggle():
 	match camera_hover:
 		CameraHover.Left:  camera_hover = CameraHover.Right
@@ -213,6 +241,7 @@ func HandleHoverToggle():
 	SetCameraHoverTarget()
 
 
+# According to camera_mode, set cam_v* offset variables.
 func SetHoverVars():
 	if camera_mode == CameraMode.First:
 		cam_v_offset = $Proxy_FPS.position.y 
@@ -284,3 +313,28 @@ func Use2(node):
 	print("Use2: ", node.name)
 
 
+#------------------------- Environment Gravity control ----------------------------------
+
+var gravity_areas := []
+
+func EnteredGravityArea(area: Area3D):
+	if not (area in gravity_areas):
+		gravity_areas.append(area)
+		print ("Player adding gravity area: ", area.name)
+
+func ExitedGravityArea(area: Area3D):
+	gravity_areas.erase(area)
+	print ("Player removing gravity area: ", area.name)
+
+func UpdateGravity():
+	if gravity_areas.size() == 0:
+		up_direction = Vector3(0,1,0)
+	else:
+		var n = 0
+		var v = Vector3()
+		for area in gravity_areas:
+			n += 1
+			v += area.UpdateGravityDirection(global_transform.origin)
+		v /= n
+		#todo: align direction should not always be the same as gravity direction
+		up_direction = -v.normalized()

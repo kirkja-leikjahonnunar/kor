@@ -8,6 +8,22 @@
 
 config_version=5
 
+_global_script_classes=[{
+"base": "Resource",
+"class": &"CameraSettings",
+"language": &"GDScript",
+"path": "res://ThirdPerson/Settings/CameraSettings.gd"
+}, {
+"base": "CharacterBody3D",
+"class": &"CharacterController",
+"language": &"GDScript",
+"path": "res://ThirdPerson/CharacterController.gd"
+}]
+_global_script_class_icons={
+"CameraSettings": "",
+"CharacterController": ""
+}
+
 [application]
 
 config/name="CharacterController"
