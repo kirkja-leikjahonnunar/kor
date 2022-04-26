@@ -8,22 +8,6 @@
 
 config_version=5
 
-_global_script_classes=[{
-"base": "Object",
-"class": &"UtilFuncs",
-"language": &"GDScript",
-"path": "res://addons/TomsUtils/UtilFuncs.gd"
-}, {
-"base": "RefCounted",
-"class": &"VectorUtils",
-"language": &"GDScript",
-"path": "res://addons/TomsUtils/VectorUtils.gd"
-}]
-_global_script_class_icons={
-"UtilFuncs": "",
-"VectorUtils": ""
-}
-
 [application]
 
 config/name="CharacterController"
@@ -38,7 +22,7 @@ window/size/viewport_height=720
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/prettyprimitive/plugin.cfg")
+enabled=PackedStringArray()
 
 [input]
 

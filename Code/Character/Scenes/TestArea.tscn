@@ -8,7 +8,7 @@
 [ext_resource type="Texture2D" uid="uid://crdt07ky8e6ma" path="res://icon.png" id="5_po3y2"]
 [ext_resource type="Script" path="res://ThirdPerson/SprayCast.gd" id="6_i3cro"]
 [ext_resource type="Script" path="res://ThirdPerson/Settings/SettingsOverlay.gd" id="6_j3eho"]
-[ext_resource type="ArrayMesh" uid="uid://yf7lu0kxdsct" path="res://Models/Torus/Hole.res" id="9_so0tq"]
+[ext_resource type="ArrayMesh" uid="uid://2rg2kmy37k1f" path="res://Models/Torus/Hole.res" id="9_so0tq"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_rvq6k"]
 size = Vector3(30, 1, 30)
