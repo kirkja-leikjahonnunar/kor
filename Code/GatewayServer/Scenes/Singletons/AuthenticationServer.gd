@@ -43,7 +43,7 @@ func AuthenticatePlayer(username: String, password: String, game_client_id: int)
 
 # this is implemented on AuthenticationServer
 @rpc(any_peer)
-func RequestAuthentication(username: String, password: String, game_client_id: int): pass
+func RequestAuthentication(_username: String, _password: String, _game_client_id: int): pass
 
 
 # This is returned from Authenticate server

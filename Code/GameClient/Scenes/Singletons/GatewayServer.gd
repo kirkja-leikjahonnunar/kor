@@ -4,7 +4,8 @@ extends Node
 #note: this is a singleton!
 #
 # This is only active upon a login request, which
-# calls ConnectToServer()
+# calls ConnectToServer(). On positive results, then we
+# connect to the GameServer.
 
 var gateway_network : ENetMultiplayerPeer
 var gateway_api : MultiplayerAPI
@@ -68,9 +69,7 @@ func RequestLogin():
 func LoginRequestResponse(result: bool, game_client_id: int):
 	print ("Auth result for ", game_client_id, ": ", result)
 	if result == true:
-		pass
-		#print ("FIXME:: Connect to game server")
-		#GameServer.ConnectToServer()
+		GameServer.ConnectToServer()
 		# free login screen
 	else:
 		print ("Incorrect login information")
@@ -82,6 +81,6 @@ func LoginRequestResponse(result: bool, game_client_id: int):
 	gateway_network.connection_succeeded.disconnect(connection_succeeded)
 
 
-#this function is run on GatewayServer:
+#this function is run on GatewayServer, called from RequestLogin() above:
 @rpc(any_peer) func LoginRequest(_username: String, _password: String): pass
 

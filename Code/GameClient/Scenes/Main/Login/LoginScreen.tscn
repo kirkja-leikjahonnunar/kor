@@ -28,13 +28,13 @@ metadata/_edit_use_custom_anchors = false
 [node name="Username" type="LineEdit" parent="MainLoginWindow/VBoxContainer"]
 offset_right = 186.0
 offset_bottom = 31.0
-text = "oeuao"
+text = "user1"
 
 [node name="Password" type="LineEdit" parent="MainLoginWindow/VBoxContainer"]
 offset_top = 35.0
 offset_right = 186.0
 offset_bottom = 66.0
-text = "1234"
+text = "pwd1"
 secret = true
 
 [node name="Login" type="Button" parent="MainLoginWindow/VBoxContainer"]

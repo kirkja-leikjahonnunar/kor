@@ -51,6 +51,8 @@ func LoginRequest(username: String, password: String):
 func ReturnLoginRequest(result: bool, game_client_id: int):
 	print ("GatewayServer ReturnLoginRequest... send to: ", game_client_id)
 	rpc_id(game_client_id, "LoginRequestResponse", result, game_client_id) # func on client 
+	
+	# HACK! perhaps not 100% reliable? seems to skip the rpc sometimes
 	await get_tree().process_frame
 	await get_tree().process_frame
 	network.get_peer(game_client_id).peer_disconnect()
