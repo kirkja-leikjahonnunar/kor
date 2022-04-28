@@ -8,9 +8,23 @@
 
 config_version=5
 
+_global_script_classes=[{
+"base": "Node",
+"class": &"PlayerVerification",
+"language": &"GDScript",
+"path": "res://Scenes/Main/PlayerVerification.gd"
+}]
+_global_script_class_icons={
+"PlayerVerification": ""
+}
+
 [application]
 
 config/name="GameServer"
 run/main_scene="res://Scenes/Main/GameServer.tscn"
 config/icon="res://icon.png"
 config/features=PackedStringArray("4.0", "Vulkan Clustered")
+
+[autoload]
+
+HubConnection="*res://Scenes/Singletons/HubConnection.gd"

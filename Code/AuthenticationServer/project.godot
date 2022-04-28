@@ -18,3 +18,4 @@ config/features=PackedStringArray("4.0", "Vulkan Clustered")
 [autoload]
 
 PlayerData="*res://Scenes/Singletons/PlayerData.gd"
+GameServers="*res://Scenes/Singletons/GameServers.gd"

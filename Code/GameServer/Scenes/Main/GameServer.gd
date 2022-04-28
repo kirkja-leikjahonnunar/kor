@@ -7,16 +7,14 @@ var network := ENetMultiplayerPeer.new()
 var port := 1909
 var max_players := 100
 
-@onready var player_verification_process := get_node("PlayerVerification")
+var expected_tokens := []
+
+
+@onready var player_verification_process := get_node("PlayerVerification") as PlayerVerification
 
 
 func _ready():
 	StartServer()
-
-#func _process(_delta):
-#	if not custom_multiplayer.has_multiplayer_peer():
-#		return
-#	custom_multiplayer.poll()
 
 
 func StartServer():
@@ -55,4 +53,48 @@ func PlayerDataRequest(what:String, requestor:int):
 
 # this is implemented on GameClient
 @rpc func PlayerDataResponse(_what:String, _data, _requestor:int): pass
+
+
+
+#------------------------------------------------------------------------------
+# Player Verification
+#------------------------------------------------------------------------------
+# Called from "PlayerVerification.gd".
+func FetchPlayerToken(player_id):
+	rpc_id(player_id, "FetchPlayerToken") # RPC to GameClient.
+
+
+
+# Called from GameClient.
+@rpc(any_peer)
+func Validate(client_token):
+	var game_client_id = get_tree().get_rpc_sender_id()
+	player_verification_process.Verify(game_client_id, client_token)
+
+
+# Called from PlayerVerification.Verify().
+func VerificationResponse(game_client_id, is_authorized: bool):
+	rpc_id(game_client_id, "VerificationResponse", is_authorized)
+
+
+#------------------------------------------------------------------------------
+# Invalidate player tokens after 30 seconds.
+#------------------------------------------------------------------------------
+
+func _on_TokenExpiration_timeout():
+	var current_time = OS.get_unix_time()
+	var token_time
+	
+	if expected_tokens.size() == 0:
+		pass
+	else:
+		for i in range(expected_tokens.size() -1, -1, -1):
+			token_time = int(expected_tokens[i].right(64))
+			if current_time - token_time >= 30:
+				expected_tokens.remove_at(i)
+				print("REMOVED: " + str(i))
+				
+	print("Expected Tokens:")
+	print(expected_tokens)
+
 

@@ -33,6 +33,7 @@ func peer_connected(new_gateway_id):
 func peer_disconnected(old_gateway_id):
 	print ("Gateway " + str(old_gateway_id) + " Disconnected!")
 
+var token
 
 # called from GatewayServer
 @rpc(any_peer)
@@ -50,6 +51,21 @@ func RequestAuthentication(username:String, password:String, game_client_id: int
 	else:
 		print ("Successful authentication for ", username)
 		result = true
+		
+		randomize()
+		var random_number = randi()
+		print(random_number)
+		var hashed = str(random_number).sha256_text()
+		print (hashed)
+		var timestamp = str(Time.get_unix_time_from_system())
+		print (timestamp)
+		token = hashed + timestamp
+		
+		token = str(randi()).sha256_text() + str(Time.get_unix_time_from_system())
+		print ("token generated: ", token)
+		
+		var gameserver = "GameServer1" #TODO: replace with proper load balance selection for server
+		GameServers.DistributeLoginToken(token, gameserver)
 	
 	print("sending auth response for "+username, ", result: ", result)
 	rpc_id(from_gateway_id, "AuthenticationResponse", result, game_client_id)
