@@ -33,7 +33,7 @@ func peer_connected(new_gateway_id):
 func peer_disconnected(old_gateway_id):
 	print ("Gateway " + str(old_gateway_id) + " Disconnected!")
 
-var token
+
 
 # called from GatewayServer
 @rpc(any_peer)
@@ -41,7 +41,9 @@ func RequestAuthentication(username:String, password:String, game_client_id: int
 	print("AuthenticatePlayer on AuthenticationServer: ", username, ": ", password)
 	var from_gateway_id = multiplayer.get_remote_sender_id()
 	var result
-
+	
+	var token := "" 
+	
 	if not PlayerData.HasPlayer(username):
 		print ("Unknown user ", username)
 		result = false
@@ -53,27 +55,20 @@ func RequestAuthentication(username:String, password:String, game_client_id: int
 		result = true
 		
 		randomize()
-		var random_number = randi()
-		print(random_number)
-		var hashed = str(random_number).sha256_text()
-		print (hashed)
-		var timestamp = str(Time.get_unix_time_from_system())
-		print (timestamp)
-		token = hashed + timestamp
-		
-		token = str(randi()).sha256_text() + str(Time.get_unix_time_from_system())
+		token = str(randi()).sha256_text() + str(int(Time.get_unix_time_from_system()))
 		print ("token generated: ", token)
 		
 		var gameserver = "GameServer1" #TODO: replace with proper load balance selection for server
 		GameServers.DistributeLoginToken(token, gameserver)
 	
-	print("sending auth response for "+username, ", result: ", result)
-	rpc_id(from_gateway_id, "AuthenticationResponse", result, game_client_id)
+	print("sending auth response for "+username, ", result: ", result, " to client: ", game_client_id)
+	rpc_id(from_gateway_id, "AuthenticationResponse", result, game_client_id, token) #ultimately goes to client
 
 
 # these are stubs, the real functions are on client side
 #@rpc(any_peer) func PlayerDataResponse(what:String, requestor:int): pass
-@rpc(any_peer) func AuthenticationResponse(_result: bool, _player_id: int): pass #sends to GatewayServer
+@rpc(any_peer) func AuthenticationResponse(_result: bool, _player_id: int, _token:String):
+	pass #sends to GatewayServer
 
 
 

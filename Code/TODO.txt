@@ -2,6 +2,15 @@ TODO:
 
 export port number across projects
 
+- how to load test?
+
+- which runs first, singleton or main scene?
+
+
+NOTES
+-----
+- Godot hard limit 4095 concurrent players per network (ccu)
+- requests per second (rps) 
 
 
 PORTING NOTES
@@ -9,6 +18,10 @@ PORTING NOTES
 
 get_tree().set_network_peer()   ->   ??? custom_multiplayer.set_root_path("/GatewayServer")
 custom_multiplayer.set_network_peer(network)   ->   custom_multiplayer.set_multiplayer_peer(network)
+
+int(string)?  <--  String.to_int()
+
+get_tree().get_rpc_sender_id()  ->  multiplayer.get_remote_sender_id(
 
 
 CHEATSHEET

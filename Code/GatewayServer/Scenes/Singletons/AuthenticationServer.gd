@@ -48,9 +48,10 @@ func RequestAuthentication(_username: String, _password: String, _game_client_id
 
 # This is returned from Authenticate server
 @rpc
-func AuthenticationResponse(result: bool, game_client_id: int):
+func AuthenticationResponse(result: bool, game_client_id: int, token: String):
 	print("Auth result: ", result, " for ", game_client_id)
-	GatewayServer.ReturnLoginRequest(result, game_client_id)
+	print ("token: ", token)
+	GatewayServer.ReturnLoginRequest(result, game_client_id, token)
 
 
 ##----------------------- Ping test -------------------------

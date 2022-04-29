@@ -1,4 +1,6 @@
 extends Node
+class_name GameServer
+
 
 # GameServer on GameServer project
 #note: this is a singleton!
@@ -7,7 +9,7 @@ var network := ENetMultiplayerPeer.new()
 var port := 1909
 var max_players := 100
 
-var expected_tokens := []
+var expected_tokens := ["aaoeuauaoueoa"]
 
 
 @onready var player_verification_process := get_node("PlayerVerification") as PlayerVerification
@@ -32,10 +34,12 @@ func peer_connected(game_client_id):
 
 
 func peer_disconnected(game_client_id: int):
-	print ("GameServer: client disconnected! "+ game_client_id)
+	print ("GameServer: client disconnected! ", game_client_id)
 	#todo: probably need to store any unsaved data on the client's node
 	get_node(str(game_client_id)).queue_free()
 
+
+#-------------- Testing random data retrieval -----------------
 
 ## This is called by any GameClient.
 # requestor is an id internal to GameClient.
@@ -60,21 +64,33 @@ func PlayerDataRequest(what:String, requestor:int):
 # Player Verification
 #------------------------------------------------------------------------------
 # Called from "PlayerVerification.gd".
-func FetchPlayerToken(player_id):
-	rpc_id(player_id, "FetchPlayerToken") # RPC to GameClient.
+func FetchPlayerToken(game_client_id):
+	rpc_id(game_client_id, "PlayerTokenRequest") # RPC to GameClient.
 
+# this is implemented on GameClient
+@rpc func PlayerTokenRequest(): pass
 
-
-# Called from GameClient.
+# this is called from GameClient
 @rpc(any_peer)
-func Validate(client_token):
-	var game_client_id = get_tree().get_rpc_sender_id()
-	player_verification_process.Verify(game_client_id, client_token)
+func PlayerTokenResponse(token: String):
+	var game_client_id = multiplayer.get_remote_sender_id()
+	print ("received token from game client: ", game_client_id)
+	player_verification_process.Verify(game_client_id, token)
+
+
+## Called from GameClient.
+#@rpc(any_peer)
+#func Validate(client_token):
+#	var game_client_id = get_tree().get_rpc_sender_id()
+#	player_verification_process.Verify(game_client_id, client_token)
 
 
 # Called from PlayerVerification.Verify().
 func VerificationResponse(game_client_id, is_authorized: bool):
-	rpc_id(game_client_id, "VerificationResponse", is_authorized)
+	rpc_id(game_client_id, "VerificationResponseToClient", is_authorized)
+
+# this is implemented on GameClient
+@rpc func VerificationResponseToClient(_is_authorized): pass
 
 
 #------------------------------------------------------------------------------
@@ -82,19 +98,21 @@ func VerificationResponse(game_client_id, is_authorized: bool):
 #------------------------------------------------------------------------------
 
 func _on_TokenExpiration_timeout():
-	var current_time = OS.get_unix_time()
+	var current_time = Time.get_unix_time_from_system()
 	var token_time
 	
 	if expected_tokens.size() == 0:
 		pass
 	else:
 		for i in range(expected_tokens.size() -1, -1, -1):
-			token_time = int(expected_tokens[i].right(64))
+			print ("Checking token: ", expected_tokens[i])
+			#print ("  right(64): ", expected_tokens[i].right(64))
+			#print ("  right(-64): ", expected_tokens[i].right(-64))
+			token_time = expected_tokens[i].right(-64).to_int()
 			if current_time - token_time >= 30:
 				expected_tokens.remove_at(i)
-				print("REMOVED: " + str(i))
-				
+				print("REMOVED expected_token: " + str(i))
+	
 	print("Expected Tokens:")
 	print(expected_tokens)
-
 

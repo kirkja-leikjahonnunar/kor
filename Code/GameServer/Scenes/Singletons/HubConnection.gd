@@ -9,9 +9,11 @@ var hub_api : MultiplayerAPI
 var ip := "127.0.0.1"
 var port := 1912
 
+@onready var gameserver : GameServer = get_node("/root/GameServer")
+
 
 func _ready():
-	pass
+	ConnectToServer()
 
 
 func _process(_delta: float):
@@ -22,8 +24,9 @@ func _process(_delta: float):
 	custom_multiplayer.poll()
 
 
-# this is called when login button pressed
-func ConnectToServer(_username: String, _password: String):
+func ConnectToServer():
+	print("HubConnection.ConnectToServer called")
+	
 	hub_network = ENetMultiplayerPeer.new()
 	hub_api = MultiplayerAPI.new()
 	
@@ -41,7 +44,11 @@ func connection_failed():
 	print ("TODO: popup server fail")
 	#TODO disable login button
 
-
 func connection_succeeded():
 	print ("GameServer connection to hub succeeded!")
+
+
+@rpc
+func ReceiveLoginToken(token):
+	gameserver.expected_tokens.append(token)
 

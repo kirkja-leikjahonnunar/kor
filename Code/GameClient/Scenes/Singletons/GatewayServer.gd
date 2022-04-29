@@ -52,7 +52,7 @@ func connection_failed():
 
 
 func connection_succeeded():
-	print ("Client connection to gateway succeeded!")
+	print ("Client connection to gateway succeeded! client id: ", multiplayer.get_unique_id())
 	RequestLogin()
 
 
@@ -65,12 +65,13 @@ func RequestLogin():
 
 
 # this is called from GatewayServer
-@rpc(any_peer)
-func LoginRequestResponse(result: bool, game_client_id: int):
+@rpc
+func LoginRequestResponse(result: bool, game_client_id: int, token: String):
 	print ("Auth result for ", game_client_id, ": ", result)
+	print ("Token: ", token)
 	if result == true:
+		GameServer.token = token
 		GameServer.ConnectToServer()
-		# free login screen
 	else:
 		print ("Incorrect login information")
 		#.. enable login button

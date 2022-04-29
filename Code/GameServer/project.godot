@@ -10,11 +10,17 @@ config_version=5
 
 _global_script_classes=[{
 "base": "Node",
+"class": &"GameServer",
+"language": &"GDScript",
+"path": "res://Scenes/Main/GameServer.gd"
+}, {
+"base": "Node",
 "class": &"PlayerVerification",
 "language": &"GDScript",
 "path": "res://Scenes/Main/PlayerVerification.gd"
 }]
 _global_script_class_icons={
+"GameServer": "",
 "PlayerVerification": ""
 }
 
