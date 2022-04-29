@@ -42,6 +42,7 @@ func Verify(game_client_id, player_token):
 		
 		# Grant access to the player, unless the internet broke.
 		if game_server.expected_tokens.has(player_token):
+			print ("Client is verified, hooray!")
 			is_authorized = true
 			CreatePlayerContainer(game_client_id)
 			awaiting_verification.erase(game_client_id)

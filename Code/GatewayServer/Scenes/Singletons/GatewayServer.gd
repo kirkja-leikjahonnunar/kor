@@ -7,6 +7,8 @@ var network := ENetMultiplayerPeer.new()
 var gateway_api = MultiplayerAPI.new()
 var port := 1910
 var max_players := 100
+var cert = load("res://Certificate/X509_Certificate.crt")
+var key = load("res://Certificate/X509_Key.key")
 
 
 func _ready():
@@ -21,6 +23,7 @@ func _process(_delta):
 
 func StartServer():
 	network.create_server(port, max_players)
+	network.host.dtls_server_setup(key, cert)
 	set_custom_multiplayer(gateway_api)
 	custom_multiplayer.set_root_path("/root/GatewayServer")
 	custom_multiplayer.set_multiplayer_peer(network)

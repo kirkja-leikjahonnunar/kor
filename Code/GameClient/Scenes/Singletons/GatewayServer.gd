@@ -11,6 +11,7 @@ var gateway_network : ENetMultiplayerPeer
 var gateway_api : MultiplayerAPI
 var ip := "127.0.0.1"
 var port := 1910
+var cert = load("res://Resources/Certificate/X509_Certificate.crt")
 
 # these should have data only between GatewayServer connect and auth response:
 var username : String
@@ -33,10 +34,12 @@ func _process(_delta: float):
 func ConnectToServer(_username: String, _password: String):
 	gateway_network = ENetMultiplayerPeer.new()
 	gateway_api = MultiplayerAPI.new()
+	
 	username = _username
 	password = _password
 	
 	gateway_network.create_client(ip, port)
+	gateway_network.host.dtls_client_setup(cert, ip, false) #TODO: false is for self signed
 	set_custom_multiplayer(gateway_api)
 	custom_multiplayer.set_root_path("/root/GatewayServer")
 	custom_multiplayer.set_multiplayer_peer(gateway_network)

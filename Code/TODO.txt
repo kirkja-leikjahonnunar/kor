@@ -6,11 +6,15 @@ export port number across projects
 
 - which runs first, singleton or main scene?
 
+- loading scene progress bar?
+
 
 NOTES
 -----
 - Godot hard limit 4095 concurrent players per network (ccu)
 - requests per second (rps) 
+- x509 certificate cost 3rd party verification, cost estimate: ~ $25 / year
+- NEVER let crypto key get on Client, only cert, Gateway gets both key and cert.
 
 
 PORTING NOTES
