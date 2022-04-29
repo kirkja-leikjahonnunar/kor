@@ -50,7 +50,7 @@ func connection_succeeded():
 
 @rpc
 func ReceiveLoginToken(token):
-	print ("GameServer hub connection got ReceiveLoginToken: ", token)
+	print ("GameServer hub connection got ReceiveLoginToken from auth server: ", token)
 	gameserver.expected_tokens.append(token)
 	print ("Now expecting tokens:")
 	print (gameserver.expected_tokens)

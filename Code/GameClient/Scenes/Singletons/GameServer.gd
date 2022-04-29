@@ -54,7 +54,7 @@ func VerificationResponseToClient(is_authorized):
 	print ("GameServer says authorized: ", is_authorized)
 	if is_authorized:
 		#TODO: remove login screen
-		pass
+		print ("We have lift off!")
 	else:
 		print ("Login failed, please try again!")
 		#TODO: reenable login button

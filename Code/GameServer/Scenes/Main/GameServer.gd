@@ -114,7 +114,7 @@ func _on_TokenExpiration_timeout():
 			#print ("  right(64): ", expected_tokens[i].right(64))
 			#print ("  right(-64): ", expected_tokens[i].right(-64))
 			token_time = expected_tokens[i].right(-64).to_int()
-			if current_time - token_time >= 30:
+			if current_time - token_time >= 31:
 				expected_tokens.remove_at(i)
 				print("REMOVED expected_token: " + str(i))
 	
