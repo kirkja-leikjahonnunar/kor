@@ -49,12 +49,15 @@ func peer_disconnected(game_client_id: int):
 func PlayerDataRequest(what:String, requestor:int):
 	var game_client_id = multiplayer.get_remote_sender_id()
 	
-	# ...RETRIEVE DATA...
-	print_debug("TODO: implement retrieve player data")
-	var data = "STUFF"
-	
-	# send data back to client
-	rpc_id(game_client_id, "PlayerDataResponse", what, data, requestor)
+	if what == "GameTime":
+		rpc_id(game_client_id, "PlayerDataResponse", what, "THE TIME IS NOW!!", requestor)
+	else:
+		# ...RETRIEVE DATA...
+		print_debug("TODO: implement retrieve player data")
+		var data = "STUFF"
+		
+		# send data back to client
+		rpc_id(game_client_id, "PlayerDataResponse", what, data, requestor)
 
 
 # this is implemented on GameClient

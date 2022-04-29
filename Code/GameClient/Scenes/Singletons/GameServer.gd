@@ -55,6 +55,7 @@ func VerificationResponseToClient(is_authorized):
 	if is_authorized:
 		#TODO: remove login screen
 		print ("We have lift off!")
+		RequestPlayerData("GameTime", get_instance_id())
 	else:
 		print ("Login failed, please try again!")
 		#TODO: reenable login button
