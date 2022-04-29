@@ -30,13 +30,15 @@ func StartServer():
 
 func peer_connected(game_client_id):
 	print ("GameServer: client connected! ", game_client_id)
+	await get_tree().process_frame
 	player_verification_process.Start(game_client_id)
 
 
 func peer_disconnected(game_client_id: int):
 	print ("GameServer: client disconnected! ", game_client_id)
 	#todo: probably need to store any unsaved data on the client's node
-	get_node(str(game_client_id)).queue_free()
+	if has_node(str(game_client_id)):
+		get_node(str(game_client_id)).queue_free()
 
 
 #-------------- Testing random data retrieval -----------------
@@ -65,6 +67,8 @@ func PlayerDataRequest(what:String, requestor:int):
 #------------------------------------------------------------------------------
 # Called from "PlayerVerification.gd".
 func FetchPlayerToken(game_client_id):
+	print ("Trying to call gameClient with PlayerTokenRequest, client id: ", game_client_id)
+	print("GameServer currently has peers: ", multiplayer.get_peers())
 	rpc_id(game_client_id, "PlayerTokenRequest") # RPC to GameClient.
 
 # this is implemented on GameClient
@@ -75,6 +79,7 @@ func FetchPlayerToken(game_client_id):
 func PlayerTokenResponse(token: String):
 	var game_client_id = multiplayer.get_remote_sender_id()
 	print ("received token from game client: ", game_client_id)
+	print ("  client token: ", token)
 	player_verification_process.Verify(game_client_id, token)
 
 

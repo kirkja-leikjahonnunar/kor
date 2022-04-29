@@ -41,6 +41,7 @@ func server_disconnected():
 # this is called from a GameServer
 @rpc
 func PlayerTokenRequest():
+	print ("Got PlayerTokenRequest from GameServer, sending response")
 	rpc_id(1, "PlayerTokenResponse", token)
 
 # this is implemented on GameServer

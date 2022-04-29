@@ -42,6 +42,7 @@ func peer_disconnected(gateway_id):
 
 func DistributeLoginToken(token, gameserver):
 	var gameserver_peer_id = gameserverlist[gameserver]
+	print ("Auth server sending token to GameServer: ", token)
 	rpc_id(gameserver_peer_id, "ReceiveLoginToken", token)
 
 # this is implemented on the GameServer

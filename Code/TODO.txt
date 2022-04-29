@@ -23,6 +23,8 @@ int(string)?  <--  String.to_int()
 
 get_tree().get_rpc_sender_id()  ->  multiplayer.get_remote_sender_id(
 
+game_server.network.disconnect_peer(game_client_id)  ->  game_server.network.get_peer(game_client_id).peer_disconnect() 
+
 
 CHEATSHEET
 ----------

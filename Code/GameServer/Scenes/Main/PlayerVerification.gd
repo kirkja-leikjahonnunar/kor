@@ -11,9 +11,9 @@ class_name PlayerVerification
 var awaiting_verification = {} 
 
 
-func Start(player_id):
-	awaiting_verification[player_id] = { "Timestamp": Time.get_unix_time_from_system() }
-	game_server.FetchPlayerToken(player_id)
+func Start(game_client_id):
+	awaiting_verification[game_client_id] = { "Timestamp": Time.get_unix_time_from_system() }
+	game_server.FetchPlayerToken(game_client_id)
 	print(awaiting_verification, "________________")
 
 
@@ -43,11 +43,12 @@ func Verify(game_client_id, player_token):
 		# Grant access to the player, unless the internet broke.
 		if game_server.expected_tokens.has(player_token):
 			is_authorized = true
-			#CreatePlayerContainer(player_id)
+			CreatePlayerContainer(game_client_id)
 			awaiting_verification.erase(game_client_id)
 			game_server.expected_tokens.erase(player_token)
 			break
 		else:
+			print ("Player not verified yet, trying again in 2 seconds...")
 			# Wait 2 seconds before, trying again (provides 15 attempts).
 			await get_tree().create_timer(2).timeout
 	
@@ -57,7 +58,7 @@ func Verify(game_client_id, player_token):
 	# Could be dodgy behaviour, or an internet hickup.
 	if is_authorized == false:
 		awaiting_verification.erase(game_client_id)
-		game_server.network.disconnect_peer(game_client_id)
+		game_server.network.get_peer(game_client_id).peer_disconnect()
 
 
 
@@ -76,5 +77,5 @@ func _on_verification_expiration_timeout():
 					game_server.VerificationResponse(key, false)
 					#TODO: check that net sends before being disconnected:
 					game_server.network.get_peer(key).peer_disconnect()
-	print("Awaiting verification:")
+	print("After verification timeout, still Awaiting verification:")
 	print(awaiting_verification)
