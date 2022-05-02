@@ -6,7 +6,7 @@ export port number across projects
 
 - which runs first, singleton or main scene?
 
-- loading scene progress bar?
+- loading scene progress bar?  ->  see: https://docs.godotengine.org/en/3.5/tutorials/io/background_loading.html
 
 
 NOTES
