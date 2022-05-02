@@ -15,18 +15,21 @@ func _ready():
 	StartServer()
 
 
-func _process(_delta):
-	if not custom_multiplayer.has_multiplayer_peer():
-		return
-	custom_multiplayer.poll()
+#func _process(_delta):
+#	if not custom_multiplayer.has_multiplayer_peer():
+#		return
+#	custom_multiplayer.poll()
 	
 
 func StartServer():
 	network.create_server(port, max_players)
 	network.host.dtls_server_setup(key, cert)
-	set_custom_multiplayer(gateway_api)
-	custom_multiplayer.set_root_path("/root/GatewayServer")
-	custom_multiplayer.set_multiplayer_peer(network)
+	
+	get_tree().set_multiplayer(gateway_api, "/root/GatewayServer")
+	#set_custom_multiplayer(gateway_api)
+	#custom_multiplayer.set_root_path()
+	#custom_multiplayer.set_multiplayer_peer(network)
+	multiplayer.set_multiplayer_peer(network)
 	print ("Gateway server started!")
 	
 	network.peer_connected.connect(peer_connected)
@@ -45,7 +48,7 @@ func peer_disconnected(game_client_id):
 func LoginRequest(username: String, password: String):
 	print("LoginRequest on GatewayServer with: ", username, ": ", password)
 	
-	var game_client_id = custom_multiplayer.get_remote_sender_id()
+	var game_client_id = multiplayer.get_remote_sender_id()
 	print ("game_client_id (remote sender id) at LoginRequest: ", game_client_id)
 	AuthenticationServer.AuthenticatePlayer(username, password, game_client_id)
 
