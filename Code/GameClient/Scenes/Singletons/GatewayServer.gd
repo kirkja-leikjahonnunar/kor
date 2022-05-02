@@ -22,12 +22,12 @@ func _ready():
 	pass
 
 
-func _process(_delta: float):
-	if get_custom_multiplayer() == null:
-		return
-	if not custom_multiplayer.has_multiplayer_peer():
-		return
-	custom_multiplayer.poll()
+#func _process(_delta: float):
+#	if get_custom_multiplayer() == null:
+#		return
+#	if not custom_multiplayer.has_multiplayer_peer():
+#		return
+#	custom_multiplayer.poll()
 
 
 # this is called when login button pressed
@@ -40,9 +40,11 @@ func ConnectToServer(_username: String, _password: String):
 	
 	gateway_network.create_client(ip, port)
 	gateway_network.host.dtls_client_setup(cert, ip, false) #TODO: false is for self signed
-	set_custom_multiplayer(gateway_api)
-	custom_multiplayer.set_root_path("/root/GatewayServer")
-	custom_multiplayer.set_multiplayer_peer(gateway_network)
+	
+	get_tree().set_multiplayer(gateway_api, "/root/GatewayServer")
+	#set_custom_multiplayer(gateway_api)
+	#custom_multiplayer.set_root_path("/root/GatewayServer")
+	multiplayer.set_multiplayer_peer(gateway_network)
 	
 	gateway_network.connection_failed.connect(connection_failed)
 	gateway_network.connection_succeeded.connect(connection_succeeded)

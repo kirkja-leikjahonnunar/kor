@@ -10,12 +10,13 @@ var gameserverlist := {}
 func _ready():
 	StartServer()
 
-func _process(_delta: float):
-	if get_custom_multiplayer() == null:
-		return
-	if not custom_multiplayer.has_multiplayer_peer():
-		return
-	custom_multiplayer.poll()
+#func _process(_delta: float):
+#	if get_custom_multiplayer() == null:
+#		return
+#	if not custom_multiplayer.has_multiplayer_peer():
+#		return
+#	custom_multiplayer.poll()
+
 
 
 func StartServer():
@@ -23,9 +24,11 @@ func StartServer():
 	gateway_api = MultiplayerAPI.new()
 	
 	gateway_network.create_server(port, max_servers)
-	set_custom_multiplayer(gateway_api)
-	custom_multiplayer.set_root_path("/root/GameServers")
-	custom_multiplayer.set_multiplayer_peer(gateway_network)
+	get_tree().set_multiplayer(gateway_api, "/root/GameServers")
+	#set_custom_multiplayer(gateway_api)
+	#custom_multiplayer.set_root_path("/root/GameServers")
+	#custom_multiplayer.set_multiplayer_peer(gateway_network)
+	multiplayer.set_multiplayer_peer(gateway_network)
 	print ("GameServer hub started!")
 	
 	gateway_network.peer_connected.connect(peer_connected)

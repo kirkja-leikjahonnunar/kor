@@ -16,12 +16,12 @@ func _ready():
 	ConnectToServer()
 
 
-func _process(_delta: float):
-	if get_custom_multiplayer() == null:
-		return
-	if not custom_multiplayer.has_multiplayer_peer():
-		return
-	custom_multiplayer.poll()
+#func _process(_delta: float):
+#	if get_custom_multiplayer() == null:
+#		return
+#	if not custom_multiplayer.has_multiplayer_peer():
+#		return
+#	custom_multiplayer.poll()
 
 
 func ConnectToServer():
@@ -31,9 +31,10 @@ func ConnectToServer():
 	hub_api = MultiplayerAPI.new()
 	
 	hub_network.create_client(ip, port)
-	set_custom_multiplayer(hub_api)
-	custom_multiplayer.set_root_path("/root/HubConnection")
-	custom_multiplayer.set_multiplayer_peer(hub_network)
+	get_tree().set_multiplayer(hub_api, "/root/HubConnection")
+	#set_custom_multiplayer(hub_api)
+	#custom_multiplayer.set_root_path("/root/HubConnection")
+	multiplayer.set_multiplayer_peer(hub_network)
 	
 	hub_network.connection_failed.connect(connection_failed)
 	hub_network.connection_succeeded.connect(connection_succeeded)
