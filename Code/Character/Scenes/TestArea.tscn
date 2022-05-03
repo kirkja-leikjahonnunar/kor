@@ -1,8 +1,9 @@
-[gd_scene load_steps=47 format=3 uid="uid://c3auumwclyj4c"]
+[gd_scene load_steps=49 format=3 uid="uid://c3auumwclyj4c"]
 
 [ext_resource type="Script" path="res://Utils/EscToQuit.gd" id="1_jhxhp"]
 [ext_resource type="PackedScene" uid="uid://ymxv0nvp3oof" path="res://Models/DoricColumn/DoricColumn.tscn" id="1_vxuft"]
 [ext_resource type="Material" uid="uid://dl5lw2hid4m8f" path="res://Materials/GridTriplanar.tres" id="2_3qr5d"]
+[ext_resource type="Material" uid="uid://flbf0inxdsxk" path="res://Materials/GridTriplanarWorld.tres" id="2_7k4np"]
 [ext_resource type="Script" path="res://ThirdPerson/CharacterController.gd" id="4_app5r"]
 [ext_resource type="Script" path="res://ThirdPerson/CameraLerper.gd" id="5_fli6b"]
 [ext_resource type="Texture2D" uid="uid://crdt07ky8e6ma" path="res://icon.png" id="5_po3y2"]
@@ -14,9 +15,11 @@
 [sub_resource type="BoxShape3D" id="BoxShape3D_rvq6k"]
 size = Vector3(30, 1, 30)
 
-[sub_resource type="PlaneMesh" id="PlaneMesh_f1fkc"]
-material = ExtResource( "2_3qr5d" )
-size = Vector2(30, 30)
+[sub_resource type="BoxMesh" id="BoxMesh_jptdc"]
+size = Vector3(30, 1, 30)
+
+[sub_resource type="BoxMesh" id="BoxMesh_18v8w"]
+material = ExtResource( "2_7k4np" )
 
 [sub_resource type="BoxMesh" id="BoxMesh_3pplv"]
 material = ExtResource( "2_3qr5d" )
@@ -233,9 +236,14 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.501328, 0)
 shape = SubResource( "BoxShape3D_rvq6k" )
 
 [node name="Ground" type="MeshInstance3D" parent="Environment/Ground"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
 layers = 524288
-mesh = SubResource( "PlaneMesh_f1fkc" )
+mesh = SubResource( "BoxMesh_jptdc" )
 skeleton = NodePath("../..")
+surface_material_override/0 = ExtResource( "2_7k4np" )
+
+[node name="CubeMesh" type="MeshInstance3D" parent="Environment/Ground/Ground"]
+mesh = SubResource( "BoxMesh_18v8w" )
 
 [node name="Columns" type="Node3D" parent="Environment"]
 
@@ -473,6 +481,15 @@ transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.5302
 layers = 524288
 mesh = SubResource( "BoxMesh_xudwm" )
 surface_material_override/0 = SubResource( "StandardMaterial3D_eh11i" )
+
+[node name="Ramp" type="StaticBody3D" parent="Environment"]
+transform = Transform3D(-3.93807e-08, 1.89696e-08, 1, 0.433974, 0.900926, 0, -0.900926, 0.433974, -4.37114e-08, 16.5207, -0.61501, -5.78507e-08)
+metadata/_edit_group_ = true
+
+[node name="CubeCSG" type="CSGBox3D" parent="Environment/Ramp"]
+use_collision = true
+size = Vector3(10, 1, 3)
+material = ExtResource( "2_7k4np" )
 
 [node name="GPUParticles3D" type="GPUParticles3D" parent="Environment"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.3518, 11.8137, -2.88896)
