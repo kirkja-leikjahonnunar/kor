@@ -39,6 +39,8 @@ func ConnectToServer(_username: String, _password: String):
 	password = _password
 	
 	gateway_network.create_client(ip, port)
+	gateway_network.connection_failed.connect(connection_failed)
+	gateway_network.connection_succeeded.connect(connection_succeeded)
 	gateway_network.host.dtls_client_setup(cert, ip, false) #TODO: false is for self signed
 	
 	get_tree().set_multiplayer(gateway_api, "/root/GatewayServer")
@@ -46,14 +48,12 @@ func ConnectToServer(_username: String, _password: String):
 	#custom_multiplayer.set_root_path("/root/GatewayServer")
 	multiplayer.set_multiplayer_peer(gateway_network)
 	
-	gateway_network.connection_failed.connect(connection_failed)
-	gateway_network.connection_succeeded.connect(connection_succeeded)
 
 
 func connection_failed():
+	#get_tree().call_group("Opine", "set_text", "Client connection to gateway failed!")
 	print ("Client connection to gateway failed!")
-	print ("TODO: popup server fail")
-	#TODO disable login button
+	get_node("/root/Client/LoginScreen").ConnectionFailed()
 
 
 func connection_succeeded():
@@ -79,7 +79,7 @@ func LoginRequestResponse(result: bool, game_client_id: int, token: String):
 		GameServer.ConnectToServer()
 	else:
 		print ("Incorrect login information")
-		#.. enable login button
+		get_node("/root/Client/LoginScreen").LoginRejected()
 	
 	#??? network.get_peer(game_client_id).peer_disconnect()
 

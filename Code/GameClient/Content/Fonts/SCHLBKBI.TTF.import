@@ -13,6 +13,7 @@ dest_files=["res://.godot/imported/SCHLBKBI.TTF-6efd93d509cddc8186b64b8132226838
 [params]
 
 antialiased=true
+generate_mipmaps=false
 multichannel_signed_distance_field=false
 msdf_pixel_range=8
 msdf_size=48

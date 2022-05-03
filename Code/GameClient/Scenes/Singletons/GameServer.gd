@@ -35,7 +35,7 @@ func connection_succeeded():
 
 func server_disconnected():
 	print ("GameServer disconnected!")
-	
+
 
 
 # this is called from a GameServer

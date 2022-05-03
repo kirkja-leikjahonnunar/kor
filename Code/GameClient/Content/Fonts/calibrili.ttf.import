@@ -13,6 +13,7 @@ dest_files=["res://.godot/imported/calibrili.ttf-dcde0f341168503515bbf2cf45b0112
 [params]
 
 antialiased=true
+generate_mipmaps=false
 multichannel_signed_distance_field=false
 msdf_pixel_range=8
 msdf_size=48

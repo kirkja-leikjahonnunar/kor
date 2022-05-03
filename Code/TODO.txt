@@ -39,10 +39,13 @@ get_tree().get_rpc_sender_id()  ->  multiplayer.get_remote_sender_id(
 
 game_server.network.disconnect_peer(game_client_id)  ->  game_server.network.get_peer(game_client_id).peer_disconnect() 
 
+custom_multiplayer  ->  get_tree().set_multiplayer(your_multiplayerapi, "/path/to/branch")
+custom_multiplayer.poll() not really needed explicitly, now: get_tree().multiplayer_poll = true (which is default)
+
 
 CHEATSHEET
 ----------
-One off timers:    get_tree().create_timer(1.0).timeout.connect(YourFunction)
+One off timers (4.0):    get_tree().create_timer(1.0).timeout.connect(YourFunction)
 
 
 GRIPES

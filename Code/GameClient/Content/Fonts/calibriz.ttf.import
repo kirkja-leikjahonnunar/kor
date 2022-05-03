@@ -13,6 +13,7 @@ dest_files=["res://.godot/imported/calibriz.ttf-2e4518cb8522f0b1fe57ee76e8bc5b70
 [params]
 
 antialiased=true
+generate_mipmaps=false
 multichannel_signed_distance_field=false
 msdf_pixel_range=8
 msdf_size=48
