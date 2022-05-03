@@ -55,11 +55,23 @@ func VerificationResponseToClient(is_authorized):
 	if is_authorized:
 		#TODO: remove login screen
 		print ("We have lift off!")
-		RequestPlayerData("GameTime", get_instance_id())
+		#RequestPlayerData("GameTime", get_instance_id())
 	else:
 		print ("Login failed, please try again!")
 		#TODO: reenable login button
 
+
+#------------ Player Maintenance ----------------------
+
+@rpc
+func DespawnPlayer(game_client_id):
+	print ("GameServer says to despawn: ", game_client_id)
+	get_node("/root/Client/World").DespawnPlayer(game_client_id)
+
+@rpc
+func SpawnNewPlayer(game_client_id: int, spawn_point: Vector2):
+	print ("GameServer says to spawn player ", game_client_id, " at ", spawn_point)
+	get_node("/root/Client/World").SpawnNewPlayer(game_client_id, spawn_point)
 
 
 ##------------------------ Testing ---------------------------
