@@ -70,24 +70,25 @@ func _physics_process(delta):
 	var target_velocity : Vector3
 	
 	if not is_on_floor():
-		target_velocity -= (gravity * delta * 10) * up_direction
-		#velocity.y -= gravity * delta
+		#target_velocity -= (gravity * delta * 10) * up_direction
+		velocity -= gravity * delta * up_direction
 	else: #on floor
 		# Handle Jump.
 		if Input.is_action_just_pressed("char_jump"):
 			# replace up velocity with jump velocity.. old should be 0 since on floor
-			#velocity = velocity - (velocity * up_direction) * up_direction + JUMP_VELOCITY * up_direction
-			target_velocity = JUMP_VELOCITY * 10 * up_direction
-		#else: target_velocity = Vector3(0,velocity.y,0)
+			velocity = velocity - velocity.dot(up_direction) * up_direction + JUMP_VELOCITY * up_direction
+			#target_velocity = JUMP_VELOCITY * 10 * up_direction
+		else:
+			# add a little downward to help stick to weird surfaces
+			target_velocity = -up_direction
 	
 	
-	# rotate player
+	# rotate camera rig in response to input
 	var rotate_amount = 1.0 if Input.is_action_pressed("char_rotate_right") else 0.0 \
 						- 1.0 if Input.is_action_pressed("char_rotate_left") else 0.0
 	if abs(rotate_amount) > 1e-5: camera_rig.rotate(Vector3(0,-1,0), delta * 60 * ROTATION_SPEED * rotate_amount)
 	
-	# Get the input direction and handle the movement/deceleration.
-	# As good practice, you should replace UI actions with custom gameplay actions.
+	# Get the input direction
 	var input_dir = -Input.get_vector("char_strafe_left", "char_strafe_right", "char_forward", "char_backward")
 	var player_dir = camera_rig.transform.basis * Vector3(input_dir.x, 0, input_dir.y) # now in Player space
 	#print (player_dir)
@@ -115,7 +116,8 @@ func _physics_process(delta):
 	
 	var dpos = position
 	#velocity.move_toward(target_velocity, .5)
-	velocity = target_velocity.lerp(velocity, .1) #note: velocity can't move_toward like a normal vector3
+	var vertical_v = (velocity.dot(up_direction)) * up_direction
+	velocity = vertical_v + target_velocity.lerp(velocity - vertical_v, .1) #note: velocity can't move_toward like a normal vector3
 	print ("velocity: ", velocity, ",  target velocity: ", target_velocity)
 	#velocity.move_toward(global_transform.basis * target_velocity, .5)
 	move_and_slide()
@@ -326,9 +328,14 @@ func ExitedGravityArea(area: Area3D):
 	gravity_areas.erase(area)
 	print ("Player removing gravity area: ", area.name)
 
+var world_gravity_floor := -2.0
+
 func UpdateGravity():
 	if gravity_areas.size() == 0:
-		up_direction = Vector3(0,1,0)
+		if global_transform.origin.y > world_gravity_floor:
+			up_direction = Vector3(0,1,0)
+		else:
+			up_direction = Vector3(0,-1,0)
 	else:
 		var n = 0
 		var v = Vector3()
