@@ -485,10 +485,11 @@ draw_pass_1 = SubResource( "QuadMesh_cpcab" )
 [node name="Platforms" type="Node3D" parent="."]
 
 [node name="AnimatedPlatform" type="AnimatableBody3D" parent="Platforms"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -26.9999, -0.261, -8.02915)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17.0287, -0.261008, -0.0323166)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Platforms/AnimatedPlatform"]
 autoplay = "Travel"
+playback_process_mode = 0
 method_call_mode = 1
 libraries = {
 "": SubResource( "AnimationLibrary_16arg" )

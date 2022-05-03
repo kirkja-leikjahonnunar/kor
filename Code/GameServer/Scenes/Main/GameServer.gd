@@ -39,6 +39,14 @@ func peer_disconnected(game_client_id: int):
 	#todo: probably need to store any unsaved data on the client's node
 	if has_node(str(game_client_id)):
 		get_node(str(game_client_id)).queue_free()
+		rpc_id(0, "DespawnPlayer", game_client_id)
+
+
+#------------ Player Maintenance ----------------------
+
+@rpc
+func DespawnPlayer(game_client_id):
+	pass
 
 
 #-------------- Testing random data retrieval -----------------
@@ -86,16 +94,15 @@ func PlayerTokenResponse(token: String):
 	player_verification_process.Verify(game_client_id, token)
 
 
-## Called from GameClient.
-#@rpc(any_peer)
-#func Validate(client_token):
-#	var game_client_id = get_tree().get_rpc_sender_id()
-#	player_verification_process.Verify(game_client_id, client_token)
-
 
 # Called from PlayerVerification.Verify().
 func VerificationResponse(game_client_id, is_authorized: bool):
 	rpc_id(game_client_id, "VerificationResponseToClient", is_authorized)
+	if is_authorized:
+		var spawn_point = Vector2(150,150)
+		rpc_id(0, "SpawnNewPlayer", game_client_id, spawn_point)
+
+@rpc func  SpawnNewPlayer(game_client_id: int, spawn_point: Vector2): pass
 
 # this is implemented on GameClient
 @rpc func VerificationResponseToClient(_is_authorized): pass
