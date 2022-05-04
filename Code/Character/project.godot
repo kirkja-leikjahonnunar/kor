@@ -18,10 +18,16 @@ _global_script_classes=[{
 "class": &"CharacterController",
 "language": &"GDScript",
 "path": "res://ThirdPerson/CharacterController.gd"
+}, {
+"base": "Area3D",
+"class": &"ProximityButton",
+"language": &"GDScript",
+"path": "res://Scenes/Interactables/ProximityButton.gd"
 }]
 _global_script_class_icons={
 "CameraSettings": "",
-"CharacterController": ""
+"CharacterController": "",
+"ProximityButton": ""
 }
 
 [application]
@@ -38,7 +44,7 @@ window/size/viewport_height=720
 
 [editor_plugins]
 
-enabled=PackedStringArray()
+enabled=PackedStringArray("res://addons/prettyprimitive/plugin.cfg")
 
 [input]
 

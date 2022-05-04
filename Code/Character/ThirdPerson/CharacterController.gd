@@ -10,6 +10,7 @@ class_name CharacterController
 @export var SPRINT_SPEED := 10.0
 @export var ROTATION_SPEED := .03
 @export var JUMP_VELOCITY := 8.5
+@export var GRAVITY_MULTIPLIER := 2.0
 
 @export var allow_fp : bool = true # allow First Person mode
 @export var min_camera_distance := 0.5  # below this, switch to 1st person
@@ -71,7 +72,7 @@ func _physics_process(delta):
 	
 	if not is_on_floor():
 		#target_velocity -= (gravity * delta * 10) * up_direction
-		velocity -= gravity * delta * up_direction
+		velocity -= GRAVITY_MULTIPLIER * gravity * delta * up_direction
 	else: #on floor
 		# Handle Jump.
 		if Input.is_action_just_pressed("char_jump"):
@@ -118,7 +119,7 @@ func _physics_process(delta):
 	#velocity.move_toward(target_velocity, .5)
 	var vertical_v = (velocity.dot(up_direction)) * up_direction
 	velocity = vertical_v + target_velocity.lerp(velocity - vertical_v, .1) #note: velocity can't move_toward like a normal vector3
-	print ("velocity: ", velocity, ",  target velocity: ", target_velocity)
+	#print ("velocity: ", velocity, ",  target velocity: ", target_velocity)
 	#velocity.move_toward(global_transform.basis * target_velocity, .5)
 	move_and_slide()
 	dpos -= position # this is world coordinates change in position
@@ -127,15 +128,25 @@ func _physics_process(delta):
 
 func AlignPlayerToUp():
 	var axis : Vector3 = global_transform.basis.y.cross(up_direction)
+	var dot = global_transform.basis.y.dot(up_direction)
 	var amount = asin(axis.length())
-	if amount < 1e-6: return
-	if amount  > PI/12:
+	if dot < 0:
+		if abs(amount) < 1e-6: # we are trying to flip a 180
+			axis = global_transform.basis.z
+		amount = PI - amount
+		#axis = -axis
+	#print ("gravity check up amount: ", amount, ", dot: ", dot)
+	if abs(amount) < 1e-6 && dot >= 0: return #without 0 check, errors about axis not being normalized, since it's 0 length
+		
+	axis = axis.normalized()
+	if amount  > PI/24:
 		# damp down extreme rotations
-		global_transform.basis = global_transform.basis.rotated(axis.normalized(), PI/12 + (amount-PI/12)*.1)
+		global_transform.basis = global_transform.basis.rotated(axis.normalized(), PI/24 + (amount-PI/24)*.1)
 	else:
-		axis = axis.normalized()
 		#print ("axis len: ", axis.length(), " ",axis.length_squared())
 		global_transform.basis = global_transform.basis.rotated(axis, amount)
+	
+	#global_transform.basis = global_transform.basis.rotated(axis, amount)
 
 func _process(_delta):
 	pass
@@ -171,6 +182,12 @@ func _unhandled_input(event):
 	# change if camera hovers off to left, right, or center of player
 	if camera_mode == CameraMode.Third && Input.is_action_just_pressed("char_camera_hover"):
 		HandleHoverToggle()
+	
+	if Input.is_action_just_pressed("char_use1"):
+		Use1(null)
+	
+	if Input.is_action_just_pressed("char_use2"):
+		Use2(null)
 
 
 ##--------------------------- Handler Functions -----------------------------
@@ -309,32 +326,36 @@ func SetFirstPerson():
 
 
 func Use1(node):
-	print("Use1: ", node.name)
+	print("Use1: ", node.name if node != null else "null")
 
 func Use2(node):
-	print("Use2: ", node.name)
+	print("Use2: ", node.name if node != null else "null")
 
 
 #------------------------- Environment Gravity control ----------------------------------
 
 var gravity_areas := []
+var world_gravity_floor := -1.0
+@export var world_max_height := 10
+@export var world_min_height := -10
+
 
 func EnteredGravityArea(area: Area3D):
 	if not (area in gravity_areas):
 		gravity_areas.append(area)
 		print ("Player adding gravity area: ", area.name)
 
+
 func ExitedGravityArea(area: Area3D):
 	gravity_areas.erase(area)
 	print ("Player removing gravity area: ", area.name)
 
-var world_gravity_floor := -2.0
 
 func UpdateGravity():
 	if gravity_areas.size() == 0:
-		if global_transform.origin.y > world_gravity_floor:
+		if global_transform.origin.y > world_max_height:
 			up_direction = Vector3(0,1,0)
-		else:
+		elif global_transform.origin.y < world_min_height:
 			up_direction = Vector3(0,-1,0)
 	else:
 		var n = 0

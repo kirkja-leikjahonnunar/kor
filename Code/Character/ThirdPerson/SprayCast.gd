@@ -27,12 +27,13 @@ func _process(_delta):
 				global_transform = new_tr
 	
 	if is_colliding() && Input.is_action_just_pressed("char_use1"):
+		#FIXME: this should integrate with player controller
 		Spray()
 
 
 # return a transform with origin at from_point that has its Y axis toward to_point
 func AlignTransformY(from_point: Vector3, to_point: Vector3, 
-					tr: Transform3D, up: Vector3) -> Transform3D:
+					trans: Transform3D, up: Vector3) -> Transform3D:
 	var new_y := -(to_point - from_point).normalized()
 	var new_x := new_y.cross(up)
 	var new_z := new_x.cross(new_y)
