@@ -24,7 +24,6 @@ func DefinePlayerState():
 	player_state = { "T": Time.get_ticks_msec(), "P": global_transform.origin }
 	GameServer.SendPlayerState(player_state)
 
-
 func HandleMovement(delta):
 	# Add the gravity.
 	if not is_on_floor():

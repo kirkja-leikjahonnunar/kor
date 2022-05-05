@@ -2,16 +2,6 @@ extends Node2D
 
 @export var player_prefab : PackedScene
 @export var other_player_prefab : PackedScene
-#@export var test : NodePath
-
-# Called when the node enters the scene tree for the first time.
-func _ready():
-	pass # Replace with function body.
-
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
-	pass
 
 
 func SpawnNewPlayer(game_client_id: int, spawn_point: Vector2):
@@ -35,18 +25,36 @@ func DespawnPlayer(game_client_id):
 	get_node("Players/"+str(game_client_id)).queue_free()
 
 
+#------------------ World State Syncing ----------------------
+
 var last_world_state := 0.0
+var interpolation_offset := 100
+var world_state_buffer = []
+
+func _physics_process(delta):
+	var render_time = Time.get_ticks_msec() - interpolation_offset
+	if world_state_buffer.size() > 1:
+		while world_state_buffer.size() > 2 and render_time > world_state_buffer[1].T:
+			world_state_buffer.remove(eua0)
+		var interpolation_factor = float(render_time - world_state_buffer[0]["T"]) \
+							/ float(world_state_buffer[1]["T"] - world_state_buffer[0]["T"])
+		for player in world_state_buffer[1].keys():
+			if str(player) == "T":
+				continue
+			if player == multiplayer.get_unique_id():
+				continue
+			if not world_state_buffer[0].has(player):
+				continue
+			if $Players.has_node(str(player)):
+				print ("Finally updating other player, lerp : ", interpolation_factor)
+				#var new_position = world_state_buffer[0][player].P.lerp(world_state_buffer[1][player].P, interpolation_factor)
+				var new_position = world_state_buffer[1][player].P
+				$Players.get_node(str(player)).MovePlayer(new_position)
+			else:
+				print("Spawing new other player ", player)
+				SpawnNewPlayer(player, world_state_buffer[1][player].P)
 
 func UpdateWorldState(world_state):
-	print ("...update world state...")
-	if world_state["T"] > last_world_state:
-		last_world_state = world_state["T"]
-		world_state.erase("T")
-		world_state.erase(multiplayer.get_unique_id())
-		for player in world_state.keys():
-			if $Players.has_node(str(player)):
-				$Players.get_node(str(player)).MovePlayer(world_state[player]["P"])
-			else:
-				print ("Spawing new other player")
-				SpawnNewPlayer(player, world_state[player]["P"])
-
+	if world_state.T > last_world_state:
+		last_world_state = world_state.T
+		world_state_buffer.append(world_state)
