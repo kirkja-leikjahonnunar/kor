@@ -22,14 +22,31 @@ func SpawnNewPlayer(game_client_id: int, spawn_point: Vector2):
 		new_player.position = spawn_point
 		new_player.name = str(game_client_id)
 		$Players.add_child(new_player)
+		new_player.set_physics_process(true)
 	else:
-		var new_other_player = other_player_prefab.instantiate()
-		new_other_player.position = spawn_point
-		new_other_player.name = str(game_client_id)
-		$Players.add_child(new_other_player)
+		if not $Players.has_node(str(game_client_id)):
+			var new_other_player = other_player_prefab.instantiate()
+			new_other_player.position = spawn_point
+			new_other_player.name = str(game_client_id)
+			$Players.add_child(new_other_player)
 
 func DespawnPlayer(game_client_id):
 	print ("Despawning ", game_client_id)
 	get_node("Players/"+str(game_client_id)).queue_free()
 
+
+var last_world_state := 0.0
+
+func UpdateWorldState(world_state):
+	print ("...update world state...")
+	if world_state["T"] > last_world_state:
+		last_world_state = world_state["T"]
+		world_state.erase("T")
+		world_state.erase(multiplayer.get_unique_id())
+		for player in world_state.keys():
+			if $Players.has_node(str(player)):
+				$Players.get_node(str(player)).MovePlayer(world_state[player]["P"])
+			else:
+				print ("Spawing new other player")
+				SpawnNewPlayer(player, world_state[player]["P"])
 

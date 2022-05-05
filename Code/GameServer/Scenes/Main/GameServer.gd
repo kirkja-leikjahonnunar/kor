@@ -9,6 +9,9 @@ var network := ENetMultiplayerPeer.new()
 var port := 1909
 var max_players := 100
 
+var packet_post = {} # Note: player states are collected here from clients
+
+
 var expected_tokens := ["aaoeuauaoueoa"]
 
 
@@ -39,6 +42,7 @@ func peer_disconnected(game_client_id: int):
 	#todo: probably need to store any unsaved data on the client's node
 	if has_node(str(game_client_id)):
 		get_node(str(game_client_id)).queue_free()
+		packet_post.erase(game_client_id)
 		rpc_id(0, "DespawnPlayer", game_client_id)
 
 
@@ -130,4 +134,29 @@ func _on_TokenExpiration_timeout():
 	
 	print("Expected Tokens:")
 	print(expected_tokens)
+
+
+#------------------------------------------------------------------------------
+# Player data syncing
+#------------------------------------------------------------------------------
+
+
+# This is called from GameClient
+@rpc(any_peer, unreliable)
+func ReceivePlayerState(player_state):
+	var game_client_id = multiplayer.get_remote_sender_id()
+	if packet_post.has(game_client_id):
+		if packet_post[game_client_id]["T"] < player_state["T"]:
+			packet_post[game_client_id] = player_state
+	else:
+		packet_post[game_client_id] = player_state
+
+
+func SendWorldState(world_state):
+	rpc_id(0, "ReceiveWorldState", world_state)
+
+
+# This is implemented on GameClient
+@rpc(unreliable)
+func ReceiveWorldState(world_state): pass
 

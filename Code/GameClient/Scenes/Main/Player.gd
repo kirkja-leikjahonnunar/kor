@@ -4,11 +4,28 @@ extends CharacterBody2D
 const SPEED = 300.0
 const JUMP_VELOCITY = -400.0
 
+var player_state
+
+
 # Get the gravity from the project settings to be synced with RigidDynamicBody nodes.
 var gravity = 0 #ProjectSettings.get_setting("physics/2d/default_gravity")
 
 
+func _ready():
+	set_physics_process(false) #hack: something to do with main menu?
+
+
 func _physics_process(delta):
+	HandleMovement(delta)
+	DefinePlayerState()
+
+
+func DefinePlayerState():
+	player_state = { "T": Time.get_ticks_msec(), "P": global_transform.origin }
+	GameServer.SendPlayerState(player_state)
+
+
+func HandleMovement(delta):
 	# Add the gravity.
 	if not is_on_floor():
 		velocity.y += gravity * delta
@@ -29,5 +46,6 @@ func _physics_process(delta):
 
 
 func _on_player_input_event(viewport, event, shape_idx):
-	if event is InputEventMouseButton:
-		print ("Player input event")
+	pass
+	#if event is InputEventMouseButton:
+	#	print ("Player input event")

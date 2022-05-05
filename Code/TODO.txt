@@ -1,10 +1,17 @@
 TODO:
 
-export port number across projects
+- test dictionary looping for value in dict: ?? returns value??
+
+- Send world state to new clients on login
+
+- implement register
+
+- implement actual database
+
+
+- export port number across projects
 
 - how to load test?
-
-- which runs first, singleton or main scene?
 
 - loading scene progress bar?  ->  see: https://docs.godotengine.org/en/3.5/tutorials/io/background_loading.html
 
@@ -21,6 +28,7 @@ NOTES
 	slow: bcrypt, scrypt, lyra2, argon2  <-  not integrated in godot
 	fast: sha, sha2
 
+- which runs first, singleton or main scene?
 
 QUESTIONS
 ---------

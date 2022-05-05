@@ -34,3 +34,7 @@ config/features=PackedStringArray("4.0", "Vulkan Clustered")
 [autoload]
 
 HubConnection="*res://Scenes/Singletons/HubConnection.gd"
+
+[physics]
+
+common/physics_ticks_per_second=20

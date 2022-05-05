@@ -74,6 +74,25 @@ func SpawnNewPlayer(game_client_id: int, spawn_point: Vector2):
 	get_node("/root/Client/World").SpawnNewPlayer(game_client_id, spawn_point)
 
 
+#------------------ Syncing player state ------------------
+
+func SendPlayerState(player_state):
+	print ("player state: ", player_state)
+	rpc_id(1, "ReceivePlayerState", player_state)
+
+# This is implemented on GameServer
+@rpc(any_peer, unreliable)
+func ReceivePlayerState(player_state): pass
+
+
+# This is called from GameServer
+@rpc(unreliable)
+func ReceiveWorldState(world_state):
+	print ("Received world state: ", world_state)
+	get_node("/root/Client/World").UpdateWorldState(world_state)
+
+
+
 ##------------------------ Testing ---------------------------
 func RequestPlayerData(what: String, requestor: int):
 	print("RequestPlayerData on client: ", what)
