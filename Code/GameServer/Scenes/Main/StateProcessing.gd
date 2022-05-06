@@ -4,7 +4,7 @@ extends Node
 var world_state := {}
 
 
-func _physics_process(delta):
+func _physics_process(_delta):
 	if not get_parent().packet_post.is_empty():
 		world_state = get_parent().packet_post.duplicate(true)
 		for player in world_state.keys(): #TODO: is there more efficient looping?

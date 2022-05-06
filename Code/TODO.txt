@@ -12,6 +12,8 @@ TODO:
 
 - despawning: typical is wait several seconds on user log off, turn off physics for player, so other clients can stay synced
  
+- debug: seems like when gameserver is stopped and started, auth server errors
+ 
 - export port number across projects
 
 - how to load test?

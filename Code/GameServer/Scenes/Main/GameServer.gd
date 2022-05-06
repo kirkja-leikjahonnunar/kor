@@ -137,6 +137,27 @@ func _on_TokenExpiration_timeout():
 
 
 #------------------------------------------------------------------------------
+# Client/Server time syncing
+#------------------------------------------------------------------------------
+
+# This is called from GameClients right after server connected
+@rpc(any_peer)
+func ServerTimeRequest(client_time):
+	var game_client_id = multiplayer.get_remote_sender_id()
+	rpc_id(game_client_id, "ServerTimeResponse", Time.get_unix_time_from_system(), client_time)
+
+@rpc func ServerTimeResponse(_server_time, _client_time): pass
+
+# This is Called from GameClient
+@rpc(any_peer)
+func LatencyRequest(client_time):
+	var game_client_id = multiplayer.get_remote_sender_id()
+	rpc_id(game_client_id, "LatencyResponse", client_time)
+
+@rpc func LatencyResponse(client_time): pass
+
+
+#------------------------------------------------------------------------------
 # Player data syncing
 #------------------------------------------------------------------------------
 
