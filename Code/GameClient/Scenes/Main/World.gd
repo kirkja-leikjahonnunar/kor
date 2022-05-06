@@ -29,7 +29,7 @@ func DespawnPlayer(game_client_id):
 #------------------ World State Syncing ----------------------
 
 var last_world_state := 0.0
-var interpolation_offset := 100.0
+var interpolation_offset := .1 #100.0
 var world_state_buffer = []
 
 func _physics_process(_delta):
@@ -48,9 +48,10 @@ func _physics_process(_delta):
 			if not world_state_buffer[0].has(player):
 				continue
 			if $Players.has_node(str(player)):
-				#var new_position = world_state_buffer[0][player].P.lerp(world_state_buffer[1][player].P, interpolation_factor)
-				var new_position = world_state_buffer[1][player].P
-				print ("Finally updating player ",player,", pos: ", new_position, 
+				var new_position = world_state_buffer[0][player].P.lerp(world_state_buffer[1][player].P, interpolation_factor)
+				#var new_position = world_state_buffer[1][player].P
+				print ("Finally updating player ",player,", pos: ", new_position,
+						", B.n: ", world_state_buffer.size(), 
 						", rt: ", render_time,
 						", t0: ", world_state_buffer[0]["T"],
 						", t1: ", world_state_buffer[1]["T"],
@@ -62,6 +63,8 @@ func _physics_process(_delta):
 				SpawnNewPlayer(player, world_state_buffer[1][player].P)
 
 func UpdateWorldState(world_state):
+	get_node("/root/Client/DebugOverlay").UpdateWorldState(world_state)
+	#print ("Got world state: ", world_state)
 	if world_state.T > last_world_state:
 		last_world_state = world_state.T
 		world_state_buffer.append(world_state)

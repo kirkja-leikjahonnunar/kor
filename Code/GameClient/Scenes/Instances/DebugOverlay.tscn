@@ -9,3 +9,9 @@ script = ExtResource( "1_8vm48" )
 offset_right = 268.0
 offset_bottom = 23.0
 text = "client_id:"
+
+[node name="WorldState" type="Label" parent="."]
+offset_top = 26.0
+offset_right = 268.0
+offset_bottom = 52.0
+text = "world state:"
