@@ -1,8 +1,9 @@
-[gd_scene load_steps=6 format=3 uid="uid://dtfbicdftlm4c"]
+[gd_scene load_steps=7 format=3 uid="uid://dtfbicdftlm4c"]
 
 [ext_resource type="Script" path="res://Scenes/Main/Client.gd" id="1_8xf8t"]
 [ext_resource type="PackedScene" uid="uid://b1umgopyfboxu" path="res://Scenes/Main/Login/LoginScreen.tscn" id="2_xkabq"]
 [ext_resource type="Script" path="res://Scenes/Main/World.gd" id="3_a6de7"]
+[ext_resource type="PackedScene" uid="uid://cm1md0yiw4cqy" path="res://Scenes/Instances/DebugOverlay.tscn" id="3_dv8lm"]
 [ext_resource type="PackedScene" uid="uid://chs1xkop0apv0" path="res://Scenes/Instances/Player.tscn" id="4_84y1f"]
 [ext_resource type="PackedScene" uid="uid://c41v58vl0a5nv" path="res://Scenes/Instances/OtherPlayer.tscn" id="5_thu5b"]
 
@@ -10,6 +11,8 @@
 script = ExtResource( "1_8xf8t" )
 
 [node name="LoginScreen" parent="." instance=ExtResource( "2_xkabq" )]
+
+[node name="DebugOverlay" parent="." instance=ExtResource( "3_dv8lm" )]
 
 [node name="World" type="Node2D" parent="."]
 script = ExtResource( "3_a6de7" )

@@ -28,14 +28,14 @@ func DespawnPlayer(game_client_id):
 #------------------ World State Syncing ----------------------
 
 var last_world_state := 0.0
-var interpolation_offset := 100
+var interpolation_offset := 100.0
 var world_state_buffer = []
 
 func _physics_process(delta):
 	var render_time = Time.get_ticks_msec() - interpolation_offset
 	if world_state_buffer.size() > 1:
 		while world_state_buffer.size() > 2 and render_time > world_state_buffer[1].T:
-			world_state_buffer.remove(eua0)
+			world_state_buffer.remove_at(0)
 		var interpolation_factor = float(render_time - world_state_buffer[0]["T"]) \
 							/ float(world_state_buffer[1]["T"] - world_state_buffer[0]["T"])
 		for player in world_state_buffer[1].keys():
@@ -46,9 +46,13 @@ func _physics_process(delta):
 			if not world_state_buffer[0].has(player):
 				continue
 			if $Players.has_node(str(player)):
-				print ("Finally updating other player, lerp : ", interpolation_factor)
 				#var new_position = world_state_buffer[0][player].P.lerp(world_state_buffer[1][player].P, interpolation_factor)
 				var new_position = world_state_buffer[1][player].P
+				print ("Finally updating player ",player,", pos: ", new_position, 
+						", t0: ", world_state_buffer[0]["T"],
+						", t1: ", world_state_buffer[1]["T"],
+						", tdiff: ",world_state_buffer[1]["T"] - world_state_buffer[0]["T"],
+						", lerp : ", interpolation_factor)
 				$Players.get_node(str(player)).MovePlayer(new_position)
 			else:
 				print("Spawing new other player ", player)

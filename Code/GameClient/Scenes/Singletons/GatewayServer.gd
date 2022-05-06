@@ -47,7 +47,7 @@ func ConnectToServer(_username: String, _password: String):
 	#set_custom_multiplayer(gateway_api)
 	#custom_multiplayer.set_root_path("/root/GatewayServer")
 	multiplayer.set_multiplayer_peer(gateway_network)
-	
+
 
 
 func connection_failed():
@@ -77,12 +77,11 @@ func LoginRequestResponse(result: bool, game_client_id: int, token: String):
 	if result == true:
 		GameServer.token = token
 		GameServer.ConnectToServer()
+		get_node("/root/Client/LoginScreen").LoginSucceeded()
 	else:
 		print ("Incorrect login information")
 		get_node("/root/Client/LoginScreen").LoginRejected()
 	
-	#??? network.get_peer(game_client_id).peer_disconnect()
-
 	gateway_network.connection_failed.disconnect(connection_failed)
 	gateway_network.connection_succeeded.disconnect(connection_succeeded)
 

@@ -47,8 +47,17 @@ func ConnectionFailed():
 	REGISTER_BUTTON.disabled = false
 
 
+func LoginSucceeded():
+	visible = false
+
+
 func LoginRejected():
 	Opine("Bad username or password.")
+	LOGIN_BUTTON.disabled = false
+	REGISTER_BUTTON.disabled = false
+
+func LoginRejectedFromGameServer():
+	Opine("Login rejected.")
 	LOGIN_BUTTON.disabled = false
 	REGISTER_BUTTON.disabled = false
 
@@ -56,4 +65,6 @@ func LoginRejected():
 func _on_register_pressed():
 	if USERNAME_IN.text == "" or PASSWORD_IN.text == "":
 		Opine("Please provide a username and password.")
-	
+	else:
+		Opine("IMPLEMENT ME!!!")
+

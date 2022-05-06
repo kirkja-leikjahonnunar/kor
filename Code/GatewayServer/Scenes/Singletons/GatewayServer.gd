@@ -55,13 +55,14 @@ func LoginRequest(username: String, password: String):
 
 # this local func is called after Auth server returns results
 func ReturnLoginRequest(result: bool, game_client_id: int, token: String):
-	print ("GatewayServer ReturnLoginRequest... send to: ", game_client_id)
+	print ("GatewayServer ReturnLoginRequest ",result,"... send to: ", game_client_id)
 	rpc_id(game_client_id, "LoginRequestResponse", result, game_client_id, token) # func on client 
 	
 	# HACK! perhaps not 100% reliable? seems to skip the rpc sometimes without the wait hack
-	await get_tree().process_frame
-	await get_tree().process_frame
-	network.get_peer(game_client_id).peer_disconnect()
+	network.poll()
+	#await get_tree().process_frame
+	#await get_tree().process_frame
+	network.get_peer(game_client_id).peer_disconnect_later()
 
 # this function is implemented on client
 @rpc(any_peer)

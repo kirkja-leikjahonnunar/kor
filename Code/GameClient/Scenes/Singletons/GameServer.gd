@@ -35,7 +35,8 @@ func connection_succeeded():
 
 func server_disconnected():
 	print ("GameServer disconnected!")
-
+	get_node("/root/Client/LoginScreen").visible = true
+	get_node("/root/Client/DebugOverlay").UpdateClientId(-1)
 
 
 # this is called from a GameServer
@@ -53,12 +54,12 @@ func PlayerTokenRequest():
 func VerificationResponseToClient(is_authorized):
 	print ("GameServer says authorized: ", is_authorized)
 	if is_authorized:
-		#TODO: remove login screen
+		get_node("/root/Client/LoginScreen").visible = false
+		get_node("/root/Client/DebugOverlay").UpdateClientId(multiplayer.get_unique_id())
 		print ("We have lift off!")
-		#RequestPlayerData("GameTime", get_instance_id())
 	else:
 		print ("Login failed, please try again!")
-		#TODO: reenable login button
+		get_node("/root/Client/LoginScreen").LoginRejectedFromGameServer()
 
 
 #------------ Player Maintenance ----------------------
@@ -77,7 +78,7 @@ func SpawnNewPlayer(game_client_id: int, spawn_point: Vector2):
 #------------------ Syncing player state ------------------
 
 func SendPlayerState(player_state):
-	print ("player state: ", player_state)
+	#print ("player state: ", player_state)
 	rpc_id(1, "ReceivePlayerState", player_state)
 
 # This is implemented on GameServer
@@ -88,7 +89,7 @@ func ReceivePlayerState(player_state): pass
 # This is called from GameServer
 @rpc(unreliable)
 func ReceiveWorldState(world_state):
-	print ("Received world state: ", world_state)
+	#print ("Received world state: ", world_state)
 	get_node("/root/Client/World").UpdateWorldState(world_state)
 
 
