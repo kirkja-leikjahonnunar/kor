@@ -8,7 +8,10 @@ TODO:
 
 - implement actual database
 
+- FIX: Despawn not syncing
 
+- despawning: typical is wait several seconds on user log off, turn off physics for player, so other clients can stay synced
+ 
 - export port number across projects
 
 - how to load test?

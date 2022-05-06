@@ -22,6 +22,7 @@ func SpawnNewPlayer(game_client_id: int, spawn_point: Vector2):
 
 func DespawnPlayer(game_client_id):
 	print ("Despawning ", game_client_id)
+	await get_tree().create_timer(0.2).timeout # pause to catch any spawn/despawn race condition
 	if $Players.has_node(str(game_client_id)):
 		get_node("Players/"+str(game_client_id)).queue_free()
 
@@ -36,31 +37,51 @@ func _physics_process(_delta):
 	#TODO: var render_time = Time.get_ticks_msec() - interpolation_offset ****NEEDS FIX FOR TIME SYNC
 	var render_time = Time.get_unix_time_from_system() - interpolation_offset
 	if world_state_buffer.size() > 1:
-		while world_state_buffer.size() > 2 and render_time > world_state_buffer[1].T:
+		while world_state_buffer.size() > 2 and render_time > world_state_buffer[2].T:
 			world_state_buffer.remove_at(0)
-		var interpolation_factor = float(render_time - world_state_buffer[0]["T"]) \
-							/ float(world_state_buffer[1]["T"] - world_state_buffer[0]["T"])
-		for player in world_state_buffer[1].keys():
-			if str(player) == "T":
-				continue
-			if player == multiplayer.get_unique_id():
-				continue
-			if not world_state_buffer[0].has(player):
-				continue
-			if $Players.has_node(str(player)):
-				var new_position = world_state_buffer[0][player].P.lerp(world_state_buffer[1][player].P, interpolation_factor)
-				#var new_position = world_state_buffer[1][player].P
-				print ("Finally updating player ",player,", pos: ", new_position,
-						", B.n: ", world_state_buffer.size(), 
-						", rt: ", render_time,
-						", t0: ", world_state_buffer[0]["T"],
-						", t1: ", world_state_buffer[1]["T"],
-						", tdiff: ",world_state_buffer[1]["T"] - world_state_buffer[0]["T"],
-						", lerp : ", interpolation_factor)
-				$Players.get_node(str(player)).MovePlayer(new_position)
-			else:
-				print("Spawing new other player ", player)
-				SpawnNewPlayer(player, world_state_buffer[1][player].P)
+		if world_state_buffer.size() > 2: # we have a future state
+			var interpolation_factor = float(render_time - world_state_buffer[1]["T"]) \
+								/ float(world_state_buffer[2]["T"] - world_state_buffer[1]["T"])
+			for player in world_state_buffer[2].keys():
+				if str(player) == "T":
+					continue
+				if player == multiplayer.get_unique_id():
+					continue
+				if not world_state_buffer[1].has(player):
+					continue
+				if $Players.has_node(str(player)):
+					var new_position = world_state_buffer[1][player].P.lerp(world_state_buffer[2][player].P, interpolation_factor)
+					#var new_position = world_state_buffer[2][player].P
+#					print ("Finally updating player ",player,", pos: ", new_position,
+#							", B.n: ", world_state_buffer.size(), 
+#							", rt: ", render_time,
+#							", t0: ", world_state_buffer[1]["T"],
+#							", t1: ", world_state_buffer[2]["T"],
+#							", tdiff: ",world_state_buffer[2]["T"] - world_state_buffer[1]["T"],
+#							", lerp : ", interpolation_factor)
+					$Players.get_node(str(player)).MovePlayer(new_position)
+				else:
+					print("Spawing new other player ", player)
+					SpawnNewPlayer(player, world_state_buffer[2][player].P)
+		elif render_time > world_state_buffer[1].T: # we have no future world state
+			var extrapolation_factor = float(render_time - world_state_buffer[0]["T"]) \
+								/ float(world_state_buffer[1]["T"] - world_state_buffer[0]["T"]) - 1.0
+			for player in world_state_buffer[1].keys():
+				if str(player) == "T":
+					continue
+				if player == multiplayer.get_unique_id():
+					continue
+				if not world_state_buffer[0].has(player):
+					continue
+				if $Players.has_node(str(player)):
+					var position_delta = (world_state_buffer[1][player].P - world_state_buffer[0][player].P)
+					var new_position = world_state_buffer[1][player].P + (position_delta * extrapolation_factor)
+					$Players.get_node(str(player)).MovePlayer(new_position)
+				else:
+					print("Spawing new other player ", player)
+					SpawnNewPlayer(player, world_state_buffer[1][player].P)
+			
+			
 
 func UpdateWorldState(world_state):
 	get_node("/root/Client/DebugOverlay").UpdateWorldState(world_state)
