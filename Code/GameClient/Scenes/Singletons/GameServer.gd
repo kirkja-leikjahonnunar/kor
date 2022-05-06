@@ -36,7 +36,7 @@ func connection_succeeded():
 func server_disconnected():
 	print ("GameServer disconnected!")
 	get_node("/root/Client/LoginScreen").visible = true
-	get_node("/root/Client/DebugOverlay").UpdateClientId(-1)
+	get_node("/root/Client/DebugOverlaye").UpdateClientId(-1)
 
 
 # this is called from a GameServer
@@ -83,7 +83,7 @@ func SendPlayerState(player_state):
 
 # This is implemented on GameServer
 @rpc(any_peer, unreliable)
-func ReceivePlayerState(player_state): pass
+func ReceivePlayerState(_player_state): pass
 
 
 # This is called from GameServer

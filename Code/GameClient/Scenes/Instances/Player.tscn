@@ -16,4 +16,16 @@ shape = SubResource( "RectangleShape2D_q6uao" )
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource( "2_nctrl" )
 
+[node name="Name" type="Label" parent="Sprite2D"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -102.0
+offset_top = -92.0
+offset_right = 40.0
+offset_bottom = -66.0
+text = "1234"
+horizontal_alignment = 1
+
 [connection signal="input_event" from="." to="." method="_on_player_input_event"]

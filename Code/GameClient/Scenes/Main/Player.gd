@@ -44,7 +44,11 @@ func HandleMovement(delta):
 	move_and_slide()
 
 
-func _on_player_input_event(viewport, event, shape_idx):
+func _on_player_input_event(_viewport, _event, _shape_idx):
 	pass
 	#if event is InputEventMouseButton:
 	#	print ("Player input event")
+
+func SetNameFromId(new_name: int):
+	name = str(new_name)
+	$Sprite2D/Name.text = name
