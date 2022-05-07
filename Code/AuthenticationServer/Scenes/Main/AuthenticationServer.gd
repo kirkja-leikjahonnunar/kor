@@ -40,26 +40,32 @@ func peer_disconnected(old_gateway_id):
 func RequestAuthentication(username:String, password:String, game_client_id: int):
 	print("AuthenticatePlayer on AuthenticationServer: ", username, ": ", password)
 	var from_gateway_id = multiplayer.get_remote_sender_id()
-	var result
+	var result := false
 	
 	var token := "" 
+	var hashed_password := ""
 	
 	if not PlayerData.HasPlayer(username):
 		print ("Unknown user ", username)
 		result = false
-	elif not PlayerData.UserPassword(username) == password:
-		print ("Incorrect password!")
-		result = false
 	else:
-		print ("Successful authentication for ", username)
-		result = true
+		var user = PlayerData.UserData(username)
+		var salt = user.salt
+		hashed_password = GenerateHashedPassword(password, salt)
 		
-		randomize()
-		token = str(randi()).sha256_text() + str(int(Time.get_unix_time_from_system()))
-		print ("token generated: ", token)
-		
-		var gameserver = "GameServer1" #TODO: replace with proper load balance selection for server
-		GameServers.DistributeLoginToken(token, gameserver)
+		if hashed_password != user.password:
+			print ("Incorrect password!")
+			result = false
+		else:
+			print ("Successful authentication for ", username)
+			result = true
+			
+			randomize()
+			token = str(randi()).sha256_text() + str(int(Time.get_unix_time_from_system()))
+			print ("token generated: ", token)
+			
+			var gameserver = "GameServer1" #TODO: replace with proper load balance selection for server
+			GameServers.DistributeLoginToken(token, gameserver)
 	
 	print("sending auth response for "+username, ", result: ", result, " to client: ", game_client_id)
 	rpc_id(from_gateway_id, "AuthenticationResponse", result, game_client_id, token) #ultimately goes to client
@@ -71,6 +77,50 @@ func RequestAuthentication(username:String, password:String, game_client_id: int
 	pass #sends to GatewayServer
 
 
+#------------------  Acount creation ---------------------------------------
+
+# note: these MUST sync up with messages on GameClient project!!
+enum CREATEACCOUNT { Success=1, UserExists=2, AuthInternalError=3 }
+
+# This is called from GatewayServer
+@rpc(any_peer)
+func CreateAccountRequest(game_client_id: int, username: String, password: String):
+	var gateway_id = multiplayer.get_remote_sender_id()
+	var result
+	var message
+	if PlayerData.HasPlayer(username):
+		result = false
+		message = CREATEACCOUNT.UserExists
+	else:
+		result = true
+		message = CREATEACCOUNT.Success
+		var salt = GenerateSalt()
+		var hashed_password = GenerateHashedPassword(password, salt)
+		var success = PlayerData.SetUserPassword(username, hashed_password, salt)
+		if not success:
+			result = false
+			message = CREATEACCOUNT.AuthInternalError
+	
+	if result == true:
+		print ("Account created for ", username)
+	rpc_id(gateway_id, "CreateAccountResponse", result, game_client_id, message)
+
+# This is implemented on GatewayServer
+@rpc func CreateAccountResponse(result, game_client_id, message): pass
+
+func GenerateSalt():
+	randomize()
+	var salt = str(randi()).sha256_text()
+	print ("Salt: ", salt)
+	return salt
+
+func GenerateHashedPassword(password, salt):
+	var hashed_password = password
+	var rounds = pow(2,3)
+	while rounds > 0:
+		hashed_password = (hashed_password + salt).sha256_text() #TODO: replace this with a "slow" hashing function instead
+		rounds -= 1
+	return hashed_password
 
 
 ##---------------- Ping test ----------------------------

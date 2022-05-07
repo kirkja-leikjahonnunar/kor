@@ -43,6 +43,9 @@ func peer_connected(game_client_id):
 func peer_disconnected(game_client_id):
 	print ("Authenticate peer disconnected! player_id: ", game_client_id)
 
+
+#--------------------------- Logging in ------------------------------
+
 # this is called from GameClient
 @rpc(any_peer)
 func LoginRequest(username: String, password: String):
@@ -59,14 +62,30 @@ func ReturnLoginRequest(result: bool, game_client_id: int, token: String):
 	rpc_id(game_client_id, "LoginRequestResponse", result, game_client_id, token) # func on client 
 	
 	# HACK! perhaps not 100% reliable? seems to skip the rpc sometimes without the wait hack
-	network.poll()
+	#network.poll()
 	#await get_tree().process_frame
 	#await get_tree().process_frame
 	network.get_peer(game_client_id).peer_disconnect_later()
 
-# this function is implemented on client
+# this function is implemented on GameClient
 @rpc(any_peer)
 func LoginRequestResponse(_result: bool, _game_client_id: int, _token: String):
 	pass
 
+
+#--------------------------- New account creation ------------------------------
+
+# This is called from GameClient
+@rpc(any_peer)
+func CreateAccountRequest(username: String, password: String):
+	var game_client_id = multiplayer.get_remote_sender_id()
+	AuthenticationServer.CreateAccount(game_client_id, username, password)
+
+# Called when AuthenticationServer oks the account creation.
+func ReturnCreateAccountRequest(result: bool, game_client_id: int, message: int):
+	rpc_id(game_client_id, "CreateAccountResponse", result, message)
+	network.get_peer(game_client_id).peer_disconnect_later()
+
+# This is implemented on GameClient.
+@rpc func CreateAccountResponse(result, message): pass
 

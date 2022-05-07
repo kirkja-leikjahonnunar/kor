@@ -7,8 +7,8 @@ extends Control
 @onready var REGISTER_BUTTON = $MainLoginWindow/VBoxContainer/HBoxContainer/Register
 @onready var OPINE = $MainLoginWindow/VBoxContainer/Opine
 
-var gateway_ip: String
-var gateway_port: int
+var gateway_ip: String = "127.0.0.1"
+var gateway_port: int = 1910
 
 
 func _ready():
@@ -22,9 +22,6 @@ func Opine(message: String):
 
 
 func _on_login_pressed():
-#	pass # Replace with function body.
-	gateway_ip = "127.0.0.1"
-	gateway_port = 1910
 	AttemptLogin()
 
 
@@ -38,7 +35,7 @@ func AttemptLogin():
 		var password = PASSWORD_IN.get_text()
 		Opine("Attempting to login...")
 		# TODO: Set timer.
-		GatewayServer.ConnectToServer(username, password)
+		GatewayServer.ConnectToServer(username, password, false)
 
 
 func ConnectionFailed():
@@ -66,5 +63,20 @@ func _on_register_pressed():
 	if USERNAME_IN.text == "" or PASSWORD_IN.text == "":
 		Opine("Please provide a username and password.")
 	else:
-		Opine("IMPLEMENT ME!!!")
+		if USERNAME_IN.text == "" or PASSWORD_IN.text == "":
+			Opine("Please provide a username and password.")
+		else:
+			LOGIN_BUTTON.disabled = true
+			REGISTER_BUTTON.disabled = true
+			var username = USERNAME_IN.get_text()
+			var password = PASSWORD_IN.get_text()
+			Opine("Registering...")
+			
+			GatewayServer.ConnectToServer(username, password, true)
+
+func CreateAccountResults(result: bool, msg: String):
+	Opine(msg)
+	LOGIN_BUTTON.disabled = false
+	REGISTER_BUTTON.disabled = false
+
 

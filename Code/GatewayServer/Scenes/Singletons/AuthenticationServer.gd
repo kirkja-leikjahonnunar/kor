@@ -35,9 +35,11 @@ func ServerDisconnected():
 	print ("Auth server disconnected. Oh no!")
 
 
+#-------------------------- Player Authentication -------------------------------
+
 # local function to initiate auth call
 func AuthenticatePlayer(username: String, password: String, game_client_id: int):
-	print("calling AuthenticatePlayer from GatewayServer")
+	print("calling AuthenticatePlayer from GatewayServer to authenticate ", username)
 	
 	rpc_id(1, "RequestAuthentication", username, password, game_client_id)
 
@@ -52,6 +54,22 @@ func AuthenticationResponse(result: bool, game_client_id: int, token: String):
 	print("Auth result: ", result, " for ", game_client_id)
 	print ("token: ", token)
 	GatewayServer.ReturnLoginRequest(result, game_client_id, token)
+
+
+#------------------------- New Account Creation ------------------------------------
+
+func CreateAccount(game_client_id: int, username: String, password: String):
+	print ("Calling auth server to create new account for ", username, ": ", password)
+	rpc_id(1, "CreateAccountRequest", game_client_id, username, password)
+
+# This is implemented on AuthenticationServer
+@rpc(any_peer) func CreateAccountRequest(game_client_id: int, username: String, password: String): pass
+
+# This is called from AuthenticationServer.
+@rpc
+func CreateAccountResponse(result: bool, game_client_id: int, message: int):
+	print ("Auth create account: ", result, ", message: ", message, ", client: ", game_client_id)
+	GatewayServer.ReturnCreateAccountRequest(result, game_client_id, message)
 
 
 ##----------------------- Ping test -------------------------

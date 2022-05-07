@@ -36,7 +36,7 @@ text = "user1"
 offset_top = 35.0
 offset_right = 186.0
 offset_bottom = 66.0
-text = "pwd1"
+text = "1234"
 secret = true
 
 [node name="HBoxContainer" type="HBoxContainer" parent="MainLoginWindow/VBoxContainer"]
