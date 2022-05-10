@@ -9,6 +9,9 @@ var network := ENetMultiplayerPeer.new()
 var port := 1909
 var max_players := 100
 
+# dictionary that has:
+#  "P": player position
+#  "T": cient time (THIS GETS REMOVED!!)
 var packet_post = {} # Note: player states are collected here from clients
 
 

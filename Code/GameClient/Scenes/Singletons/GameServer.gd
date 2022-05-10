@@ -40,7 +40,7 @@ func ConnectToServer():
 	game_server_network.connection_succeeded.connect(connection_succeeded)
 	game_server_network.server_disconnected.connect(server_disconnected)
 
-
+	
 func connection_failed():
 	print ("GameServer Connection failed!")
 	game_server_network.connection_failed.disconnect(connection_failed)

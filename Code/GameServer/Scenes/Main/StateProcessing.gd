@@ -3,7 +3,7 @@ extends Node
 
 var world_state := {}
 
-
+# This happens 20 times a second
 func _physics_process(_delta):
 	if not get_parent().packet_post.is_empty():
 		world_state = get_parent().packet_post.duplicate(true)

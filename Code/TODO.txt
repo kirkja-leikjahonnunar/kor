@@ -1,5 +1,21 @@
 TODO:
 
+- loose ends:
+  - sqlite
+  - server side map/collision
+  - submodules with github-desktop
+  - trello bootcamp
+  
+
+- TODO: tips:
+  - check that server calling funcs is actually id == 1 for EVERY client func... does @rpc cover that?
+  - for really fast stuff, lag compensation, do some extrapolate on some action to predict time sequence of actual clients
+  - load balancing.. how to add/remove servers on the fly as clients come and go
+  - c++ optimizing
+  - databases: see Game Development Center's discord for big discussion? See Sigrid's database modules
+
+- FIXME: restarting game server should not make auth/gateway fault out
+
 - test dictionary looping for value in dict: ?? returns value??
 
 - Send world state to new clients on login
@@ -63,6 +79,8 @@ One off timers (4.0):    get_tree().create_timer(1.0).timeout.connect(YourFuncti
 
 GRIPES
 ------
+Text editor needs to be its own window
+
 should be able to drag nodes to inspector for a different object, alpha 7 makes it go away on click on the node
 
 see also current github issues around 4.0: https://github.com/godotengine/godot/issues?q=is%3Aissue+is%3Aopen+milestone%3A4.0+label%3Abug+

@@ -35,7 +35,8 @@ var world_state_buffer = []
 
 func _physics_process(_delta):
 	#TODO: var render_time = Time.get_ticks_msec() - interpolation_offset ****NEEDS FIX FOR TIME SYNC
-	var render_time = Time.get_unix_time_from_system() - interpolation_offset
+	#var render_time = Time.get_unix_time_from_system() - interpolation_offset
+	var render_time = GameServer.client_clock - interpolation_offset
 	if world_state_buffer.size() > 1:
 		while world_state_buffer.size() > 2 and render_time > world_state_buffer[2].T:
 			world_state_buffer.remove_at(0)
@@ -45,8 +46,8 @@ func _physics_process(_delta):
 			for player in world_state_buffer[2].keys():
 				if str(player) == "T":
 					continue
-				if player == multiplayer.get_unique_id():
-					continue
+				#if player == multiplayer.get_unique_id():
+				#	continue
 				if not world_state_buffer[1].has(player):
 					continue
 				if $Players.has_node(str(player)):
@@ -69,8 +70,8 @@ func _physics_process(_delta):
 			for player in world_state_buffer[1].keys():
 				if str(player) == "T":
 					continue
-				if player == multiplayer.get_unique_id():
-					continue
+				#if player == multiplayer.get_unique_id():
+				#	continue
 				if not world_state_buffer[0].has(player):
 					continue
 				if $Players.has_node(str(player)):

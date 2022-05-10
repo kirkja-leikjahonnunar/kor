@@ -3,7 +3,7 @@ class_name PlayerVerification
 
 
 @onready var game_server : GameServer = get_parent()
-@onready var player_container_scene := preload("res://Scenes/Instances/PlayerContainer.tscn")
+@onready var server_player_scene := preload("res://Scenes/Instances/ServerPlayer.tscn")
 
 
 # Waiting room for connected peers:
@@ -18,12 +18,12 @@ func Start(game_client_id):
 
 
 func CreatePlayerContainer(game_client_id):
-	var new_player_container = player_container_scene.instantiate()
-	new_player_container.name = str(game_client_id)
-	get_parent().add_child(new_player_container, true)
+	var new_player = server_player_scene.instantiate()
+	new_player.name = str(game_client_id)
+	get_node("../World/Players").add_child(new_player, true)
 	#var player_container = get_node("../" + str(game_client_id))
 	#FillPlayerContainer(player_container)
-	FillPlayerContainer(new_player_container)
+	FillPlayerContainer(new_player)
 
 func FillPlayerContainer(_player_container):
 	#player_container.player_stats = ServerData.test_data.Stats

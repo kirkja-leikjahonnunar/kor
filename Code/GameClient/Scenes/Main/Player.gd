@@ -21,6 +21,7 @@ func _physics_process(delta):
 
 
 func DefinePlayerState():
+	#TODO: probably need GameServer.client_clock instead of sys time here:
 	player_state = { "T": Time.get_ticks_msec(), "P": global_transform.origin }
 	GameServer.SendPlayerState(player_state)
 
@@ -52,3 +53,8 @@ func _on_player_input_event(_viewport, _event, _shape_idx):
 func SetNameFromId(new_name: int):
 	name = str(new_name)
 	$Sprite2D/Name.text = name
+
+
+func MovePlayer(new_position):
+	#print ("MovePlayer, old: ", position, ", new: ", new_position)
+	set_position(new_position)
