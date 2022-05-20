@@ -22,11 +22,11 @@ func start_server():
 	
 	#print("peer id: "+network.)
 
-var gateway_id # we only have this global to test pinging
+#var gateway_id # we only have this global to test pinging
 func peer_connected(new_gateway_id):
 	print ("Gateway " + str(new_gateway_id) + " Connected!")
-	gateway_id = new_gateway_id
 	# ping for debugging, auth to gateway:
+	#gateway_id = new_gateway_id
 	#get_tree().create_timer(1.0).timeout.connect(DoPingGatewayServer)
 
 
@@ -96,7 +96,7 @@ func CreateAccountRequest(game_client_id: int, username: String, password: Strin
 		message = CREATEACCOUNT.Success
 		var salt = GenerateSalt()
 		var hashed_password = GenerateHashedPassword(password, salt)
-		var success = PlayerData.SetUserPassword(username, hashed_password, salt)
+		var success = PlayerData.SetUserPassword(username, hashed_password, salt, true)
 		if not success:
 			result = false
 			message = CREATEACCOUNT.AuthInternalError
@@ -106,7 +106,7 @@ func CreateAccountRequest(game_client_id: int, username: String, password: Strin
 	rpc_id(gateway_id, "CreateAccountResponse", result, game_client_id, message)
 
 # This is implemented on GatewayServer
-@rpc func CreateAccountResponse(result, game_client_id, message): pass
+@rpc func CreateAccountResponse(_result, _game_client_id, _message): pass
 
 func GenerateSalt():
 	randomize()

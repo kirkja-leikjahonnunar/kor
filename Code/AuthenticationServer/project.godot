@@ -19,3 +19,7 @@ config/features=PackedStringArray("4.0", "Vulkan Clustered")
 
 PlayerData="*res://Scenes/Singletons/PlayerData.gd"
 GameServers="*res://Scenes/Singletons/GameServers.gd"
+
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/godot-sqlite/plugin.cfg")
