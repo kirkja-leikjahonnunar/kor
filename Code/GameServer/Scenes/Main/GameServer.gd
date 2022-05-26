@@ -5,20 +5,23 @@ class_name GameServer
 # GameServer on GameServer project
 #note: this is a singleton!
 
+@onready var server_player_scene := preload("res://Scenes/Instances/ServerPlayer.tscn")
+
 var network := ENetMultiplayerPeer.new()
 var port := 1909
 var max_players := 100
 
 # dictionary that has:
+# packet_post[game_client_id] = { "P", "T" }
 #  "P": player position
-#  "T": cient time (THIS GETS REMOVED!!)
+#  "T": cient time. THIS GETS REMOVED before being sent back out in SendWorldState()!!
 var packet_post = {} # Note: player states are collected here from clients
 
 
 var expected_tokens := ["aaoeuauaoueoa"]
 
 
-@onready var player_verification_process := get_node("PlayerVerification") as PlayerVerification
+@onready var player_verification_process : PlayerVerification = get_node("PlayerVerification") as PlayerVerification
 
 
 func _ready():
@@ -46,14 +49,13 @@ func peer_disconnected(game_client_id: int):
 	if has_node(str(game_client_id)):
 		get_node(str(game_client_id)).queue_free()
 		packet_post.erase(game_client_id)
-		rpc_id(0, "DespawnPlayer", game_client_id)
+		rpc_id(0, "DespawnPlayer", game_client_id) # tell everyone this one's gone
 
 
 #------------ Player Maintenance ----------------------
 
-@rpc
-func DespawnPlayer(game_client_id):
-	pass
+# This is implemented on GameClients when another one disconnects.
+@rpc func DespawnPlayer(game_client_id): pass
 
 
 #-------------- Testing random data retrieval -----------------
@@ -101,18 +103,36 @@ func PlayerTokenResponse(token: String):
 	player_verification_process.Verify(game_client_id, token)
 
 
-
-# Called from PlayerVerification.Verify().
-func VerificationResponse(game_client_id, is_authorized: bool):
+# Called from PlayerVerification.Verify(), sends verification results to GameClient.
+func VerificationResponse(game_client_id: int, is_authorized: bool, player_node):
 	rpc_id(game_client_id, "VerificationResponseToClient", is_authorized)
-	if is_authorized:
-		var spawn_point = Vector2(150,150)
-		rpc_id(0, "SpawnNewPlayer", game_client_id, spawn_point)
+	if is_authorized: # tell everyone there's a new birth
+		rpc_id(0, "SpawnNewPlayer", game_client_id, player_node.position)
 
-@rpc func  SpawnNewPlayer(game_client_id: int, spawn_point: Vector2): pass
+# This is implemented on GameClient.
+@rpc func SpawnNewPlayer(_game_client_id: int, _spawn_point: Vector2): pass
 
 # this is implemented on GameClient
 @rpc func VerificationResponseToClient(_is_authorized): pass
+
+
+#------------------------------------------------------------------------------
+# Create player object
+#------------------------------------------------------------------------------
+
+# Called from PlayerVerification.Verify(). Returns new player node.
+func CreatePlayerContainer(game_client_id):
+	var new_player = server_player_scene.instantiate()
+	new_player.name = str(game_client_id)
+	get_node("../World/Players").add_child(new_player, true)
+	new_player.position = Vector2(randf_range(50,400), randf_range(50,400))
+	FillPlayerContainer(new_player)
+	return new_player
+
+# Fill new player with their last state, such as map/position, model, skin, color, inventory, etc
+func FillPlayerContainer(_player_container):
+	#player_container.player_stats = ServerData.test_data.Stats
+	pass
 
 
 #------------------------------------------------------------------------------
@@ -149,6 +169,7 @@ func ServerTimeRequest(client_time):
 	var game_client_id = multiplayer.get_remote_sender_id()
 	rpc_id(game_client_id, "ServerTimeResponse", Time.get_unix_time_from_system(), client_time)
 
+# This is implemented on GameClient.
 @rpc func ServerTimeResponse(_server_time, _client_time): pass
 
 # This is Called from GameClient
@@ -164,8 +185,10 @@ func LatencyRequest(client_time):
 # Player data syncing
 #------------------------------------------------------------------------------
 
+# See also StateProcessing.
 
-# This is called from GameClient
+# This is called frequently from GameClient. GameServer deals with it 20 times a second, and sends 
+# updates back to GameClient with SendWorldState().
 @rpc(any_peer, unreliable)
 func ReceivePlayerState(player_state):
 	var game_client_id = multiplayer.get_remote_sender_id()
@@ -176,11 +199,10 @@ func ReceivePlayerState(player_state):
 		packet_post[game_client_id] = player_state
 
 
+# This is called from StateProcessing._physics_process().
 func SendWorldState(world_state):
 	rpc_id(0, "ReceiveWorldState", world_state)
 
-
 # This is implemented on GameClient
-@rpc(unreliable)
-func ReceiveWorldState(world_state): pass
+@rpc(unreliable) func ReceiveWorldState(_world_state): pass
 

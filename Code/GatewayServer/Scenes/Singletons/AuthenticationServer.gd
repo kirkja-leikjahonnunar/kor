@@ -63,7 +63,7 @@ func CreateAccount(game_client_id: int, username: String, password: String):
 	rpc_id(1, "CreateAccountRequest", game_client_id, username, password)
 
 # This is implemented on AuthenticationServer
-@rpc(any_peer) func CreateAccountRequest(game_client_id: int, username: String, password: String): pass
+@rpc(any_peer) func CreateAccountRequest(_game_client_id: int, _username: String, _password: String): pass
 
 # This is called from AuthenticationServer.
 @rpc

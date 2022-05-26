@@ -16,14 +16,6 @@ func _ready():
 	ConnectToServer()
 
 
-#func _process(_delta: float):
-#	if get_custom_multiplayer() == null:
-#		return
-#	if not custom_multiplayer.has_multiplayer_peer():
-#		return
-#	custom_multiplayer.poll()
-
-
 func ConnectToServer():
 	print("HubConnection.ConnectToServer called")
 	

@@ -7,16 +7,16 @@ A generic 3rd/1st person character controller in Godot.
 
 ### Proxy distance nodes
 
-The Player object has several Proxy_* nodes that let you visually set up various
+The Player object has several `Proxy_*` nodes that let you visually set up various
 distances that control how the camera will avoid colliding with the player.
 
 TODO: This should be remade with some kind of gizmo plugin, instead of nodes 
 
-- Proxy_Left, Proxy_Right, and Proxy_Over control the horizontal distance away from the player, so
+- `Proxy_Left`, `Proxy_Right`, and `Proxy_Over` control the horizontal distance away from the player, so
   the 3rd person view will show the player off to the left or right, or centered
-- Proxy_Back is how much in front or behind the camera view should be when you are looking down
+- `Proxy_Back` is how much in front or behind the camera view should be when you are looking down
   from above, or up from below
-- Proxy_FPS is the spot to place the camera in 1st person view
+- `Proxy_FPS` is the spot to place the camera in 1st person view
 
 
 ### Camera
@@ -28,6 +28,8 @@ TODO: This potentially allows adaptation to taking over the camera to look at po
 ## TODO
 
 ### BUGS
+- Crash trying to open with Alpha 8
+- player clips through the fast rotating lever platform
 - can't push rigidbodies that are just lying around -> has to do with non-bidirectional mask-layer combos
 - need to lerp velocity, diff lerp for in air?, continue velocity when in air regardless of sprint?
 

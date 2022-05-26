@@ -102,17 +102,18 @@ func HasPlayer_SQLite(username: String) -> bool:
 	if not success:
 		return false
 	var selected_array : Array = db.query_result
-	DebugLog ("query result: "+ success + ", data: " + selected_array)
+	DebugLog ("query result: "+ str(success) + ", data: " + str(selected_array))
 	
 	return selected_array.size() > 0
 
 
 # Return the user's (hashed) password as { password, salt }.
 func UserData_SQLite(username: String):
+	DebugLog("Get user data for "+username+"...")
 	username = SanitizeUsername(username)
 	if username == null || username == "":
 		return null
-	var success : bool = db.query("SELECT [username, password, salt] FROM %s WHERE username = '%s'" % [db_user_table, username])
+	var success : bool = db.query("SELECT username, password, salt FROM %s WHERE username = '%s';" % [db_user_table, username])
 	if !success || db.query_result.size() != 1:
 		return null
 	

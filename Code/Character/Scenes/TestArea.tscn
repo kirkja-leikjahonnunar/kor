@@ -10,7 +10,7 @@
 [ext_resource type="Script" path="res://ThirdPerson/CameraLerper.gd" id="5_fli6b"]
 [ext_resource type="Texture2D" uid="uid://crdt07ky8e6ma" path="res://icon.png" id="5_po3y2"]
 [ext_resource type="Material" uid="uid://22kvbxfs4q8h" path="res://Materials/Blue.tres" id="6_6kle7"]
-[ext_resource type="Script" path="res://ThirdPerson/SprayCast.gd" id="6_i3cro"]
+[ext_resource type="Script" path="res://PlayerItems/SprayGun/SprayCast.gd" id="6_i3cro"]
 [ext_resource type="Script" path="res://ThirdPerson/Settings/SettingsOverlay.gd" id="6_j3eho"]
 [ext_resource type="ArrayMesh" uid="uid://qfm3jwmujvl0" path="res://Models/Torus/Hole.res" id="9_so0tq"]
 [ext_resource type="Script" path="res://ThirdPerson/GravityAreas/Torroidal.gd" id="10_rmf8n"]
@@ -834,6 +834,7 @@ collision_layer = 2
 transform = Transform3D(3.7, 0, 0, 0, 3.7, 0, 0, 0, 3.7, 0, 0, 0)
 mesh = ExtResource( "9_so0tq" )
 skeleton = NodePath("../..")
+surface_material_override/0 = ExtResource( "2_7k4np" )
 
 [node name="CollisionHole" type="CollisionShape3D" parent="HoleStaticBody"]
 transform = Transform3D(3.7, 0, 0, 0, 3.7, 0, 0, 0, 3.7, 0, 0, 0)

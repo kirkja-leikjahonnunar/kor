@@ -22,21 +22,24 @@ func _physics_process(delta):
 
 func DefinePlayerState():
 	#TODO: probably need GameServer.client_clock instead of sys time here:
-	player_state = { "T": Time.get_ticks_msec(), "P": global_transform.origin }
+	player_state = { "T": GameServer.client_clock, "P": global_transform.origin }
+	#player_state = { "T": Time.get_ticks_msec(), "P": global_transform.origin }
 	GameServer.SendPlayerState(player_state)
 
 func HandleMovement(delta):
+	var input_blocked := (get_viewport().gui_get_focus_owner() != null)
+	
 	# Add the gravity.
 	if not is_on_floor():
 		velocity.y += gravity * delta
 
 	# Handle Jump.
-	if Input.is_action_just_pressed("ui_accept") and is_on_floor():
+	if not input_blocked and Input.is_action_just_pressed("ui_accept") and is_on_floor():
 		velocity.y = JUMP_VELOCITY
 
 	# Get the input direction and handle the movement/deceleration.
 	# As good practice, you should replace UI actions with custom gameplay actions.
-	var direction = Input.get_vector("move_left", "move_right", "move_up", "move_down")
+	var direction = Input.get_vector("move_left", "move_right", "move_up", "move_down") if not input_blocked else Vector2(0,0)
 	if direction:
 		velocity = direction * SPEED
 	else:

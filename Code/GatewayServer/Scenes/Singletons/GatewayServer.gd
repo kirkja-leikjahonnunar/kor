@@ -87,5 +87,5 @@ func ReturnCreateAccountRequest(result: bool, game_client_id: int, message: int)
 	network.get_peer(game_client_id).peer_disconnect_later()
 
 # This is implemented on GameClient.
-@rpc func CreateAccountResponse(result, message): pass
+@rpc func CreateAccountResponse(_result, _message): pass
 

@@ -38,6 +38,8 @@ TODO:
 
 - 2fa? sms? trust device from mac?
 
+- godot bug: timer.timeout warning about await not being needed: https://github.com/godotengine/godot/issues/58156
+
 
 NOTES
 -----
@@ -49,15 +51,22 @@ NOTES
 	slow: bcrypt, scrypt, lyra2, argon2  <-  not integrated in godot
 	fast: sha, sha2
 
+
+Unanswered Questions
+--------------------
+- Does godot have something like Debug.Log that get removed at export time? functionally like commenting out dbg statements?
+
 - which runs first, singleton or main scene?
 
-QUESTIONS
----------
-Does godot have something like Debug.Log that get removed at export time? functionally like commenting out dbg statements?
+
+Answered Questions
+------------------
+
 
 
 PORTING NOTES
 -------------
+...from porting things to Godot 4.0
 
 get_tree().set_network_peer()   ->   ??? custom_multiplayer.set_root_path("/GatewayServer")
 custom_multiplayer.set_network_peer(network)   ->   custom_multiplayer.set_multiplayer_peer(network)
@@ -74,7 +83,8 @@ custom_multiplayer.poll() not really needed explicitly, now: get_tree().multipla
 
 CHEATSHEET
 ----------
-One off timers (4.0):    get_tree().create_timer(1.0).timeout.connect(YourFunction)
+One off timers (4.0):  get_tree().create_timer(1.0).timeout.connect(YourFunction)
+Blocking timer (4.0):  await get_tree().create_timer(1.0).timeout
 
 
 GRIPES
