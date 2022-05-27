@@ -1,5 +1,29 @@
 @tool
+class_name ControlConfig
 extends Control
+
+#TODO: settings UI
+# - joypad or keys should be able to navigate full menu, and not have "Press any key" snafu
+# - try out InputEventMidi
+# - keys to change focus, but can go offscreen when out of visible scroll area
+# - if you click outside while prompt up, should not use mouse for it?
+# - press any key should be a different color
+# - restore defaults option.. all at once? per item?
+# - option to clear binding
+# - don't clobber existing bind to other action
+# - save to file on change of binding
+# - UI should be updatable by a language flag somehow
+# - key bindings should have saveable sets to/from file (done), maybe settings file is an array of settings?
+# - need better styling, probably a "Settings" header (done) too
+#
+# - DONE mouse down issue, also arrow keys move focus.. all input should be blocked until input
+# - DONE keycode is 0?  <-  needed to use physical_keycode and button_index, not keycode and button_mask!
+# - DONE use physical key, but display user keys?
+#
+# see:
+#   OS.get_keycode_string
+#   DisplayServer.keyboard_get_keycode_from_physical
+
 
 @export var grab_settings := false:
 	get:
@@ -8,55 +32,45 @@ extends Control
 		if value == true:
 			if Engine.is_editor_hint():
 				SetBindingsFromCurrentEditor()
+				SaveSettings(settings_file)
 
-#TODO: settings UI
-# - press any key should be a different color
-# - restore defaults option.. all at once? per item?
-# - option to clear binding
-# - don't clobber existing bind to other action
-# - save to file on change of binding
-# - use physical key, but display user keys?
-# - UI should be updatable by a language flag somehow
-# - appears to be a bug in ProjectSettings in editor returing 0 event keycode
-#       see also: https://github.com/godotengine/godot/issues/25865
-#       https://github.com/godotengine/godot/issues/44776
-# - key bindings should have saveable sets to/from file (done), maybe settings file is an array of settings?
-# - need better styling, probably a "Settings" header (done) too
-#
-# - DONE mouse down issue, also arrow keys move focus.. all input should be blocked until input
-#
-# see:
-#   OS.get_keycode_string
-#   DisplayServer.keyboard_get_keycode_from_physical
+
+
+@export var display_physical := true
+
 
 # this should be translatable, or do some UI gimmick to indicate nothing
 var unassigned := "Unassigned"
+var PressAnyKey := "Press any key"
+
+enum DeviceType { NONE = 0, KEY = 1, MOUSE = 2, PAD = 3 }
 
 # These must match your the InputMap actions:
 var actions := {
-		# index is physical key code, or mouse button number
-		#"action": { "label": "Human Readable", "index": 4, "is_mouse": false } 
-		"char_forward":      { "label": "Forward", "index": -1, "is_mouse": false },
-		"char_backward":     { "label": "Backward", "index": -1, "is_mouse": false },
-		"char_strafe_left":  { "label": "Left", "index": -1, "is_mouse": false },
-		"char_strafe_right": { "label": "Right", "index": -1, "is_mouse": false },
-		"char_rotate_left":  { "label": "Rotate Left", "index": -1, "is_mouse": false },
-		"char_rotate_right": { "label": "Rotate Right", "index": -1, "is_mouse": false },
-		"char_fly_up":       { "label": "Up", "index": -1, "is_mouse": false },
-		"char_fly_down":     { "label": "Down", "index": -1, "is_mouse": false },
-		"char_jump":         { "label": "Jump", "index": -1, "is_mouse": false },
-		"char_sprint":       { "label": "Sprint", "index": -1, "is_mouse": false },
-		"char_toggle_mouse": { "label": "Toggle mouse", "index": -1, "is_mouse": false },
-		"char_crouch":       { "label": "Crouch", "index": -1, "is_mouse": false },
-		"char_use1":         { "label": "Use 1", "index": -1, "is_mouse": false },
-		"char_use2":         { "label": "Use 2", "index": -1, "is_mouse": false },
-		"char_use3":         { "label": "Use 3", "index": -1, "is_mouse": false },
-		"char_zoom_in":      { "label": "Zoom in", "index": -1, "is_mouse": false },
-		"char_zoom_out":     { "label": "Zoom out", "index": -1, "is_mouse": false },
-		"char_camera_hover": { "label": "Camera hover", "index": -1, "is_mouse": false }, # selects which side of player to hover camera 
+		# index is physical key code, or mouse button number, or joypad button
+		#"action": { "label": "Human Readable", "device": dev_type, "index": index } 
+		"char_forward":      { "label": "Forward"     , "device": 0, "index": -1 },
+		"char_backward":     { "label": "Backward"    , "device": 0, "index": -1 },
+		"char_strafe_left":  { "label": "Left"        , "device": 0, "index": -1 },
+		"char_strafe_right": { "label": "Right"       , "device": 0, "index": -1 },
+		"char_rotate_left":  { "label": "Rotate Left" , "device": 0, "index": -1 },
+		"char_rotate_right": { "label": "Rotate Right", "device": 0, "index": -1 },
+		"char_fly_up":       { "label": "Up"          , "device": 0, "index": -1 },
+		"char_fly_down":     { "label": "Down"        , "device": 0, "index": -1 },
+		"char_jump":         { "label": "Jump"        , "device": 0, "index": -1 },
+		"char_sprint":       { "label": "Sprint"      , "device": 0, "index": -1 },
+		"char_toggle_mouse": { "label": "Toggle mouse", "device": 0, "index": -1 },
+		"char_crouch":       { "label": "Crouch"      , "device": 0, "index": -1 },
+		"char_use1":         { "label": "Use 1"       , "device": 0, "index": -1 },
+		"char_use2":         { "label": "Use 2"       , "device": 0, "index": -1 },
+		"char_use3":         { "label": "Use 3"       , "device": 0, "index": -1 },
+		"char_zoom_in":      { "label": "Zoom in"     , "device": 0, "index": -1 },
+		"char_zoom_out":     { "label": "Zoom out"    , "device": 0, "index": -1 },
+		"char_camera_hover": { "label": "Camera hover", "device": 0, "index": -1 }, # selects which side of player to hover camera 
 	}
 
 var settings := {
+		"id": "Default",
 		"fov_degrees": 75.0,
 		"mouse_sensitivity": 1.0,
 		"invert_x": false,
@@ -134,14 +148,20 @@ func SetBindingsFromCurrentLive():
 			else:
 				#actions[action] = evs[0] #.as_text()
 				if evs[0] is InputEventKey:
-					actions[action]["key"] = evs[0].get_keycode_with_modifiers()
+					actions[action]["device"] = DeviceType.KEY
+					actions[action]["index"] = evs[0].physical_keycode
 					print ("Grabbing key event: ", evs[0], ", keycode: ", evs[0].get_keycode(),
 						", kkm: ", evs[0].get_keycode_with_modifiers(),
 						#", kkstr: ", OS.get_keycode_string(evs[0])
 						)
-				elif evs[0] is InputEventMouse:
-					actions[action]["mouse"] = evs[0].button_mask
-					print ("Grabbing mouse event: ", evs[0], ", button: ", evs[0].get_button_mask())
+				elif evs[0] is InputEventMouseButton:
+					actions[action]["device"] = DeviceType.MOUSE
+					actions[action]["index"] = evs[0].button_index
+					print ("Grabbing mouse event: ", evs[0], ", button: ", evs[0].get_button_index())
+				elif evs[0] is InputEventJoypadButton:
+					actions[action]["device"] = DeviceType.PAD
+					actions[action]["index"] = evs[0].button_index
+					print ("Grabbing pad event: ", evs[0], ", button: ", evs[0].button_index)
 			print (actions[action])
 
 
@@ -157,13 +177,34 @@ func SetBindingsFromCurrentEditor():
 			var found_key = null
 			if events.size() != 0:
 				print ("events[0]: ", events[0])
-				found_key = events[0].keycode #FIXME: WHY IS THIS ZERO??????
-				print ("e0.keycode: ", events[0].keycode)
-				var is_physical = events[0].physical_keycode
-				print ("found ", action, ": ", found_key, " ", is_physical, "  ", OS.get_keycode_string(found_key), 
-						", mapped: ", OS.get_keycode_string(DisplayServer.keyboard_get_keycode_from_physical(found_key)))
+				if events[0] is InputEventKey:
+					found_key = events[0].keycode #note :this will be 0 when event is physical and vice versa
+					print ("key e0.keycode: ", events[0].keycode)
+					var physical_code = events[0].physical_keycode
+					print ("  found ", action, ": ", found_key, " ", physical_code, "  ", OS.get_keycode_string(found_key), 
+							", mapped: ", OS.get_keycode_string(DisplayServer.keyboard_get_keycode_from_physical(physical_code)))
+					settings.bindings[action]["device"] = DeviceType.KEY
+					settings.bindings[action]["index"] = physical_code
+					settings.bindings[action]["cap"]   = OS.get_keycode_string(physical_code)
+					settings.bindings[action]["local"] = OS.get_keycode_string(DisplayServer.keyboard_get_keycode_from_physical(physical_code))
+				elif events[0] is InputEventMouseButton:
+					found_key = events[0].button_index
+					print ("mouse: e0.button_index: ", events[0].button_index)
+					#var is_physical = events[0].physical_keycode
+					print ("  found ", action, ": ", found_key, "  ")
+					settings.bindings[action]["device"] = DeviceType.MOUSE
+					settings.bindings[action]["index"] = found_key
+				elif events[0] is InputEventJoypadButton:
+					found_key = events[0].button_index
+					print ("pad: e0.button_index: ", events[0].button_index)
+					#var is_physical = events[0].physical_keycode
+					print ("  found ", action, ": ", found_key, "  ")
+					settings.bindings[action]["device"] = DeviceType.PAD
+					settings.bindings[action]["index"] = found_key
 			else:
 				print ("found ", action, ": Unassigned")
+				settings.bindings[action]["device"] = DeviceType.NONE
+				#settings.bindings[action]["index"] = physical_code
 		else:
 			print ("action ",action," not in ProjectSettings")
 
@@ -177,6 +218,7 @@ func PopulateMenuWithBindings():
 		label.name = action+"-Label"
 		hbox.add_child(label)
 		var button := KeyBindButton.new()
+		button.control_config = self
 		button.name = action+"-Button"
 		button.action = action
 		if def == null:
@@ -184,14 +226,24 @@ func PopulateMenuWithBindings():
 			button.text = unassigned
 		else:
 			label.text = def["label"]
-			if "key" in def:
-				if def.key <= 0: button.text = unassigned
-				else: button.text = "key: "+str(def.key)
-			elif "mouse" in def:
-				if def.mouse <= 0: button.text = unassigned
-				else: button.text = "mouse: "+str(def.mouse)
-			else:
-				button.text = unassigned
+			var type = def["device"]
+			match def.device:
+				DeviceType.KEY:
+					if def.index <= 0: button.text = unassigned
+					else:
+						#button.text = "key: "+OS.get_keycode_string(def.index)
+						if display_physical:
+							button.text = OS.get_keycode_string(DisplayServer.keyboard_get_keycode_from_physical(def.index))
+						else:
+							button.text = OS.get_keycode_string(def.index)
+				DeviceType.MOUSE:
+					if def.index <= 0: button.text = unassigned
+					else: button.text = "mouse: "+str(def.index)
+				DeviceType.PAD:
+					if def.pad <= 0: button.text = unassigned
+					else: button.text = "pad: "+str(def.index)
+				_: #default
+					button.text = unassigned
 		label.size_flags_horizontal = SIZE_EXPAND_FILL
 		button.size_flags_horizontal = SIZE_EXPAND_FILL
 		hbox.add_child(button)
